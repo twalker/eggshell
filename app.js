@@ -39,8 +39,3 @@ function compileCss(str, path) {
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
 });
-
-// live reload
-var livereload = require('livereload');
-var server = livereload.createServer({exts: ['styl', 'js', 'mustache']});
-server.watch(path.join(__dirname, 'public'));
