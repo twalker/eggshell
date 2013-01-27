@@ -1,8 +1,2 @@
-body {
-  padding: 20px;
-  font: 14px sans-serif;
-/*background-color green*/
-}
-img.chick {
-  float: right;
-}
+body{padding:0 20px;font:14px sans-serif;background-color:#fff}
+img.chick{float:right}
