@@ -6,7 +6,8 @@
     "express": "3.0.5",
     "jade": "*",
     "stylus": "*",
-    "nib": "*"
+    "nib": "*",
+    "livereload": "~0.3.0"
   },
   "devDependencies": {
     "mocha": "~1.6.0",
