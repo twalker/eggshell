@@ -10,6 +10,7 @@ require.config({
 		jquery: "../lib/jquery-2.0.0b1",
 		underscore: "../lib/lodash",
 		backbone: "../lib/backbone",
+		paginator: "../lib/backbone.paginator",
 		mustache: "../lib/mustache",
 
 		// RequireJS Plugins
@@ -29,6 +30,10 @@ require.config({
 				_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 				return window.Backbone;
 			}
+		},
+		"paginator": {
+			deps: "backbone",
+			exports: window.Backbone.Paginator
 		},
 
 		"mocha": {exports: "mocha"}

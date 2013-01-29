@@ -6,6 +6,7 @@ define(function(require){
 			Backbone = require('backbone'),
 			Egg = require('models/egg'),
 			Eggs = require('collections/eggs'),
+			CommitsRouter = require('routers/commits');
 			EggsRouter = require('routers/eggs');
 
 	// single page app boot procedure
@@ -15,6 +16,7 @@ define(function(require){
 		self.rootView = new Backbone.View({el: jQuery('#content')});
 
 		// initialize router(s)
+		new CommitsRouter({ elRoot: rootView.$el });
 		new EggsRouter({ elRoot: rootView.$el });
 
 		// Start watching for navigation events
