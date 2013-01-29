@@ -19,11 +19,23 @@ module.exports = function(grunt) {
 				],
 				tasks: 'tinylr-reload'
 			}
+		},
+		requirejs: {
+			compile: {
+				options: {
+					baseUrl: "public/js/src",
+					mainConfigFile: "public/js/src/config.js",
+					out: "public/js/dist/<%= pkg.name %>.js",
+					name: "main",
+					optimize: "uglify2"
+				}
+			}
 		}
 		
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('tiny-lr');
 
 	grunt.registerTask('reload', ['tinylr-start', 'watch']);
