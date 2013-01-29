@@ -1,5 +1,5 @@
 /**
-* module for a campaign model
+* module for an egg model
 **/
 define(function(require){
 	var Backbone = require('backbone');
