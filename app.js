@@ -28,6 +28,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/api/eggs', eggs.list);
+app.get('/client-tests/:name?', require('./routes/client-tests').show);
 
 function compileCss(str, path) {
 	return stylus(str)

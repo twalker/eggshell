@@ -27,9 +27,6 @@ require.config({
 			init: function(_, $) {
 				// remove globals and configure lodash to use Mustache format templating
 				_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
-				//_.noConflict();
-				//$.noConflict();
-				//return this.Backbone.noConflict();
 				return window.Backbone;
 			}
 		},

@@ -11,13 +11,14 @@ require(['require', 'mocha', 'chai',
 
 	describe("app", function() {
 
-		describe("init", function() {
+		describe(".init", function() {
 
 			it("should exist", function(){
 				assert.ok(app.init);
 			});
 
 		});
+	});
 
 	// Start runner
 	mocha.run();
