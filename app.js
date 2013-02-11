@@ -6,7 +6,7 @@ var express = require('express'),
 	stylus = require('stylus'),
 	nib = require('nib');
 
-var app = express();
+var app = module.exports = express();
 
 app
 	.set('port', process.env.PORT || 3000)
