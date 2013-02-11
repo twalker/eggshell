@@ -6,6 +6,10 @@ module.exports = function(grunt) {
 			css: {
 				files: 'public/css/*',
 				tasks: ['livereload']
+			},
+			src: {
+				files: 'public/js/**/*.js',
+				tasks: ['livereload']
 			}
 		},
 		requirejs: {
