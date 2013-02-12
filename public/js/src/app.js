@@ -9,10 +9,12 @@ define(function(require){
 			EggsRouter = require('routers/eggs');
 
 	// single page app boot procedure
+	var self = {};
+
 	self.init = function(bootdata){
 
 		// Instantiate root view
-		self.rootView = new Backbone.View({el: jQuery('#content')});
+		var rootView = self.rootView = new Backbone.View({el: jQuery('#content')});
 
 		// initialize router(s)
 		new EggsRouter({ elRoot: rootView.$el });

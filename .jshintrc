@@ -1,0 +1,22 @@
+{
+	"maxcomplexity": 3,
+	"es5": true,
+	"strict": false,
+	"maxstatements": 10,
+	"maxdepth": 4,
+	"maxparams": 4,
+	"smarttabs": true,
+	"immed" : true,
+	"newcap" : true,
+	"noarg" : true,
+	"sub" : true,
+	"undef" : true,
+	"boss" : true,
+	"eqnull" : true,
+	"browser" : true,
+	"node": true,
+	"devel": true,
+	"globals": {
+		"define": true
+	}
+}

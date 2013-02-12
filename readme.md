@@ -21,3 +21,10 @@ I want to write code instead of reading configuration documentation.
 
 ### run
 `npm start` for the site, and `grunt` in a second terminal tab for live-reload goodness.
+
+### test
+`npm test` for server-side  
+browse to `/client-tests/` for client-side
+
+### build
+`grunt release`
