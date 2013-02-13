@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 			},
 			src: {
 				files: 'public/js/**/*.js',
-				tasks: ['jshint', 'livereload']
+				tasks: ['livereload']
 			}
 		},
 

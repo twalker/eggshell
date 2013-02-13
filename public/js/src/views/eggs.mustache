@@ -1,8 +1,8 @@
 <p>and/or get crackin' on the client!</p>
-<p>Eggs:</p>
+<p>Crack an eggs:</p>
 <ul>
 	{{#eggs}}
-		<li>{{name}}</li>
+		<li{{#cracked}} class="cracked"{{/cracked}}>{{name}}</li>
 	{{/eggs}}
 </ul>
 <p>ooh, and don't forget to write some <a href="/client-tests/app">client-tests</a>.</p>

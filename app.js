@@ -28,6 +28,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/api/eggs', eggs.list);
+app.put('/api/eggs/:id', eggs.update);
 app.get('/client-tests/:name?', require('./routes/client-tests').show);
 
 function compileCss(str, path) {

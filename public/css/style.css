@@ -1,2 +1,3 @@
-body{padding:0 20px;font:14px sans-serif;background-color:#fff}
-img.chick{float:right}
+body{padding:0 20px;font:14px sans-serif;background-color:#000;color:#fff}
+img.egg{float:right}
+.cracked{text-decoration:line-through}
