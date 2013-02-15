@@ -12,7 +12,7 @@ app
 	.set('port', process.env.PORT || 3000)
 	.set('views', __dirname + '/views')
 	.set('view engine', 'jade')
-	.use(express.favicon())
+	.use(express.favicon('public/img/favicon.ico'))
 	.use(express.logger('dev'))
 	.use(express.bodyParser())
 	.use(app.router)
