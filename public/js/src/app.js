@@ -7,7 +7,7 @@ define(function(require){
 			Egg = require('models/egg'),
 			Eggs = require('collections/eggs'),
 			EggsRouter = require('routers/eggs');
-
+			
 	// single page app boot procedure
 	var self = {};
 
