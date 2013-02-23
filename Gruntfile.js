@@ -4,24 +4,37 @@ module.exports = function(grunt) {
 
 		pkg: grunt.file.readJSON('package.json'),
 
+		// regarde is a replacement for the 'watch' task
 		regarde: {
 			css: {
 				files: 'public/css/*',
 				tasks: ['livereload']
 			},
 			src: {
-				files: 'public/js/**/*.js',
-				tasks: ['livereload']
+				files: 'public/js/src/**/*.js',
+				tasks: ['jshint', 'livereload']
 			}
 		},
 
 		requirejs: {
-			compile: {
+			// shared options
+			options: {
+				baseUrl: 'public/js/src',
+				mainConfigFile: 'public/js/src/config.js',
+				name: 'main',
+				include: 'requireLib'
+			},
+			// development env: no minification, YAGNI?
+			dev: {
 				options: {
-					baseUrl: 'public/js/src',
-					mainConfigFile: 'public/js/src/config.js',
-					out: 'public/js/dist/<%= pkg.name %>.js',
-					name: 'main',
+					out: 'public/js/dist/<%= pkg.name %>.dev.js',
+					optimize: 'none'
+				}
+			},
+			// production env: minified	gr
+			prod: {
+				options: {
+					out: 'public/js/dist/<%= pkg.name %>.prod.js',
 					optimize: 'uglify2'
 				}
 			}
@@ -44,8 +57,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	// primary tasks
-	grunt.registerTask('release', ['jshint', 'requirejs']);
-	grunt.registerTask('dev', ['livereload-start', 'regarde']);
+	grunt.registerTask('dev', ['requirejs', 'livereload-start', 'regarde']);
 	grunt.registerTask('default', ['dev']);
-
+	grunt.registerTask('build', ['jshint', 'requirejs']);
 };

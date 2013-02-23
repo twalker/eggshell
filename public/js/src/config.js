@@ -13,6 +13,7 @@ require.config({
 		mustache: "../lib/mustache",
 
 		// RequireJS Plugins
+		requireLib: "../lib/require",
 		text: "../lib/text",
 
 		// Unit testing Libraries

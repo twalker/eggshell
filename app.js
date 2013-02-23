@@ -4,7 +4,8 @@ var express = require('express'),
 	http = require('http'),
 	path = require('path'),
 	stylus = require('stylus'),
-	nib = require('nib');
+	nib = require('nib'),
+	pkg = require('./package.json');
 
 var app = module.exports = express();
 
@@ -12,6 +13,8 @@ app
 	.set('port', process.env.PORT || 3000)
 	.set('views', __dirname + '/views')
 	.set('view engine', 'jade')
+	.set('name', pkg.name)
+	.set('version', pkg.version)
 	.use(express.favicon('public/img/favicon.ico'))
 	.use(express.logger('dev'))
 	.use(express.bodyParser())

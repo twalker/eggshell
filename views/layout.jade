@@ -1,10 +1,15 @@
 doctype 5
 html
 	head
-		title= title
+		title #{title} v#{settings.version} (#{settings.env})
 		link(rel='stylesheet', href='/css/style.css')
-		script(src='/js/lib/require.js', data-main="/js/src/config")
+		//-TOREVISIT:
+		//- require needs the data-main attribute, eliminate xtra request.
+		//- should dev environment use eggshell.dev.js, or load js async?
+		case settings.env
+			when 'production'
+				script(src='/js/dist/#{settings.name}.prod.js', data-main="/js/src/config")
+			default
+				script(src='/js/lib/require.js', data-main="/js/src/config")
 	body
 		block content
-
-
