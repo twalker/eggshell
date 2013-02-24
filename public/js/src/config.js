@@ -1,4 +1,6 @@
-
+/**
+ * RequireJS configuration
+ */
 require.config({
 	deps: ["main"],
 

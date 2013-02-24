@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 			options: {
 				baseUrl: 'public/js/src',
 				mainConfigFile: 'public/js/src/config.js',
-				name: 'main',
+				name: 'config',
 				include: 'requireLib'
 			},
 			// development env: no minification, YAGNI?

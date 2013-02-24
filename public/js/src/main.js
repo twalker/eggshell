@@ -1,3 +1,6 @@
+/**
+ * App initialization
+ */
 define(function(require, exports, module){
 	var jQuery = require('jquery'),
 		app = require('app');
