@@ -7,7 +7,7 @@ define(function(require){
 			Egg = require('models/egg'),
 			Eggs = require('collections/eggs'),
 			EggsRouter = require('routers/eggs');
-			
+
 	// single page app boot procedure
 	var self = {};
 
@@ -20,7 +20,7 @@ define(function(require){
 		new EggsRouter({ elRoot: rootView.$el });
 
 		// Start watching for navigation events
-		Backbone.history.start();
+		Backbone.history.start({ pushState: true });
 
 		return self;
 	};

@@ -1,21 +1,42 @@
 module.exports = function(grunt) {
-
+	/*  Project configuration. */
 	grunt.initConfig({
 
 		pkg: grunt.file.readJSON('package.json'),
 
-		// regarde is a replacement for the 'watch' task
-		regarde: {
-			css: {
-				files: 'public/css/*',
-				tasks: ['livereload']
-			},
-			src: {
-				files: 'public/js/src/**/*.js',
-				tasks: ['jshint', 'livereload']
+		// Shared JS File locations
+		jsfiles: {
+			client: [
+				'Gruntfile.js',
+				'public/js/src/**/*.js',
+			],
+			server: [
+				'app.js',
+				'package.json',
+				'routes/*'
+			]
+		},
+
+		// The clean task removes previous built files from the dist folder.
+		clean: ['public/js/dist/'],
+
+		jshint: {
+			options: {jshintrc: '.jshintrc'},
+			all: ['<%= jsfiles.client %>','<%= jsfiles.server %>']
+		},
+
+		// The stylus task compiles .styl files to css
+		stylus: {
+			compile: {
+				options: { compress: false },
+				files: {
+					'public/css/style.css': 'public/css/style.styl'
+				}
 			}
 		},
 
+		// The requirejs task traces all client-side app dependencies,
+		// concatenates, minifies, and creates built files in the dist folder.
 		requirejs: {
 			// shared options
 			options: {
@@ -31,7 +52,7 @@ module.exports = function(grunt) {
 					optimize: 'none'
 				}
 			},
-			// production env: minified	gr
+			// production env: minified
 			prod: {
 				options: {
 					out: 'public/js/dist/<%= pkg.name %>.prod.js',
@@ -40,24 +61,52 @@ module.exports = function(grunt) {
 			}
 		},
 
-		jshint: {
-			options: {jshintrc: '.jshintrc'},
-			all: [
-				'Gruntfile.js',
-				'app.js',
-				'public/js/src/**/*.js',
-				'routes/**/*.js'
-			]
+		// regarde is a replacement for the 'watch' task
+		regarde: {
+			css: {
+				files: 'public/css/**/*.styl',
+				tasks: ['stylus']
+			},
+			js: {
+				files: [
+					'public/js/src/**/*.js',
+					'public/js/src/views/**/*.mustache'
+				],
+				tasks: ['jshint', 'requirejs:dev']
+			},
+			compiled: {
+				files: [
+					// built css
+					'public/css/style.css',
+					// built js
+					'public/js/dist/**/*.js',
+					// unit tests
+					'public/js/test/*.js',
+					// server-side views
+					'views/**/*.jade'
+				],
+				tasks: ['livereload']
+			}
 		}
 	});
 
+	/* Load task plugins */
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-stylus');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-regarde');
 	grunt.loadNpmTasks('grunt-contrib-livereload');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	// primary tasks
-	grunt.registerTask('dev', ['requirejs', 'livereload-start', 'regarde']);
-	grunt.registerTask('default', ['dev']);
-	grunt.registerTask('build', ['jshint', 'requirejs']);
+	/* Register primary tasks */
+	// `grunt build` builds fresh production js/css files
+	grunt.registerTask('build', ['jshint', 'clean', 'stylus', 'requirejs']);
+
+	// `grunt dev` builds fresh distributable js/css files and starts watching for
+	// code changes--sending livereload messages when it does.
+	grunt.registerTask('dev', ['build', 'livereload-start', 'regarde']);
+
+	// `grunt` an alias to the build task
+	grunt.registerTask('default', ['build']);
+
 };

@@ -16,8 +16,8 @@ I want to write code instead of reading configuration documentation.
 
 ------
 ### install
-`npm install`
-
+`npm install`  
+`grunt build`
 
 ### run
 `npm start` for the site, and `grunt dev` in a second terminal tab for live-reload goodness.
@@ -29,5 +29,7 @@ browse to `/client-tests/` for client-side
 ### build
 `grunt build`
 
-### browse built
-`NODE_ENV=production node app`
+### browse
+`NODE_ENV=test node app` # individual js requests
+`NODE_ENV=development node app` # concatenated, but not minified js (default)
+`NODE_ENV=production node app` # concatenated and minified js
