@@ -1,5 +1,6 @@
 /*
- * GET eggs json.
+ * Serves eggs for Backbone consumption.
+ *
  */
  var eggs = [
 		{id: 0, name: 'brown', cracked: false},

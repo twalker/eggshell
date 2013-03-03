@@ -1,6 +1,7 @@
 var express = require('express'),
 	routes = require('./routes'),
 	eggs = require('./routes/eggs'),
+	mocki = require('./routes/mocki'),
 	http = require('http'),
 	path = require('path'),
 	stylus = require('stylus'),
@@ -19,6 +20,8 @@ app
 	.use(express.logger('dev'))
 	.use(express.bodyParser())
 	.use(app.router)
+	// use mock json files for api requests
+	.use('/api', mocki)
 	.use(stylus.middleware({
 		src: path.join(__dirname, 'public'),
 		compile: compileCss
@@ -29,10 +32,15 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
+// spa
 app.get('/', routes.index);
-app.get('/api/eggs', eggs.list);
-app.put('/api/eggs/:id', eggs.update);
+
+// client-tests
 app.get('/client-tests/:name?', require('./routes/client-tests').show);
+
+// manual routes to egg resources
+//app.get('/api/eggs', eggs.list);
+//app.put('/api/eggs/:id', eggs.update);
 
 function compileCss(str, path) {
 	return stylus(str)

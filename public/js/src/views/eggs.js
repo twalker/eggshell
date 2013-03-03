@@ -20,7 +20,7 @@ define(function(require, exports, module){
 
 		onClick: function(e){
 			e.preventDefault();
-			var id = jQuery(e.currentTarget).index();
+			var id = jQuery(e.currentTarget).data('id');
 			var model = this.collection.get(id);
 			model.save({cracked: !model.get('cracked')});
 		},
