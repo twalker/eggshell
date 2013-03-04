@@ -30,6 +30,6 @@ browse to `/client-tests/` for client-side
 `grunt build`
 
 ### browse
-`NODE_ENV=test node app` # individual js requests
-`NODE_ENV=development node app` # concatenated, but not minified js (default)
-`NODE_ENV=production node app` # concatenated and minified js
+`NODE_ENV=test node app` # individual js requests  
+`NODE_ENV=development node app` # concatenated, but not minified js (default)  
+`NODE_ENV=production node app` # concatenated and minified js  
