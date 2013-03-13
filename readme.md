@@ -14,6 +14,8 @@ I want to write code instead of reading configuration documentation.
 
 ![eggshell](https://raw.github.com/twalker/eggshell/master/public/img/get-crackin.jpg "Get crackin'")
 
+[![Build Status](https://travis-ci.org/twalker/eggshell.png)](https://travis-ci.org/twalker/eggshell)
+
 ------
 ### install
 `npm install`  
