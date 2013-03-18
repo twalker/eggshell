@@ -25,6 +25,7 @@ require.config({
 	},
 
 	shim: {
+
 		"backbone": {
 			deps: ["underscore", "jquery"],
 			exports: 'Backbone',
@@ -38,10 +39,8 @@ require.config({
 				return window.Backbone;
 			}
 		},
-		"paginator": {
-			deps: "backbone",
-			exports: window.Backbone.Paginator
-		},
+
+		"paginator": { deps: ["backbone"], exports: 'Backbone.Paginator' },
 
 		"mocha": {exports: "mocha"}
 

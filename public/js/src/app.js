@@ -19,7 +19,7 @@ define(function(require){
 
 		// initialize router(s)
 		new CommitsRouter({ elRoot: rootView.$el });
-		new EggsRouter({ elRoot: rootView.$el });
+		//new EggsRouter({ elRoot: rootView.$el });
 
 		// Start watching for navigation events
 		Backbone.history.start({ pushState: true });

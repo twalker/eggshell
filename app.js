@@ -32,11 +32,12 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
-// spa
-app.get('/', routes.index);
-
 // client-tests
 app.get('/client-tests/:name?', require('./routes/client-tests').show);
+
+// spa
+//app.get('/*', routes.index);
+app.get('/commits*', routes.index);
 
 // manual routes to egg resources
 //app.get('/api/eggs', eggs.list);
