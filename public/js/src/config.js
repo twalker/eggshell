@@ -9,7 +9,7 @@ require.config({
 		lib: "../lib",
 
 		// Libraries
-		jquery: "../lib/jquery-2.0.0b1",
+		jquery: "../lib/jquery-2.0.0b2",
 		underscore: "../lib/lodash",
 		backbone: "../lib/backbone",
 		paginator: "../lib/backbone.paginator",
@@ -30,7 +30,11 @@ require.config({
 			exports: 'Backbone',
 			init: function(_, $) {
 				// remove globals and configure lodash to use Mustache format templating
-				_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+				_.templateSettings = {
+					evaluate:/\{\{(.+?)\}\}/g,
+					interpolate:/\{\{=(.+?)\}\}/g,
+					escape:/\{\{-(.+?)\}\}/g
+				};
 				return window.Backbone;
 			}
 		},
