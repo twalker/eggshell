@@ -16,7 +16,7 @@ require(['require', 'mocha', 'chai',
 			it("should exist", function(){
 				assert.ok(app.init);
 			});
-
+			
 		});
 	});
 

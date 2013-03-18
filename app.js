@@ -1,21 +1,27 @@
 var express = require('express'),
 	routes = require('./routes'),
 	eggs = require('./routes/eggs'),
+	mocki = require('./routes/mocki'),
 	http = require('http'),
 	path = require('path'),
 	stylus = require('stylus'),
-	nib = require('nib');
+	nib = require('nib'),
+	pkg = require('./package.json');
 
-var app = express();
+var app = module.exports = express();
 
 app
 	.set('port', process.env.PORT || 3000)
 	.set('views', __dirname + '/views')
 	.set('view engine', 'jade')
-	.use(express.favicon())
+	.set('name', pkg.name)
+	.set('version', pkg.version)
+	.use(express.favicon('public/img/favicon.ico'))
 	.use(express.logger('dev'))
 	.use(express.bodyParser())
 	.use(app.router)
+	// use mock json files for api requests
+	.use('/api', mocki)
 	.use(stylus.middleware({
 		src: path.join(__dirname, 'public'),
 		compile: compileCss
@@ -26,9 +32,15 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
+// spa
 app.get('/', routes.index);
-app.get('/api/eggs', eggs.list);
+
+// client-tests
 app.get('/client-tests/:name?', require('./routes/client-tests').show);
+
+// manual routes to egg resources
+//app.get('/api/eggs', eggs.list);
+//app.put('/api/eggs/:id', eggs.update);
 
 function compileCss(str, path) {
 	return stylus(str)

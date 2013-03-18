@@ -1,2 +1,17 @@
-body{padding:0 20px;font:14px sans-serif;background-color:#fff}
-img.chick{float:right}
+body {
+  padding: 0 20px;
+  font: 14px sans-serif;
+  background-color: #1a1a1a;
+  color: #faebd7;
+}
+img.egg {
+  float: right;
+}
+ul.egglist li {
+  cursor: pointer;
+  color: #fff;
+}
+ul.egglist li.cracked {
+  text-decoration: line-through;
+  color: #ff0;
+}

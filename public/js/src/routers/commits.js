@@ -15,7 +15,7 @@ define(function(require){
 		},
 
 		list: function(){
-			console.log('list')
+			console.log('list');
 			var commits = new Commits();
 			var commitsView = new CommitsView({collection: commits});
 			this.elRoot.html(commitsView.el);

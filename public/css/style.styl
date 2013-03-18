@@ -3,7 +3,17 @@
 body
 	padding 0 20px
 	font 14px sans-serif
-	background-color white
+	background-color lighten(black, 10%)
+	color antiquewhite
 
-img.chick
+img.egg
 	float right
+
+ul.egglist
+	li
+		cursor pointer
+		color white
+		&.cracked
+			text-decoration line-through
+			color yellow
+

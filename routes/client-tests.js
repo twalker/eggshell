@@ -17,4 +17,4 @@ exports.show = function(req, res){
 
 		res.render('client-tests', {name: req.params.name, names: testFiles});
 	});
-}
+};
