@@ -15,7 +15,7 @@ define(function(require, exports, module){
 		},
 
 		initialize: function(options){
-			this.collection.on('reset change', this.render, this);
+			this.listenTo(this.collection, 'sync', this.render);
 		},
 
 		onClick: function(e){
