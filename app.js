@@ -21,7 +21,7 @@ app
 	.use(express.bodyParser())
 	.use(app.router)
 	// use mock json files for api requests
-	.use('/api', mocki)
+	.use('/api', mocki())
 	.use(stylus.middleware({
 		src: path.join(__dirname, 'public'),
 		compile: compileCss
