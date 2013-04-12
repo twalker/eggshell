@@ -2,7 +2,7 @@
 	"maxcomplexity": 3,
 	"es5": true,
 	"strict": false,
-	"maxstatements": 10,
+	"maxstatements": 15,
 	"maxlen": 120,
 	"maxdepth": 4,
 	"maxparams": 4,
