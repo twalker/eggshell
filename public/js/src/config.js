@@ -9,7 +9,7 @@ require.config({
 		lib: "../lib",
 
 		// Libraries
-		jquery: "../lib/jquery-2.0.0b2",
+		jquery: "../lib/jquery-2.0.0-beta3",
 		underscore: "../lib/lodash",
 		backbone: "../lib/backbone",
 		mustache: "../lib/mustache",
