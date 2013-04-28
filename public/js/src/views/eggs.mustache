@@ -1,8 +1,20 @@
-<p>and/or get crackin' on the client!</p>
+<h3>view functions</h3>
+<ul>
+	<li>no args: {{hello}}</li>
+	<li>using collection: {{crackCount}}</li>
+	<li>directly accessing collection: {{collection.length}}</li>
+	<li>helper function: {{#helper}}{{hello}}, and goodbye.{{/helper}}</li>
+	<li>templateOptions: {{show.foo}}</li>
+	<li>last stamp: {{lastStampDate}}</li>
+</ul>
 <p>Crack an egg:</p>
 <ul class="egglist">
 	{{#eggs}}
-		<li{{#cracked}} class="cracked"{{/cracked}} data-id="{{id}}">{{name}}</li>
+		<li data-id="{{id}}" {{#cracked}} class="cracked"{{/cracked}}>
+		{{upperName}}
+		({{name}} updated on  {{#formatDate}}{{stamp}}{{/formatDate}})
+		</li>
 	{{/eggs}}
 </ul>
+
 <p>ooh, and don't forget to write some <a href="/client-tests/app">client-tests</a>.</p>
