@@ -67,7 +67,7 @@ define(function(require, exports, module){
 
 		render: function(){
 			this.$el.html(this.template(this));
-
+			console.log('render')
 			var egg = this.collection.first();
 			var eggView = new EggView({model: egg}).render();
 

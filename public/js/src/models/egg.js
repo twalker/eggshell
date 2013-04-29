@@ -32,8 +32,8 @@ define(function(require){
 
 		},
 
-		upperName: function(){
-			return this.get('name').toUpperCase();
+		upperName: function(suffix){
+			return this.name().toUpperCase() + ' color plus ' + suffix;
 		}
 	});
 

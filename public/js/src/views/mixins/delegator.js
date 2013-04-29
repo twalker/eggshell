@@ -7,6 +7,7 @@ define(['underscore'], function(lodash){
 			// model or collection?
 			var obj = this.model || this.collection;
 			var method = obj[member];
+			//console.log('args', method, this, obj);
 			// return function or attribute
 			return (lodash.isFunction(method)) ? method.apply(obj, arguments) : method;
 		};

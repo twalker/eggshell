@@ -10,11 +10,14 @@ define(function(require, exports, module){
 	return Backbone.View.extend({
 		className: 'egg',
 		template: Mustache.compile(mainTemplate),
-		name: delegator('name'),
+		delegatedName: delegator('upperName'),
 		id: delegator('id'),
 
 		initialize: function(options){
 
+		},
+		upperName: function(){
+			return this.delegatedName(' delagated name');
 		},
 
 		render: function(){
