@@ -1,7 +1,52 @@
 eggshell
 ========
 
-a starting point for hatching ideas.
+this branch is an experiment on passing the view as the context to a template:
+
+    this.$el.html(this.template(**this**));
+    
+The problems I'm trying to solve:
+
+- views need 
+  * displayLogic (templateOptions), 
+  * formatting helpers, and 
+  * model properties
+  I have to cobble that shit together in render.
+
+- model properties often need serialized to be useful in the view
+    *serialize pattern is ok, but has to support all methods needed by N views
+
+features
+- formatting helpers
+- direct model access
+- template options for display logic
+
+
+The approaches:
+A) render creates a viewmodel from: model.serialize, templateOptions, and invocations.
+
+emphasis is on model (albeit a not very useful one)
+
+pros:
+- separation of concerns
+
+cons:
+- boated and ugly render methods
+
+B) pass view's **this** as reference to template
+
+emphasis is on view logic
+
+pros
+- more flexible
+- better separation of model 
+- direct relation between view method and template param
+- abstracts away template options and model attributes.
+
+cons
+- more separation from attributes (could help with accessor: e.g. {{model.name}}
+- more methods in view, possibly duplicating some logic
+- more work?
 
 ------
 

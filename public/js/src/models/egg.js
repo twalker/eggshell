@@ -14,6 +14,17 @@ define(function(require){
 			stamp: null
 		},
 
+		paths: {
+			'new': 'eggs/new',
+			'show': 'eggs/{{id}}',
+			'settings': 'eggs/{{id}}/settings'
+		},
+
+		pathTo: function(key){
+			//TOTEST!!
+			return lodash.template(this.paths[key], this.toJSON())
+		},
+
 		name: accessor('name'),
 		cracked: accessor('cracked'),
 
