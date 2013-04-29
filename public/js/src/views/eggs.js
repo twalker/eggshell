@@ -5,6 +5,7 @@ define(function(require, exports, module){
 	var Backbone = require('backbone'),
 		Mustache = require('mustache'),
 		mainTemplate = require('text!views/eggs.mustache'),
+		EggView = require('views/egg'),
 		jQuery = require('jquery');
 
 	return Backbone.View.extend({
@@ -66,6 +67,11 @@ define(function(require, exports, module){
 
 		render: function(){
 			this.$el.html(this.template(this));
+
+			var egg = this.collection.first();
+			var eggView = new EggView({model: egg}).render();
+
+			this.$el.append(eggView.el);
 
 			return this;
 		}

@@ -5,27 +5,20 @@ define(function(require, exports, module){
 	var Backbone = require('backbone'),
 		Mustache = require('mustache'),
 		mainTemplate = require('text!views/egg.mustache'),
-		jQuery = require('jquery');
+		delegator = require('views/mixins/delegator');
 
 	return Backbone.View.extend({
 		className: 'egg',
 		template: Mustache.compile(mainTemplate),
-		events: {
-			'click li': 'onClick'
-		},
+		name: delegator('name'),
+		id: delegator('id'),
 
 		initialize: function(options){
-			this.listenTo(this.collection, 'sync change', this.render);
-		},
 
-		onClick: function(e){
-			e.preventDefault();
-			this.model.save({cracked: !this.model.get('cracked'), stamp: Date.now()});
 		},
 
 		render: function(){
-			this.$el.html(this.template(this.model.toJSON()));
-
+			this.$el.html(this.template(this));
 			return this;
 		}
 	});
