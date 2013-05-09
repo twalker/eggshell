@@ -3,20 +3,18 @@ require(['require', 'mocha', 'chai',
 	], function(require, mocha, chai, app){
 
 	// Setup
-	var assert = chai.assert,
-		should = chai.should(),
-		expect = chai.expect;
+	var assert = chai.assert;
 
 	mocha.setup('bdd');
 
-	describe("app", function() {
+	describe('app', function(){
 
-		describe(".init", function() {
+		describe('.init', function(){
 
-			it("should exist", function(){
+			it('should exist', function(){
 				assert.ok(app.init);
 			});
-			
+
 		});
 	});
 

@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 		jsfiles: {
 			client: [
 				'Gruntfile.js',
-				'public/js/src/**/*.js',
+				'public/js/src/**/*.js'
 			],
 			server: [
 				'app.js',
@@ -61,31 +61,36 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// regarde is a replacement for the 'watch' task
-		regarde: {
+		// watches for file changes and performs tasks
+		watch: {
 			css: {
-				files: 'public/css/**/*.styl',
-				tasks: ['stylus']
+				files: ['public/css/**/*.styl'],
+				tasks: ['stylus'],
+				options: {
+					livereload: true
+				}
 			},
 			js: {
 				files: [
-					'public/js/src/**/*.js',
+					'<%= jsfiles.client %>',
 					'public/js/src/views/**/*.mustache'
 				],
-				tasks: ['jshint', 'requirejs:dev']
+				tasks: ['jshint', 'requirejs:dev'],
+				options: {
+					livereload: true
+				}
 			},
-			compiled: {
+			homeless: {
 				files: [
-					// built css
-					'public/css/style.css',
-					// built js
-					'public/js/dist/**/*.js',
 					// unit tests
 					'public/js/test/*.js',
 					// server-side views
 					'views/**/*.jade'
 				],
-				tasks: ['livereload']
+				tasks: ['jshint'],
+				options: {
+					livereload: true
+				}
 			}
 		}
 	});
@@ -95,8 +100,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-regarde');
-	grunt.loadNpmTasks('grunt-contrib-livereload');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	//grunt.loadNpmTasks('grunt-contrib-livereload');
 
 	/* Register primary tasks */
 	// `grunt build` builds fresh production js/css files
@@ -104,7 +109,7 @@ module.exports = function(grunt) {
 
 	// `grunt dev` builds fresh distributable js/css files and starts watching for
 	// code changes--sending livereload messages when it does.
-	grunt.registerTask('dev', ['build', 'livereload-start', 'regarde']);
+	grunt.registerTask('dev', ['build', 'watch']);
 
 	// `grunt` an alias to the build task
 	grunt.registerTask('default', ['build']);
