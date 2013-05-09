@@ -65,30 +65,28 @@ module.exports = function(grunt) {
 		watch: {
 			css: {
 				files: ['public/css/**/*.styl'],
-				tasks: ['stylus'],
-				options: {
-					livereload: true
-				}
+				tasks: ['stylus']
 			},
 			js: {
 				files: [
 					'<%= jsfiles.client %>',
 					'public/js/src/views/**/*.mustache'
 				],
-				tasks: ['jshint', 'requirejs:dev'],
-				options: {
-					livereload: true
-				}
+				tasks: ['jshint', 'requirejs:dev']
 			},
-			homeless: {
+			compiled: {
 				files: [
+					// built css
+					'public/css/style.css',
+					// built js
+					'public/js/dist/**/*.js',
 					// unit tests
 					'public/js/test/*.js',
 					// server-side views
 					'views/**/*.jade'
 				],
-				tasks: ['jshint'],
 				options: {
+					event: ['changed', 'added'],
 					livereload: true
 				}
 			}
@@ -101,7 +99,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	//grunt.loadNpmTasks('grunt-contrib-livereload');
 
 	/* Register primary tasks */
 	// `grunt build` builds fresh production js/css files
