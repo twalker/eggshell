@@ -61,18 +61,30 @@ module.exports = function(grunt) {
 			}
 		},
 
+		notify: {
+			css: {
+				options: {
+					message: 'stylus compiled'
+				}
+			},
+			js: {
+				options: {
+					message: 'js compiled'
+				}
+			}
+		},
 		// watches for file changes and performs tasks
 		watch: {
 			css: {
 				files: ['public/css/**/*.styl'],
-				tasks: ['stylus']
+				tasks: ['stylus', 'notify:css']
 			},
 			js: {
 				files: [
 					'<%= jsfiles.client %>',
 					'public/js/src/views/**/*.mustache'
 				],
-				tasks: ['jshint', 'requirejs:dev']
+				tasks: ['jshint', 'requirejs:dev', 'notify:js']
 			},
 			compiled: {
 				files: [
@@ -99,6 +111,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-notify');
 
 	/* Register primary tasks */
 	// `grunt build` builds fresh production js/css files
