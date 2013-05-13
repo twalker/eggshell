@@ -71,6 +71,11 @@ module.exports = function(grunt) {
 				options: {
 					message: 'js compiled'
 				}
+			},
+			reload: {
+				options: {
+					message: 'reload sent'
+				}
 			}
 		},
 		// watches for file changes and performs tasks
@@ -97,6 +102,7 @@ module.exports = function(grunt) {
 					// server-side views
 					'views/**/*.jade'
 				],
+				tasks: ['notify:reload'],
 				options: {
 					event: ['changed', 'added'],
 					livereload: true
