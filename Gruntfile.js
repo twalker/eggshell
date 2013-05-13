@@ -97,6 +97,7 @@ module.exports = function(grunt) {
 					// server-side views
 					'views/**/*.jade'
 				],
+				tasks: ['notify:js'],
 				options: {
 					event: ['changed', 'added'],
 					livereload: true

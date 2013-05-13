@@ -13,6 +13,7 @@ require.config({
 		underscore: "../lib/lodash",
 		backbone: "../lib/backbone",
 		mustache: "../lib/mustache",
+		async: "../lib/async",
 
 		// RequireJS Plugins
 		requireLib: "../lib/require",
@@ -20,7 +21,8 @@ require.config({
 
 		// Unit testing Libraries
 		mocha: "../test/vendor/mocha",
-		chai: "../test/vendor/chai"
+		chai: "../test/vendor/chai",
+		sinon: "../test/vendor/sinon-1.7.1"
 	},
 
 	shim: {
@@ -38,7 +40,8 @@ require.config({
 			}
 		},
 
-		"mocha": {exports: "mocha"}
+		"mocha": {exports: "mocha"},
+		"sinon": {exports: "sinon"}
 
 	}
 });
