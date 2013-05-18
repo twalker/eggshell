@@ -49,14 +49,17 @@ module.exports = function(grunt) {
 			dev: {
 				options: {
 					out: 'public/js/dist/<%= pkg.name %>.dev.js',
-					optimize: 'none'
+					optimize: 'none',
+					useSourceUrl: true
 				}
 			},
 			// production env: minified
 			prod: {
 				options: {
 					out: 'public/js/dist/<%= pkg.name %>.prod.js',
-					optimize: 'uglify2'
+					optimize: 'uglify2',
+					preserveLicenseComments: false,
+					generateSourceMaps: true
 				}
 			}
 		},

@@ -1,6 +1,5 @@
 {
 	"maxcomplexity": 3,
-	"es5": true,
 	"strict": false,
 	"maxstatements": 15,
 	"maxlen": 120,
