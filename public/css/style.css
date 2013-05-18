@@ -7,9 +7,6 @@ body {
 body a {
   color: #fff;
 }
-img.egg {
-  float: right;
-}
 ul.egglist li {
   cursor: pointer;
   color: #fff;
@@ -17,4 +14,21 @@ ul.egglist li {
 ul.egglist li.cracked {
   text-decoration: line-through;
   color: #ff0;
+}
+aside.crack-count {
+  background: url("/img/chicken-egg.png") center center no-repeat;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  background-size: 100%;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2em;
+  padding: 5% 10px 10% 10px;
+  text-align: center;
+}
+aside.crack-count b.count {
+  color: #ff0;
+  font-size: 1.5em;
+  display: block;
 }

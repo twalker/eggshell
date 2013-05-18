@@ -10,7 +10,11 @@ define(function(require){
 			return 'api/eggs';
 		},
 
-		model: Egg
+		model: Egg,
+
+		crackedCount: function(){
+			return this.where({cracked: true}).length;
+		}
 
 	});
 });

@@ -26,7 +26,10 @@ define(function(require, exports, module){
 		},
 
 		render: function(){
-			this.$el.html(this.template({eggs: this.collection.toJSON()}));
+			this.$el.html(this.template({
+				eggs: this.collection.toJSON(),
+				crackedCount: this.collection.crackedCount()
+			}));
 
 			return this;
 		}
