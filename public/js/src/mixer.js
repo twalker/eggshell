@@ -59,7 +59,7 @@ define(['underscore'], function(lodash){
 		 * Most useful when a mixin has initialize, event, or defaults.
 		 * @example
 		 * mixer.merge(MyModel, {
-		 *	initialize: function(){return "called after MyModel.initialize"}
+		 *  initialize: function(){return "called after MyModel.initialize"}
 		 * }, modelMixin2);
 		 */
 		merge: mergeIn

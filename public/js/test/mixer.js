@@ -74,6 +74,8 @@ require([
 				mixer.extend(bestPunk, {band: 'sex pistols'}, {band: 'the clash'});
 				assert.equal(bestPunk.band, 'the clash');
 			});
+
+
 		});
 
 		describe('.merge(klass [, source1, source2, …])', function(){
@@ -97,6 +99,7 @@ require([
 
 				mixer.merge(Mod, modMixin, {rebel: noop});
 			});
+
 
 			it('should merge methods/properties to a destination object from sources', function(){
 				assert.isDefined(Mod.prototype.playBass);
@@ -134,6 +137,7 @@ require([
 				assert(thirdSpy.calledAfter(mixinInitSpy));
 			});
 		});
+
 	});
 
 	// Start runner
