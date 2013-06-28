@@ -46,7 +46,7 @@ require([
 
 		});
 
-		describe('.extend(dest [, source1, source2, …])', function(){
+		describe('.assign(dest [, source1, source2, …])', function(){
 			var Mod, modMixin;
 
 			beforeEach(function(){
@@ -59,7 +59,7 @@ require([
 					playBass: noop
 				};
 
-				mixer.extend(Mod.prototype, modMixin, {rebel: noop});
+				mixer.assign(Mod.prototype, modMixin, {rebel: noop});
 			});
 
 			it('should copy methods/properties to a destination object from sources', function(){
@@ -71,14 +71,14 @@ require([
 				assert.deepEqual(Mod.prototype.defaults, {last:'vicious'});
 
 				var bestPunk = {};
-				mixer.extend(bestPunk, {band: 'sex pistols'}, {band: 'the clash'});
+				mixer.assign(bestPunk, {band: 'sex pistols'}, {band: 'the clash'});
 				assert.equal(bestPunk.band, 'the clash');
 			});
 
 
 		});
 
-		describe('.merge(klass [, source1, source2, …])', function(){
+		describe('.patch(klass [, source1, source2, …])', function(){
 			var Mod, modMixin;
 			var initSpy, mixinInitSpy;
 
@@ -97,7 +97,7 @@ require([
 					initialize: mixinInitSpy
 				};
 
-				mixer.merge(Mod, modMixin, {rebel: noop});
+				mixer.patch(Mod, modMixin, {rebel: noop});
 			});
 
 
@@ -120,7 +120,7 @@ require([
 			it('should merge N collisions in their source order', function(){
 				var thirdSpy = sinon.spy();
 
-				mixer.merge(Mod, {initialize: thirdSpy});
+				mixer.patch(Mod, {initialize: thirdSpy});
 
 				var m = new Mod({});
 

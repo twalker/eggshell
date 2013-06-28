@@ -1,9 +1,10 @@
 /**
- * Mixer of mixins. A utility to copy functionality from mixins to objects.
+ * Mixer of mixins.
+ * A utility to copy functionality from mixins to objects.
  */
 define(['underscore'], function(lodash){
 	// heavily inspired by: https://github.com/onsi/cocktail
-	var mergeIn = function mergeIn(klass){
+	function patch(klass){
 		var mixins = lodash(arguments).toArray().rest().flatten().value();
 		var collisions = {};
 
@@ -50,18 +51,18 @@ define(['underscore'], function(lodash){
 		 * Destructively copies members to a destination object from source objects.
 		 * A simple proxy to lodash.extend.
 		 * @example
-		 * mixer.extend(MyModel.prototype, modelMixin1, modelMixin2);
+		 * mixer.assign(MyModel.prototype, modelMixin1, modelMixin2);
 		 */
-		extend: lodash.extend,
+		assign: lodash.assign,
 		/**
 		 * Copies members from mixins to a Constructor (klass), merging colliding
 		 * members.
 		 * Most useful when a mixin has initialize, event, or defaults.
 		 * @example
-		 * mixer.merge(MyModel, {
+		 * mixer.patch(MyModel, {
 		 *  initialize: function(){return "called after MyModel.initialize"}
 		 * }, modelMixin2);
 		 */
-		merge: mergeIn
+		patch: patch
 	};
 });
