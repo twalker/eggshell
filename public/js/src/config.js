@@ -13,6 +13,7 @@ require.config({
 		underscore: '../lib/lodash',
 		backbone: '../lib/backbone',
 		'backbone-associations': '../lib/backbone-associations',
+		'backbone-relational': '../lib/backbone-relational',
 		mustache: '../lib/mustache',
 
 		// RequireJS Plugins
@@ -31,6 +32,10 @@ require.config({
 			exports: 'Backbone'
 		},
 		'backbone-associations': {
+			deps: ['backbone'],
+			exports: 'Backbone'
+		},
+		'backbone-relational': {
 			deps: ['backbone'],
 			exports: 'Backbone'
 		},

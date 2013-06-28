@@ -1,5 +1,6 @@
 {
   "id": "green",
   "name": "green",
-  "cracked": false
+  "cracked": false,
+  "bacon": null
 }

@@ -2,15 +2,17 @@
 * module for a egg model
 **/
 define(function(require){
-	var Backbone = require('backbone-associations'),
+	var Backbone = require('backbone-relational'),
 		Bacon = require('models/bacon');
 
-	var Egg = Backbone.AssociatedModel.extend({
+	var Egg = Backbone.RelationalModel.extend({
 		relations: [
 			{
-				type: Backbone.One,
+				type: Backbone.HasOne,
 				key: 'bacon',
-				relatedModel: Bacon
+				relatedModel: Bacon,
+				includeInJSON: 'id',
+				autoFetch: true
 			}
 		],
 

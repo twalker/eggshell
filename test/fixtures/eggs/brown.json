@@ -2,9 +2,5 @@
   "id": "brown",
   "name": "brown",
   "cracked": false,
-  "bacon": {
-    "id": null,
-    "name": null,
-    "crispy": false
-  }
+  "bacon": "maple-smoked"
 }
