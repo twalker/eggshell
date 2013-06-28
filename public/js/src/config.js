@@ -9,7 +9,7 @@ require.config({
 		lib: "../lib",
 
 		// Libraries
-		jquery: "../lib/jquery-2.0.0",
+		jquery: "../lib/jquery-2.0.2",
 		underscore: "../lib/lodash",
 		backbone: "../lib/backbone",
 		mustache: "../lib/mustache",
@@ -27,16 +27,7 @@ require.config({
 	shim: {
 		"backbone": {
 			deps: ["underscore", "jquery"],
-			exports: 'Backbone',
-			init: function(_, $) {
-				// remove globals and configure lodash to use Mustache format templating
-				_.templateSettings = {
-					evaluate:/\{\{(.+?)\}\}/g,
-					interpolate:/\{\{=(.+?)\}\}/g,
-					escape:/\{\{-(.+?)\}\}/g
-				};
-				return window.Backbone;
-			}
+			exports: 'Backbone'
 		},
 
 		"mocha": {exports: "mocha"},

@@ -5,15 +5,19 @@
 
 /*global define: false*/
 
-(function (root, mustache) {
+(function (root, factory) {
   if (typeof exports === "object" && exports) {
-    module.exports = mustache; // CommonJS
-  } else if (typeof define === "function" && define.amd) {
-    define(mustache); // AMD
+    factory(exports); // CommonJS
   } else {
-    root.Mustache = mustache; // <script>
+    var mustache = {};
+    factory(mustache);
+    if (typeof define === "function" && define.amd) {
+      define(mustache); // AMD
+    } else {
+      root.Mustache = mustache; // <script>
+    }
   }
-}(this, (function () {
+}(this, function (mustache) {
 
   var whiteRe = /\s*/;
   var spaceRe = /\s+/;
@@ -22,24 +26,23 @@
   var curlyRe = /\s*\}/;
   var tagRe = /#|\^|\/|>|\{|&|=|!/;
 
-  var _test = RegExp.prototype.test;
-  var _toString = Object.prototype.toString;
-
   // Workaround for https://issues.apache.org/jira/browse/COUCHDB-577
   // See https://github.com/janl/mustache.js/issues/189
-  function testRe(re, string) {
-    return _test.call(re, string);
+  var RegExp_test = RegExp.prototype.test;
+  function testRegExp(re, string) {
+    return RegExp_test.call(re, string);
   }
 
   function isWhitespace(string) {
-    return !testRe(nonSpaceRe, string);
+    return !testRegExp(nonSpaceRe, string);
   }
 
+  var Object_toString = Object.prototype.toString;
   var isArray = Array.isArray || function (obj) {
-    return _toString.call(obj) === '[object Array]';
+    return Object_toString.call(obj) === '[object Array]';
   };
 
-  function escapeRe(string) {
+  function escapeRegExp(string) {
     return string.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
   }
 
@@ -343,8 +346,8 @@
 
   function escapeTags(tags) {
     return [
-      new RegExp(escapeRe(tags[0]) + "\\s*"),
-      new RegExp("\\s*" + escapeRe(tags[1]))
+      new RegExp(escapeRegExp(tags[0]) + "\\s*"),
+      new RegExp("\\s*" + escapeRegExp(tags[1]))
     ];
   }
 
@@ -423,7 +426,7 @@
         scanner.scan(eqRe);
         scanner.scanUntil(tagRes[1]);
       } else if (type === '{') {
-        value = scanner.scanUntil(new RegExp('\\s*' + escapeRe('}' + tags[1])));
+        value = scanner.scanUntil(new RegExp('\\s*' + escapeRegExp('}' + tags[1])));
         scanner.scan(curlyRe);
         scanner.scanUntil(tagRes[1]);
         type = '&';
@@ -463,8 +466,6 @@
     return nestTokens(tokens);
   }
 
-  var mustache = {};
-
   mustache.name = "mustache.js";
   mustache.version = "0.7.2";
   mustache.tags = ["{{", "}}"];
@@ -480,13 +481,13 @@
   mustache.escape = escapeHtml;
 
   // All Mustache.* functions use this writer.
-  var _writer = new Writer();
+  var defaultWriter = new Writer();
 
   /**
    * Clears all cached templates and partials in the default writer.
    */
   mustache.clearCache = function () {
-    return _writer.clearCache();
+    return defaultWriter.clearCache();
   };
 
   /**
@@ -494,7 +495,7 @@
    * writer.
    */
   mustache.compile = function (template, tags) {
-    return _writer.compile(template, tags);
+    return defaultWriter.compile(template, tags);
   };
 
   /**
@@ -502,7 +503,7 @@
    * function using the default writer.
    */
   mustache.compilePartial = function (name, template, tags) {
-    return _writer.compilePartial(name, template, tags);
+    return defaultWriter.compilePartial(name, template, tags);
   };
 
   /**
@@ -510,7 +511,7 @@
    * function using the default writer.
    */
   mustache.compileTokens = function (tokens, template) {
-    return _writer.compileTokens(tokens, template);
+    return defaultWriter.compileTokens(tokens, template);
   };
 
   /**
@@ -518,7 +519,7 @@
    * default writer.
    */
   mustache.render = function (template, view, partials) {
-    return _writer.render(template, view, partials);
+    return defaultWriter.render(template, view, partials);
   };
 
   // This is here for backwards compatibility with 0.4.x.
@@ -532,6 +533,4 @@
     }
   };
 
-  return mustache;
-
-}())));
+}));

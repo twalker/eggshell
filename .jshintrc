@@ -1,5 +1,5 @@
 {
-	"maxcomplexity": 3,
+	"maxcomplexity": 4,
 	"strict": false,
 	"maxstatements": 15,
 	"maxlen": 120,
