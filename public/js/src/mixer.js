@@ -3,6 +3,8 @@
  * A utility to copy functionality from mixins to objects.
  */
 define(['underscore'], function(lodash){
+	// monkey patches an object to combine values of
+	// object literals (e.g. events) and functions (e.g. initialize).
 	// heavily inspired by: https://github.com/onsi/cocktail
 	function patch(klass){
 		var mixins = lodash(arguments).toArray().rest().flatten().value();
@@ -37,7 +39,7 @@ define(['underscore'], function(lodash){
 			};
 		});
 
-	};
+	}
 
 	return {
 		/**

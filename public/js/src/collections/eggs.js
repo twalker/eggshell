@@ -5,7 +5,7 @@ define(function(require){
 	var Backbone = require('backbone'),
 		Egg = require('models/egg');
 
-	return Backbone.Collection.extend({
+	var Eggs = Backbone.Collection.extend({
 		url: function(){
 			return 'api/eggs';
 		},
@@ -17,4 +17,6 @@ define(function(require){
 		}
 
 	});
+
+	return Eggs;
 });

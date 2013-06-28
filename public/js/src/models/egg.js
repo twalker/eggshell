@@ -4,7 +4,7 @@
 define(function(require){
 	var Backbone = require('backbone');
 
-	return Backbone.Model.extend({
+	var Egg = Backbone.Model.extend({
 		defaults: {
 			id: null,
 			name: null,
@@ -17,4 +17,6 @@ define(function(require){
 
 
 	});
+
+	return Egg;
 });
