@@ -18,7 +18,7 @@ define(function(require){
 
 		list: function(){
 
-			var eggs = new Eggs();
+			var eggs = window.eggs = new Eggs();
 			var eggsView = new EggsView({collection: eggs});
 			this.elRoot.html(eggsView.el);
 

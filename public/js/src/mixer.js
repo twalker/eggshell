@@ -33,7 +33,7 @@ define(['underscore'], function(lodash){
 				});
 
 				return returnValue;
-			}
+			};
 		});
 
 	};
