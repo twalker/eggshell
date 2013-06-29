@@ -106,7 +106,7 @@ require([
 				assert.isDefined(Mod.prototype.rebel);
 			});
 
-			it('should merge colliding/existing members', function(){
+			it('should merge colliding/existing members (methods and plain objects)', function(){
 				assert.deepEqual(Mod.prototype.defaults, {first:'sid', last: 'vicious'});
 				var options = {rock: 'hard'};
 				new Mod({}, options);
@@ -115,6 +115,7 @@ require([
 				assert.isTrue(mixinInitSpy.called);
 				assert.isTrue(initSpy.calledWith({}, options));
 				assert.isTrue(mixinInitSpy.calledWith({}, options));
+
 			});
 
 			it('should merge N collisions in their source order', function(){
@@ -135,7 +136,48 @@ require([
 
 				assert(thirdSpy.called);
 				assert(thirdSpy.calledAfter(mixinInitSpy));
+				assert(thirdSpy.calledOn(m));
 			});
+
+			it('should not break the prototype chain', function(){
+				var parentSpy = sinon.spy(),
+					childSpy = sinon.spy(),
+					mixSpy = sinon.spy();
+
+				var ParentView = Backbone.View.extend({
+					initialize: parentSpy,
+					events: {'click':'onParent'}
+				});
+
+				var ChildView = ParentView.extend({
+					initialize: childSpy,
+					events: {'click':'onChild'}
+				});
+
+				var viewMix = {
+					initialize: mixSpy,
+					events: {'submit': 'onMix'}
+				};
+
+				mixer.patch(ChildView, viewMix);
+
+				var view = new ChildView();
+
+				assert.isFalse(parentSpy.called);
+				assert.isTrue(childSpy.called);
+				assert.isTrue(mixSpy.called);
+
+				assert.deepEqual(ParentView.prototype.events, {'click':'onParent'});
+				assert.deepEqual(ChildView.prototype.events, {'click':'onChild', 'submit': 'onMix'});
+
+				delete ChildView.prototype.events;
+				delete ChildView.prototype.initialize;
+				// child view should now use prototype of parent
+				assert.deepEqual(ChildView.prototype.events, ParentView.prototype.events);
+				assert.equal(ChildView.prototype.initialize, ParentView.prototype.initialize)
+
+			});
+
 		});
 
 	});
