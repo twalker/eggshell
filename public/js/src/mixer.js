@@ -4,10 +4,11 @@
  */
 define(['underscore'], function(lodash){
 
-	// Monkey patch a klass (Model, View, etc.) by combining member values that are
-	// object literals (e.g. events, defaults) and functions (e.g. initialize).
+	// Monkey patch a destication object (i.e. Model.prototype, View.prototype, etc.)
+	// by combining member values that are object literals (e.g. events, defaults),
+	// functions (e.g. initialize), or arrays (e.g.relations).
 	// Heavily inspired by: https://github.com/onsi/cocktail
-	function patch(klass){
+	function patch(dest){
 		var mixins = lodash(arguments).toArray().rest();
 		var collisions = {};
 
@@ -15,36 +16,45 @@ define(['underscore'], function(lodash){
 			lodash(mixin).forOwn(function(value, key) {
 				if (lodash.isFunction(value)) {
 					// methods
-					if (klass.prototype[key]) {
-						collisions[key] = collisions[key] || [klass.prototype[key]];
+					if (dest[key]) {
+						collisions[key] = collisions[key] || [dest[key]];
 						collisions[key].push(value);
 					}
-					klass.prototype[key] = value;
+					dest[key] = value;
 				} else if (lodash.isPlainObject(value)) {
 					// object literals
-					klass.prototype[key] = lodash.extend({}, value, klass.prototype[key] || {});
-				} else if(!lodash.has(klass.prototype, key)) {
-					// primitives
-					// only overwrite primitive members that aren't on prototype
-					klass.prototype[key] = value;
+					dest[key] = lodash.extend({}, value, dest[key] || {});
+				} else if(lodash.isArray(value)) {
+					// arrays
+					dest[key] = value.concat(dest[key] || []);
+				} else {
+					// primitives (string, date, regex), last in wins!?!
+					// mixins should be composed of functions, and rarely use primitives.
+					dest[key] = value;
 				}
 			});
 		});
 
-		lodash(collisions).each(function(propertyValues, propertyName) {
-			klass.prototype[propertyName] = function() {
-				var that = this,
-						args = arguments,
-						returnValue;
-
-				lodash(propertyValues).each(function(value) {
-					var returnedValue = lodash.isFunction(value) ? value.apply(that, args) : value;
-					returnValue = (returnedValue === undefined ? returnValue : returnedValue);
-				});
-
-				return returnValue;
-			};
+		lodash(collisions).forOwn(function(fnValues, propName) {
+			dest[propName] = wrapFuncs(fnValues);
 		});
+	}
+
+	// creates a wrapped function that invokes an array of functions,
+	// in the order given. Returns the last undefined return.
+	function wrapFuncs(funcs){
+		return function(){
+			var that = this,
+					args = arguments,
+					returnValue;
+
+			lodash(funcs).each(function(value) {
+				var returnedValue = lodash.isFunction(value) ? value.apply(that, args) : value;
+				returnValue = (returnedValue === undefined ? returnValue : returnedValue);
+			});
+
+			return returnValue;
+		};
 	}
 
 	return {
@@ -65,12 +75,13 @@ define(['underscore'], function(lodash){
 		 */
 		assign: lodash.assign,
 		/**
-		 * Monkey patches members from mixins into a Constructor's prototype (klass),
-		 * merging colliding members (methods, and object literals).
-		 * Most useful when a mixin includes initialize, events, or other conflicting members.
+		 * Monkey patches members from mixins into a destination object,
+		 * merging colliding members (methods, object literals, and arrays).
+		 * Typically used on Constructor (klass) prototypes when a mixin
+		 * includes initialize, events, or other conflicting members.
 		 *
 		 * @example
-		 * mixer.patch(MyModel, {
+		 * mixer.patch(MyModel.prototype, {
 		 *  initialize: function(){return "called after MyModel.initialize"},
 		 *  defaults: {labels: []}
 		 * }, modelMixin2);

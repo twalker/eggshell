@@ -78,7 +78,7 @@ require([
 
 		});
 
-		describe('.patch(klass [, source1, source2, …])', function(){
+		describe('.patch(dest [, source1, source2, …])', function(){
 			var Mod, modMixin;
 			var initSpy, mixinInitSpy;
 
@@ -88,26 +88,29 @@ require([
 
 				Mod = Backbone.Model.extend({
 					defaults: {first: 'sid'},
-					initialize: initSpy
+					initialize: initSpy,
+					genre: ['punk']
 				});
 
 				modMixin = {
 					defaults: {last: 'vicious'},
 					playBass: noop,
-					initialize: mixinInitSpy
+					initialize: mixinInitSpy,
+					genre: ['rock']
 				};
 
-				mixer.patch(Mod, modMixin, {rebel: noop});
+				mixer.patch(Mod.prototype, modMixin, {rebel: noop});
 			});
 
 
-			it('should merge methods/properties to a destination object from sources', function(){
+			it('should copy methods/functions to a destination object from sources', function(){
 				assert.isDefined(Mod.prototype.playBass);
 				assert.isDefined(Mod.prototype.rebel);
 			});
 
-			it('should merge colliding/existing members (methods and plain objects)', function(){
+			it('should merge colliding/existing members (functions, plain objects, and arrays)', function(){
 				assert.deepEqual(Mod.prototype.defaults, {first:'sid', last: 'vicious'});
+				assert.deepEqual(Mod.prototype.genre.sort(), ['punk', 'rock'].sort());
 				var options = {rock: 'hard'};
 				new Mod({}, options);
 
@@ -121,7 +124,7 @@ require([
 			it('should merge N collisions in their source order', function(){
 				var thirdSpy = sinon.spy();
 
-				mixer.patch(Mod, {initialize: thirdSpy});
+				mixer.patch(Mod.prototype, {initialize: thirdSpy});
 
 				var m = new Mod({});
 
@@ -159,7 +162,7 @@ require([
 					events: {'submit': 'onMix'}
 				};
 
-				mixer.patch(ChildView, viewMix);
+				mixer.patch(ChildView.prototype, viewMix);
 
 				var view = new ChildView();
 
