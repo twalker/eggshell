@@ -36,10 +36,3 @@ browse to `/client-tests/` for client-side
 `NODE_ENV=development node app` # concatenated, but not minified js (default)
 `NODE_ENV=production node app` # concatenated and minified js
 
-
----------
-
-TODO:
-
-* revisit dir structure for app-wide modules (lib, vendor, app, core)
-* stub out some "pages" for pushstate fun
