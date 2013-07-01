@@ -7,7 +7,7 @@ define(function(require, exports, module){
 		mainTemplate = require('text!views/eggs.mustache'),
 		jQuery = require('jquery');
 
-	return Backbone.View.extend({
+	var EggsView = Backbone.View.extend({
 		className: 'eggs',
 		template: Mustache.compile(mainTemplate),
 		events: {
@@ -34,4 +34,6 @@ define(function(require, exports, module){
 			return this;
 		}
 	});
+
+	return EggsView;
 });

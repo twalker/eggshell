@@ -4,7 +4,7 @@
  */
 define(['underscore'], function(lodash){
 
-	// Monkey patch a destication object (i.e. Model.prototype, View.prototype, etc.)
+	// Monkey patch a destination object (i.e. Model.prototype, View.prototype, etc.)
 	// by combining member values that are object literals (e.g. events, defaults),
 	// functions (e.g. initialize), or arrays (e.g.relations).
 	// Heavily inspired by: https://github.com/onsi/cocktail
