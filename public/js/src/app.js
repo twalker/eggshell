@@ -5,6 +5,7 @@ define(function(require){
 	var jQuery = require('jquery'),
 		lodash = require('underscore'),
 		Backbone = require('backbone'),
+		nav = require('nav'),
 
 		Egg = require('models/egg'),
 		Eggs = require('collections/eggs'),
@@ -19,7 +20,7 @@ define(function(require){
 		}
 	};
 
-	// Single page app boot procedure
+	// single page app boot procedure
 	self.init = function(bootdata){
 
 		// Instantiate root view
@@ -29,7 +30,10 @@ define(function(require){
 		new EggsRouter({ elRoot: rootView.$el });
 
 		// Start watching for navigation events
-		Backbone.history.start({ pushState: true });
+		nav.start();
+
+		// global pushState link handler
+		rootView.$el.on('click', 'a[data-pushlink]',	nav.onPushLinkClick.bind(nav));
 
 		return self;
 	};
