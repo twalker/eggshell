@@ -41,3 +41,35 @@ RelModel
         // possibly?
         // includeInJSON?
       }
+
+
+## api scratch
+
+fetchRelated(key<string>, [options<object>], [update<boolean>])
+Klass.findOrCreate(attributes<string|number|object>, [options<object>])
+
+getRelation(name<string>
+
+getRelations()
+
+
+set(key<string>, value, [options<object>]) or set(attributes<object>, [options<object>])
+
+  // Backbone-relational
+  relations: [
+    {
+      type: Backbone.HasMany,
+      key: 'customers',
+      relatedModel: 'Customer',
+      autoFetch: true
+    }
+  ]
+
+  //Backbone Associations
+  relations: [
+    {
+      type: Backbone.One, //nature of the relationship
+      key: 'manager', // attribute of Employee
+      relatedModel: 'Employee' //AssociatedModel for attribute key
+    }
+  ],
