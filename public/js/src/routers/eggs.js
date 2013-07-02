@@ -22,7 +22,9 @@ define(function(require){
 			var eggsView = new EggsView({collection: eggs});
 			this.elRoot.html(eggsView.el);
 
-			eggs.fetch();
+			eggs.fetch().done(function(){
+				window.egg = eggs.get('brown');
+			});
 
 		}
 

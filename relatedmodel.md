@@ -4,7 +4,7 @@ relatedmodel.md
 Problems to solve:
 
 - sharing model references
-- Store reference in models (each Model has it's own cache store?)
+- Store reference in models (each Model.all() has it's own cache store? kinda spine-like)
 - memorystore (shared-collections)
 - create new model, find, or fetch
 - support thin/fat model pattern
@@ -14,14 +14,22 @@ Problems to solve:
 - how to expire removed models from shared collections.
   e.g. how can the labeled mixin add a collection.remove handler?
 
+**Backbone.Relational is pretty awesome, but I get caught up on:**
+- egg.has('bacon') returns undefined instead of id, it becomes a model after fetchRelated.
+
 
 MemoryStore
   - stores references
-  - findOrCreate(type, id)
+  - findOrCreate(type, id) // but what if it does't save?
+  - get(cachekey)
+  - set(cachekey)
+  - register(type, initialData)
+  - unset(cacheKey)
 
-BaseModel
-  - has a relations hash (one and many are infered by value)
-  - fetchRelated()
+RelModel
+  - has a relations hash (one and many are inferred by value)
+  - fetchRelated('key' || all)
+
 
   - override fetch
 
@@ -29,5 +37,7 @@ BaseModel
       {
         type: Backbone.One,
         key: 'bacon',
-        relatedModel: Bacon
+        relatedModel: Bacon,
+        // possibly?
+        // includeInJSON?
       }

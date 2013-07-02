@@ -37,7 +37,7 @@ define(['underscore'], function(lodash){
 			};
 		});
 
-	};
+	}
 
 	return {
 		/**

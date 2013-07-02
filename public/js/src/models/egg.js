@@ -11,8 +11,9 @@ define(function(require){
 				type: Backbone.HasOne,
 				key: 'bacon',
 				relatedModel: Bacon,
+				//includeInJSON: Backbone.Model.prototype.idAttribute,
 				includeInJSON: 'id',
-				autoFetch: true
+				autoFetch: false
 			}
 		],
 
