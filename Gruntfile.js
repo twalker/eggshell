@@ -8,7 +8,8 @@ module.exports = function(grunt) {
 		jsfiles: {
 			client: [
 				'Gruntfile.js',
-				'public/js/src/**/*.js'
+				'public/js/src/**/*.js',
+				'!public/js/src/vendor/**'
 			],
 			server: [
 				'app.js',

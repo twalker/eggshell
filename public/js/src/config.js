@@ -5,18 +5,16 @@ require.config({
 	deps: ['main'],
 
 	paths: {
-		// JavaScript folders
-		lib: '../lib',
 
-		// Libraries
-		jquery: '../lib/jquery-2.0.2',
-		underscore: '../lib/lodash',
-		backbone: '../lib/backbone',
-		mustache: '../lib/mustache',
+		// Third-party Libraries
+		jquery: 'vendor/jquery-2.0.2',
+		underscore: 'vendor/lodash',
+		backbone: 'vendor/backbone',
+		mustache: 'vendor/mustache',
 
 		// RequireJS Plugins
-		requireLib: '../lib/require',
-		text: '../lib/text',
+		requireLib: 'vendor/require',
+		text: 'vendor/text',
 
 		// Unit testing Libraries
 		mocha: '../test/vendor/mocha',

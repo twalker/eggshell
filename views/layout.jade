@@ -10,6 +10,6 @@ html
 			when 'development'
 				script(src='/js/dist/#{settings.name}.dev.js')
 			default
-				script(src='/js/lib/require.js', data-main="/js/src/config")
+				script(src='/js/src/vendor/require.js', data-main="/js/src/config")
 	body
 		block content
