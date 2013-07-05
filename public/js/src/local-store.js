@@ -53,6 +53,10 @@ define(['underscore'], function(lodash){
 				}
 			});
 			this._bucket = stored;
+		},
+		// removes the entire bucket.
+		remove: function(){
+			window.localStorage.removeItem(this.name);
 		}
 	};
 
@@ -63,12 +67,18 @@ define(['underscore'], function(lodash){
 				// gets/sets the full object from localStorage
 				_bucket: {
 					get: function(){
-						var stored = window.localStorage.getItem(name);
+						var stored = window.localStorage.getItem(this.name);
 						return (stored) ? JSON.parse(stored) : {};
 					},
 					set: function(obj){
-						return window.localStorage.setItem(name, JSON.stringify(obj));
+						return window.localStorage.setItem(this.name, JSON.stringify(obj));
 					}
+				},
+				name: {
+					value: name,
+					writable: false,
+					enumerable: false,
+					configurable: false
 				}
 			});
 		}

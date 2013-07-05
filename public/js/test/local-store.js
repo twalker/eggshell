@@ -117,6 +117,20 @@ require(['require', 'mocha', 'chai',
 				assert.isTrue(mystore.has('future'));
 			});
 		});
+
+		describe('.remove()', function(){
+			it('should remove the entire bucket', function(){
+				var mystore = store.create('mystery-machine');
+
+				mystore.set('foo', 'bar');
+				assert.ok(window.localStorage.getItem('mystery-machine'));
+
+				mystore.remove();
+
+				assert.isNull(window.localStorage.getItem('mystery-machine'));
+
+			});
+		});
 	});
 
 	// Start runner
