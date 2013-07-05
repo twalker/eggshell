@@ -1,108 +1,75 @@
 /**
- * A LocalStorage module with expiration.
- * https://github.com/pamelafox/lscache/blob/master/lscache.js
+ * A LocalStorage module with expiration for items.
+ *
+ * TOIMPROVE:
+ * - re-use proto for Session and Memory stores
+ * - is there a performance hit from methods constantly retrieving form localStorage?
+ * - revisit using try/catch for exceeding size.
+ * 	see: https://github.com/pamelafox/lscache/blob/master/lscache.js
  */
 define(['underscore'], function(lodash){
-
-	/*
 	var proto = {
-		get: function(key){
-			return JSON.parse(window.localStorage.getItem(key)).val;
+		// adds a key/value pair to the storage bucket.
+		set: function(key, val, expires){
+			// optional expires can be milliseconds since epoch (number),
+			// a date, or a datestring. Defaults to MaxDate
+			if(lodash.isString(expires)) expires = Date.parse(expires);
+			if(lodash.isDate(expires)) expires = expires.getTime();
+
+			var stored = this._bucket;
+			stored[key] = {
+				val: val,
+				expires: expires || Math.floor(8.64e15)
+			};
+			this._bucket = stored;
 		},
-		// key, value, time
-		set: function(key, value, expiration){
-			window.localStorage.setItem(key, JSON.stringify({val: value, exp: expiration}))
-		},
-
-		flush: function(){
-			for (var i = window.localStorage.length-1; i >= 0 ; --i) {
-				var key = window.localStorage.key(i);
-				if (key.indexOf(this.bucket) === 0) {
-					localStorage.removeItem(key);
-				}
-			}
-		},
-
-		remove: function(){
-
-		},
-	}
-	*/
-	var proto = {
-		// gets the full object from localStorage
-		getBucket: function(){
-			var stored = window.localStorage.getItem(this.bucket);
-			return (stored) ? JSON.parse(stored) : [];
-		},
-
-		// save the full object in localStorage
-		setBucket: function(obj){
-			return window.localStorage.setItem(this.bucket, JSON.stringify(obj));
-		},
-
-		get: function(id){
-			var found = this.getBucket().filter(function(obj){
-				return obj.item.id === id;
-			});
-			return (found.length) found[0] : undefined;
-		},
-
-		has: function(id, stored){
-			return (stored || this.getBucket()).some(function(obj, i){
-				return obj.item.id === id;
-			}, this);
-		},
-
-		// adds an item
-		add: function(obj, expires){
-			if(typeof expires == 'string') expires = Date.parse(expires);
-
-			var updated = this.getBucket().filter(function(obj){
-				return obj.item.id !== obj.id;
-			});
-
-
-			updated.push({
-				item: obj,
-				exp: expires,
-			});
-
-			this.set(updated);
-		},
-
 		// removes an item
-		remove: function(id){
-			var stored = this.getBucket();
-			var updated = stored.filter(function(item){
-				return item.id !== id;
-			});
-			this.set(updated);
+		unset: function(key){
+			var stored = this._bucket;
+			if(key in stored) delete stored[key];
+			this._bucket = stored;
 		},
-
-		chain: function(){
-			return lodash(this.getBucket()).pluck('item');
+		// gets an item
+		get: function(key){
+			var stored = this._bucket;
+			return (key in stored) ? stored[key].val : undefined;
 		},
-		find: function(){
-
+		// whether or not an item exists for the given key
+		has: function(key){
+			return (key in this._bucket);
 		},
-
+		// convenience wrapper for testing purposes.
+		_chain: function(){
+			return lodash(this._bucket);//.pluck('val');
+		},
 		// removes expired items
 		prune: function(){
-			var stored = this.getBucket();
+			var stored = this._bucket;
 			var nowstamp = Date.now();
-			var updated = stored.filter(function(item){
-				// console.log('expire', item.exp, nowstamp, nowstamp >= item.exp);
-				return nowstamp <= item.exp;
+			Object.keys(stored).forEach(function(key){
+				if(nowstamp >= stored[key].expires){
+					// console.log('deleting', key, stored[key].expires);
+					delete stored[key];
+				}
 			});
-			this.set(updated);
+			this._bucket = stored;
 		}
 	};
 
 	var store = {
-		create: function(key){
-
+		create: function(name){
+			// create an instance, ES5 style.
 			return Object.create(proto, {
-				bucket: { writable: false, configurable: true, value: key }
+				// gets/sets the full object from localStorage
+				_bucket: {
+					get: function(){
+						var stored = window.localStorage.getItem(name);
+						return (stored) ? JSON.parse(stored) : {};
+					},
+					set: function(obj){
+						return window.localStorage.setItem(name, JSON.stringify(obj));
+					}
+				}
 			});
 		}
 	};
