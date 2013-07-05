@@ -131,6 +131,16 @@ require(['require', 'mocha', 'chai',
 
 			});
 		});
+
+		describe('createSession(name)', function() {
+			it('should create an instance of a local storage bucket for a given name (key)', function(){
+				var session = store.createSession('session');
+				session.set('foo', 'bar');
+				assert.ok(window.sessionStorage.getItem('session'))
+			});
+
+		});
+
 	});
 
 	// Start runner
