@@ -3,8 +3,8 @@ html(lang="en")
 	head
 		meta(charset="utf-8")
 		title #{name} unit test
-		link(rel="stylesheet", href="/js/test/vendor/mocha.css")
-		style
+		link(rel="stylesheet", href="/js/src/bower_components/mocha/mocha.css")
+		style.
 			nav.tests {
 				font-size: 12px;
 				position: fixed;
@@ -18,8 +18,8 @@ html(lang="en")
 			nav.tests a.active {
 				text-decoration: none;
 			}
-		script(data-main="/js/src/config", src="/js/src/vendor/require.js")
-		script
+		script(data-main="/js/src/config", src="/js/src/bower_components/requirejs/require.js")
+		script.
 			requirejs({
 				paths : {
 					// overwrite 'main' to be the unit test file for the module to be tested.

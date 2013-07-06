@@ -18,7 +18,11 @@ I want to write code instead of reading configuration documentation.
 
 ------
 ### install
+
+Assuming npm, grunt and bower are available globally.
+
 `npm install`
+`bower install`
 `grunt build`
 
 ### run

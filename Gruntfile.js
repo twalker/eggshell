@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 			client: [
 				'Gruntfile.js',
 				'public/js/src/**/*.js',
-				'!public/js/src/vendor/**'
+				'!public/js/src/bower_components/**'
 			],
 			server: [
 				'app.js',
@@ -119,8 +119,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-stylus');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-notify');
 
 	/* Register primary tasks */
