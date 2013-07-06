@@ -19,11 +19,10 @@ I want to write code instead of reading configuration documentation.
 ------
 ### install
 
-Assuming npm, grunt and bower are available globally.
-
-`npm install`
-`bower install`
-`grunt build`
+assuming npm, grunt, and bower are available globally:  
+`npm install`  
+`bower install`  
+`grunt build`  
 
 ### run
 `npm start` for the site, and `grunt dev` in a second terminal tab for live-reload goodness.
