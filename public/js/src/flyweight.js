@@ -6,11 +6,8 @@
  *
  */
 define(function(require){
-	var Backbone = require('backbone'),
-		lodash = require('underscore');
-
-	var Flyweight = function(constructor, keyfn) {
-		return function() {
+	var Flyweight = function(constructor, keyfn){
+		return function(){
 			var key = keyfn.apply(null, arguments);
 
 			// instance exists in cache, return that instance
@@ -36,5 +33,4 @@ define(function(require){
 	Flyweight.cache = {};
 
 	return Flyweight;
-
 });
