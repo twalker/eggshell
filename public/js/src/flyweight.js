@@ -14,11 +14,10 @@ define(function(require){
 			if (Flyweight.cache[key]) return Flyweight.cache[key];
 
 			// create a new class but with an empty constructor
-			var NewConstructor = function() {};
 			// but the same prototype as the old class
-			NewConstructor.prototype = Object.create(constructor.prototype);
 			// and instantiate an instance
-			var instance = new NewConstructor();
+			var instance = Object.create(constructor.prototype);
+
 			// then apply the old constructor to the instance with provided arguments
 			constructor.apply(instance, arguments);
 
