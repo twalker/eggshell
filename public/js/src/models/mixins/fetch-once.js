@@ -7,6 +7,8 @@ define(function(require){
 		Backbone = require('backbone');
 	/**
 	 * Fetches a model once, re-using a promise for subsequent calls.
+	 * Resolves promises and callbacks with model, json.
+	 *
 	 * @param  {[Object]} options fetch options with addition of 'reload' to force a new request.
 	 * @return {[promise]} promise that resolves with the model instance.
 	 *
@@ -31,31 +33,34 @@ define(function(require){
 	 * });
 	 *
 	 * TORECONSIDER:
-	 * - support Collection's too? allow the consumer to pass in a fetch function argument or use instanceof
-	 * - success to always be fired instead of only once? YAGNI, just use the promise.
-	 *     success(model, response, options)
-	 *     error(model, response, options)
-	 * - Use same signature as success/error? (model, data, options)
+	 * - Add options to callback/resolution to match success/error signature of Backbone?
+	 * 	 currently omitting options argument. (model, response, options)
 	 */
-	return function fetchOnce(options){
+	return function fetchOnce(fetchOptions){
 			var oldDfr = this._dfrFetch;
-			var reload = options && options.reload;
+			var options = fetchOptions || {};
+			var reload = options.reload;
 
 			// return existing promise, unless reload option is used
-			if(oldDfr && !reload) return this._dfrFetch.promise();
-
+			if(oldDfr && !reload){
+				// ensure optional success/error callbacks get called when re-using promise
+				if(options.success) this._dfrFetch.done(options.success);
+				if(options.error) this._dfrFetch.fail(options.error);
+				return this._dfrFetch.promise();
+			}
 			this._dfrFetch = new jQuery.Deferred();
 
 			// if the reload option was set to true, and there was a previous deferred,
 			// resolve/reject the previous deferrred along with the new one.
 			if(oldDfr && reload){
-					this._dfrFetch.done(oldDfr.resolve).fail(oldDfr.reject);
+				this._dfrFetch.done(oldDfr.resolve).fail(oldDfr.reject);
 			}
-			// call original model fetch
-			var req = Backbone.Model.prototype.fetch.apply(this, arguments);
+			// call original model fetch on model or collection
+			var origFetch = Backbone[this instanceof Backbone.Collection ? "Collection" : "Model"].prototype.fetch;
+			var req = origFetch.apply(this, arguments);
 			req
 				.done(function(res){
-						// return the model along with raw json response
+						// return the model/collection along with raw json response
 						this._dfrFetch.resolveWith(this, [this, res]);
 					}.bind(this))
 				.fail(function(res){
