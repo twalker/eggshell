@@ -34,7 +34,7 @@ define(function(require){
 	 *
 	 * TORECONSIDER:
 	 * - Add options to callback/resolution to match success/error signature of Backbone?
-	 * 	 currently omitting options argument. (model, response, options)
+	 *   currently omitting options argument. (model, response, options)
 	 */
 	return function fetchOnce(fetchOptions){
 			var oldDfr = this._dfrFetch;
