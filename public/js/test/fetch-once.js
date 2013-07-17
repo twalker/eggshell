@@ -14,7 +14,7 @@ require([
 
 	describe('fetchOnce Model (or Collection) mixin', function() {
 
-		var server, callback;
+		var server;
 		beforeEach(function(){
 			server = sinon.fakeServer.create();
 			server.autoRespond = true;
