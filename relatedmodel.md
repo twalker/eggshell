@@ -10,6 +10,7 @@ Problems to solve:
 - support thin/fat model pattern
 - model relations: choose associations or relational and implement. (tied to shared collections for a cache store)
 
+- how to avoid circular/reverse references that'll kill requirejs dependency tree
 
 - how to expire removed models from shared collections.
   e.g. how can the labeled mixin add a collection.remove handler?
@@ -17,8 +18,14 @@ Problems to solve:
 **Backbone.Relational is pretty awesome, but I get caught up on:**
 - egg.has('bacon') returns undefined instead of id, it becomes a model after fetchRelated.
 
+**supermodel looks stale**
+
+**backbone associations is focused on events**
 
 MemoryStore
+The memory store gets and sets collection and model references for re-use accross
+the application.
+
   - stores references
   - findOrCreate(type, id) // but what if it does't save?
   - get(cachekey)
@@ -73,3 +80,17 @@ set(key<string>, value, [options<object>]) or set(attributes<object>, [options<o
       relatedModel: 'Employee' //AssociatedModel for attribute key
     }
   ],
+
+
+## Use case
+
+    // in route
+    var campaign = refStore.get("campaigns").get(id);
+    campaign
+      .fetch()
+      .then(function(){
+        campaign
+          .fetchOrCreateRelated('sms')
+          .done(onFetched);
+      });
+
