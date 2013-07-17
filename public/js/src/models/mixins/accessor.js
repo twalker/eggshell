@@ -4,11 +4,15 @@
 * a value was provided.
 *
 * @example
-* Backbone.Model.extend({
+* var Model = Backbone.Model.extend({
 *   name: accessor('name')
 * });
+* var m = new Model({name: 'sid'});
+* m.name() // 'sid'
+* m.name('johnny')
+* m.name() // 'johnny'
 **/
-define([], function(){
+define(function(){
 	return function(attribute) {
 		return function(value) {
 			if (value) {

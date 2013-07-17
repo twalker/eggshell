@@ -11,7 +11,8 @@
 *   }
 * });
 **/
-define(['underscore'], function(lodash){
+define(function(require){
+	var lodash = require('underscore');
 	return function(member) {
 		return function() {
 			var obj = this.model || this.collection;

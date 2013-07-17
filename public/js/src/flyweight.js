@@ -6,7 +6,7 @@
  *
  */
 define(function(require){
-	var Flyweight = function(constructor, keyfn){
+	var Flyweight = function Flyweight(constructor, keyfn){
 		return function(){
 			var key = keyfn.apply(null, arguments);
 

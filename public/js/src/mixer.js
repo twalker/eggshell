@@ -2,7 +2,8 @@
  * Mixer of mixins.
  * A utility to copy functionality from mixins to objects.
  */
-define(['underscore'], function(lodash){
+define(function(require){
+	var lodash = require('underscore');
 
 	// Monkey patch a destination object (i.e. Model.prototype, View.prototype, etc.)
 	// by combining member values that are object literals (e.g. events, defaults),

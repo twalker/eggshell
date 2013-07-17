@@ -1,11 +1,12 @@
 /**
  * nav manages pushState navigation and emits navigation events.
+ *
  */
 define(function(require){
 	var Backbone = require('backbone'),
 		mixer = require('mixer');
 
-	var self = {
+	var nav = {
 		// Start watching for navigation events
 		start: function(){
 			var startingUrl = '/';
@@ -25,7 +26,7 @@ define(function(require){
 			Backbone.history.navigate(to, {trigger: true});
 
 			// fire a global event
-			self.trigger('nav:go', to);
+			nav.trigger('nav:go', to);
 		},
 
 		// reload the current url, firing the route again.
@@ -38,6 +39,7 @@ define(function(require){
 		},
 
 		// global link handler that prevents default and uses pushState instead.
+		// e.g. $('a[data-pushlink="spa"]').on('click', nav.onPushLink.bind(nav));
 		onPushLinkClick: function(e){
 			e.preventDefault();
 			var url = e.currentTarget.getAttribute('href');
@@ -47,8 +49,8 @@ define(function(require){
 	};
 
 	// mixin events
-	mixer.mixin(self, Backbone.Events);
+	mixer.mixin(nav, Backbone.Events);
 
-	return self;
+	return nav;
 
 });
