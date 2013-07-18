@@ -3,11 +3,13 @@ relatedmodel.md
 
 Problems to solve:
 
-- sharing model references
+- sharing model references 
 - Store reference in models (each Model.all() has it's own cache store? kinda spine-like)
 - memorystore (shared-collections)
+
 - create new model, find, or fetch
-- support thin/fat model pattern
+
+- support thin/fat model pattern (manuall recall what's been fetched?)
 - model relations: choose associations or relational and implement. (tied to shared collections for a cache store)
 
 - how to avoid circular/reverse references that'll kill requirejs dependency tree
@@ -97,4 +99,4 @@ set(key<string>, value, [options<object>]) or set(attributes<object>, [options<o
           .done(onFetched);
       });
 
-    
+

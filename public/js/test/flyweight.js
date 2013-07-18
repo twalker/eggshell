@@ -8,16 +8,12 @@ require(['require', 'mocha', 'chai',
 	mocha.setup('bdd');
 
 	describe("Flyweight(constructor, fnKey)", function() {
-		var FlyModel, FlyModelChild;
 
-		beforeEach(function(){
-			FlyModel = Backbone.Model.extend({});
-			FlyModelChild = FlyModel.extend({});
+		var FlyModel = Backbone.Model.extend({});
+		var FlyModelChild = FlyModel.extend({});
 
-			FlyModel = Flyweight(FlyModel, function(options){
-				if(options && options.id) return "mymodel." + options.id;
-			});
-
+		FlyModel = window.FlyModel = Flyweight(FlyModel, function(options){
+			if(options && options.id) return "mymodel." + options.id;
 		});
 
 		it("should extend a constructor to return cached instances when they exist", function(){

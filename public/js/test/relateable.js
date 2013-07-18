@@ -16,6 +16,7 @@ require([
 	describe('relateable', function() {
 		var ModelA = Backbone.Model.extend({defaults: {name: 'a'}, url: '/api/a' });
 		var ModelB = Backbone.Model.extend({defaults: {name: 'b'}, url: '/api/b' });
+		var ModelC = Backbone.Model.extend({defaults: {name: 'c'}, url: '/api/c' });
 		var server;
 
 		beforeEach(function(){
@@ -37,6 +38,7 @@ require([
 					key: 'b',
 					relatedModel: ModelB
 				}
+				// todo: collection/array/many relation
 			],
 		});
 
@@ -49,7 +51,7 @@ require([
 				var model = new Mod({
 					id: 1,
 					a: 1,
-					b: [1,2,3]
+					b: 1
 				});
 
 				server.respondWith('GET', '/api/a', [
@@ -81,15 +83,18 @@ require([
 				server.respondWith('GET', '/api/a', [
 					200, {'Content-Type': 'application/json'}, '{"id":1}'
 				]);
+				server.respondWith('GET', '/api/b', [
+					200, {'Content-Type': 'application/json'}, '{"id":1}'
+				]);
 
 				var promises = model.fetchAllRelated();
 				assert.isArray(promises);
 				assert.equal(promises.length, 2);
 				jQuery
-					.when(promises)
+					.when.apply(jQuery, promises)
 					.then(function(a, b){
-						console.log('returns', a)
-						//assert.isTrue(a[0] instanceof ModelA);
+						assert.isTrue(a instanceof ModelA);
+						assert.isTrue(b instanceof ModelB);
 						done();
 					});
 

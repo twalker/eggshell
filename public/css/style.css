@@ -1,6 +1,34 @@
-body{padding:0 20px;font:14px sans-serif;background-color:#333;color:#faebd7;}
-body a{color:#fff}
-ul.egglist li{cursor:pointer;color:#fff;}
-ul.egglist li.cracked{text-decoration:line-through;color:#ff0}
-aside.crack-count{background:url("/img/chicken-egg.png") center center no-repeat;-webkit-background-size:100%;-moz-background-size:100%;background-size:100%;position:absolute;top:20px;right:20px;font-size:2em;padding:5% 10px 10% 10px;text-align:center;}
-aside.crack-count b.count{color:#ff0;font-size:1.5em;display:block}
+body {
+  padding: 0 20px;
+  font: 14px sans-serif;
+  background-color: #333;
+  color: #faebd7;
+}
+body a {
+  color: #fff;
+}
+ul.egglist li {
+  cursor: pointer;
+  color: #fff;
+}
+ul.egglist li.cracked {
+  text-decoration: line-through;
+  color: #ff0;
+}
+aside.crack-count {
+  background: url("/img/chicken-egg.png") center center no-repeat;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  background-size: 100%;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2em;
+  padding: 5% 10px 10% 10px;
+  text-align: center;
+}
+aside.crack-count b.count {
+  color: #ff0;
+  font-size: 1.5em;
+  display: block;
+}

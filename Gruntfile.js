@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 		},
 
 		// The clean task removes previous built files from the dist folder.
-		clean: ['public/js/dist/', 'public/js/src/bower_components'],
+		clean: ['public/js/dist/'],
 
 		jshint: {
 			options: {jshintrc: '.jshintrc'},
