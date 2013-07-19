@@ -101,6 +101,54 @@ require([
 			});
 		});
 
+		describe('Model.all collection', function(){
+			it('should be a collection to store/cache all instances', function(){
+				var fetchSpy = sinon.spy();
+				var AllModel = Backbone.Model.extend({
+					constructor: function(attr, options){
+						var all = this.constructor.all;
+						//var instance;
+						if(all.get(attr.id)){
+							 return all.get(attr.id).set(attr);
+						} else {
+							// TODO: how do I get a new model into the collection
+
+							//var instance = Object.create(Backbone.Model.prototype);
+							//Backbone.Model.apply(instance, arguments);
+
+							 //return all.create(attr, options)
+
+							// Backbone.Model.apply(this, arguments);
+							// console.log('this', this instanceof Backbone.Model, instance)
+							 //this.once('sync', all.add, all);
+							 //return instance;
+							//Backbone.Model.apply(this, arguments);
+							Backbone.Model.apply(this, arguments)
+							this.once('sync', all.add, all);
+							console.log(this)
+						}
+
+					}
+				}, {
+					all: new Backbone.Collection(/*{model: AllModel}*/)
+				});
+				//AllModel.all = new Backbone.Collection({model: AllModel});
+
+				AllModel.all.reset([{id:'a', name:'a'}, {id:'b', name:'b'}]);
+
+				var modelA = new AllModel({id: 'a'});
+				var modelC = new AllModel({id: 'c'});
+				console.log('a', modelA);
+				console.log('c', modelC)
+
+				assert.equal(AllModel.all.size(), 2);
+				// return the same reference from constructor
+				assert.equal(AllModel.all.get('a'), modelA);
+				// will add it to the collection if it doesn't exist
+				assert.equal(AllModel.all.get('c'), modelC);
+			});
+		});
+
 
 
 	});

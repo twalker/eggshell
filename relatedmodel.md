@@ -3,11 +3,13 @@ relatedmodel.md
 
 Problems to solve:
 
+- fetch model, create new model, find, or fetch
+- cleanly collect array of models to a fetchAll method
+
 - sharing model references 
 - Store reference in models (each Model.all() has it's own cache store? kinda spine-like)
 - memorystore (shared-collections)
 
-- create new model, find, or fetch
 
 - support thin/fat model pattern (manuall recall what's been fetched?)
 - model relations: choose associations or relational and implement. (tied to shared collections for a cache store)
@@ -20,7 +22,7 @@ Problems to solve:
 **Backbone.Relational is pretty awesome, but I get caught up on:**
 - egg.has('bacon') returns undefined instead of id, it becomes a model after fetchRelated.
 
-**supermodel looks stale**
+**supermodel is much more in line with functional, but looks stale, must try!!!**
 
 **backbone associations is focused on events**
 
@@ -87,16 +89,65 @@ set(key<string>, value, [options<object>]) or set(attributes<object>, [options<o
   ],
 
 
-## Use case
+## Use cases
 
-    // in route
-    var campaign = refStore.get("campaigns").get(id);
+    // get a related model, if it exists
+    var sms;
+    if(campaign.has('sms')){
+      sms = campaign.getRelated('sms');
+      // OR
+      campaign.fetchRelated('sms')
+    }
+    // saving
+    campaign.setRelated('sms', newSMSModel);
+    campaign.setRelated('rules', newRuleCollection);
+
+    // fetch related models, after getting a refreshed campaign
     campaign
       .fetch()
-      .then(function(){
-        campaign
-          .fetchOrCreateRelated('sms')
-          .done(onFetched);
-      });
+      .done(function(){
+        jQuery.when(
+          campaign.fetchOrCreateRelated('list'),
+          campaign.fetchOrCreateRelated('sms')
+        ).done(onFetched)});
+
+## Crap I'd like to replace
+
+    // determine if this is a /new model or existing, fetching if existing.
+    var fetchCampaign = function(id){
+      var dfr = new jQuery.Deferred();
+      var campaign;
+      if(id){
+        campaign = campaigns.get(id);
+        campaign.fetch().done(function(){
+          dfr.resolve(campaign);
+        });
+      } else {
+        campaign = new Campaign({channel: Campaign.Channels.SMS});
+        dfr.resolve(campaign);
+      }
+      return dfr.promise();
+    };
+
+    var segmentation = new Segmentation({id: id});
+    // gets the subscriber list from the campaign if there is one
+    var fetchList = function(){
+      var dfr = new jQuery.Deferred();
+      if(campaign.has('list')){
+        list = new List({id: campaign.get('list')});
+        lists = new Lists([list]);
+        list.fetch().done(dfr.resolve);
+      } else {
+        dfr.resolve();
+      }
+      return dfr.promise();
+    };
 
 
+## random thoughts
+- stop worring about caching, first tackle relations
+- backbone collection.add disallow duplicates, use collection for storage! 
+- Model.all is a good idea for storage, combine it with using a generic collection? beware of URL!
+- use requirejs path to models/collections to avoid circular references
+
+- super model, looks, well, pretty super.
