@@ -106,6 +106,7 @@ require([
 				var fetchSpy = sinon.spy();
 				var AllModel = Backbone.Model.extend({
 					constructor: function(attr, options){
+						console.log('constructing', attr.id)
 						var all = this.constructor.all;
 						//var instance;
 						if(all.get(attr.id)){
@@ -128,9 +129,12 @@ require([
 							console.log(this)
 						}
 
+					},
+					initialize: function(options){
+						if(this.isNew()) this.once('sync', this.constructor.add, this.constructor);
 					}
 				}, {
-					all: new Backbone.Collection(/*{model: AllModel}*/)
+					all: new Backbone.Collection({model: AllModel})
 				});
 				//AllModel.all = new Backbone.Collection({model: AllModel});
 
@@ -143,9 +147,10 @@ require([
 
 				assert.equal(AllModel.all.size(), 2);
 				// return the same reference from constructor
-				assert.equal(AllModel.all.get('a'), modelA);
+				assert.strictEqual(AllModel.all.get('a'), modelA);
+				assert.isTrue(AllModel.all.get('a') instanceof AllModel);
 				// will add it to the collection if it doesn't exist
-				assert.equal(AllModel.all.get('c'), modelC);
+				//assert.equal(AllModel.all.get('c'), modelC);
 			});
 		});
 

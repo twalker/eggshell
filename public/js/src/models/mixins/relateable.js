@@ -10,9 +10,9 @@
  *    inverseKey: 'thismodelnameId'
  *   },
  *   {
- *   	collection: CollectionRef,
- *   	// url??
- *   	??
+ *     collection: CollectionRef,
+ *     // url??
+ *     ??
  *   }
  *
  * ]

@@ -6,7 +6,7 @@ Problems to solve:
 - fetch model, create new model, find, or fetch
 - cleanly collect array of models to a fetchAll method
 
-- sharing model references 
+- sharing model references
 - Store reference in models (each Model.all() has it's own cache store? kinda spine-like)
 - memorystore (shared-collections)
 
@@ -146,8 +146,9 @@ set(key<string>, value, [options<object>]) or set(attributes<object>, [options<o
 
 ## random thoughts
 - stop worring about caching, first tackle relations
-- backbone collection.add disallow duplicates, use collection for storage! 
+- backbone collection.add disallow duplicates, use collection for storage!
 - Model.all is a good idea for storage, combine it with using a generic collection? beware of URL!
 - use requirejs path to models/collections to avoid circular references
 
 - super model, looks, well, pretty super.
+- model registry is pretty cool: https://github.com/rhysbrettbowen/Backbone.ModelRegistry
