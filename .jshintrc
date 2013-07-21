@@ -1,5 +1,6 @@
 {
 	"maxcomplexity": 5,
+	"asi": true,
 	"strict": false,
 	"maxstatements": 15,
 	"maxlen": 120,

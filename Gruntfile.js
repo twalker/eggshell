@@ -9,7 +9,8 @@ module.exports = function(grunt) {
 			client: [
 				'Gruntfile.js',
 				'public/js/src/**/*.js',
-				'!public/js/src/bower_components/**'
+				'!public/js/src/bower_components/**',
+				'!public/js/src/lib/supermodel.js'
 			],
 			server: [
 				'app.js',

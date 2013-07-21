@@ -9,6 +9,7 @@ require.config({
 		jquery: 'bower_components/jquery/jquery',
 		underscore: 'bower_components/lodash/lodash',
 		backbone: 'bower_components/backbone/backbone',
+		supermodel: 'lib/supermodel',
 		mustache: 'bower_components/mustache/mustache',
 		requireLib: 'bower_components/requirejs/require',
 		text: 'bower_components/requirejs-text/text',
@@ -22,6 +23,10 @@ require.config({
 		backbone: {
 			deps: ['underscore', 'jquery'],
 			exports: 'Backbone'
+		},
+		supermodel: {
+			deps: ['underscore', 'backbone'],
+			exports: 'Supermodel'
 		},
 		mocha: {
 			exports: 'mocha'

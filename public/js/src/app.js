@@ -9,7 +9,8 @@ define(function(require){
 
 		Egg = require('models/egg'),
 		Eggs = require('collections/eggs'),
-		EggsRouter = require('routers/eggs');
+		EggsRouter = require('routers/eggs'),
+		ArtistsRouter = require('routers/artists');
 
 	var app = {
 		versions: {
@@ -25,6 +26,7 @@ define(function(require){
 
 			// initialize router(s)
 			new EggsRouter({ elRoot: rootView.$el });
+			new ArtistsRouter({ elRoot: rootView.$el });
 
 			// Start watching for navigation events
 			nav.start();
