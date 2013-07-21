@@ -5,7 +5,8 @@ define(function(require, exports, module){
 	var Backbone = require('backbone'),
 		Mustache = require('mustache'),
 		mainTemplate = require('text!views/artists.mustache'),
-		jQuery = require('jquery');
+		jQuery = require('jquery'),
+		nav = require('nav');
 
 	var ArtistsView = Backbone.View.extend({
 		className: 'artists',
@@ -22,11 +23,9 @@ define(function(require, exports, module){
 			e.preventDefault();
 			var id = jQuery(e.currentTarget).data('id');
 			var model = this.collection.get(id);
-			console.log('click');
-			require(['models/artist'], function(Artist){
-				window.Artist = Artist;
-				console.log('required', Artist);
-			});
+
+			nav.go('artists/' + id);
+
 		},
 
 		render: function(){

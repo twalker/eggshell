@@ -5,11 +5,14 @@ define(function(require){
 	var Backbone = require('backbone'),
 		jQuery = require('jquery'),
 		Artists = require('collections/artists'),
-		ArtistsView = require('views/artists');
+		ArtistsView = require('views/artists'),
+		Artist = require('models/artist'),
+		ArtistView = require('views/artist');
 
 	return Backbone.Router.extend({
 		routes: {
-			'artists': 'list'
+			'artists': 'list',
+			'artists/:artist': 'show'
 		},
 
 		initialize: function(options){
@@ -24,6 +27,18 @@ define(function(require){
 
 			artists.fetch();
 
+		},
+
+		show: function(id){
+			console.log('show', id);
+			//var artist = Artist.all().get(id);
+			var artist = Artist.create({id: id});
+			var artistView = new ArtistView({model: artist});
+			this.elRoot.html(artistView.el);
+
+			artist
+				.fetch()
+				.done(artistView.render.bind(artistView));
 		}
 
 

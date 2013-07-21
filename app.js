@@ -34,7 +34,7 @@ app.configure('development', function(){
 
 // spa
 app.get('/', routes.index);
-app.get('/artists', routes.index);
+app.get('/artists/:artist?', routes.index);
 
 // client-tests
 app.get('/client-tests/:name?', require('./routes/client-tests').show);
