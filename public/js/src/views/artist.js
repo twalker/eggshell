@@ -25,7 +25,9 @@ define(function(require, exports, module){
 		},
 
 		render: function(){
-			this.$el.html(this.template(this.model.toJSON()));
+			var vm = this.model.toJSON();
+			vm.albums = this.model.albums().toJSON();
+			this.$el.html(this.template(vm));
 			return this;
 		}
 	});

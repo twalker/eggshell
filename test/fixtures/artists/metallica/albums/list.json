@@ -1,0 +1,5 @@
+[
+	{"id":"puppets", "artist_id": "metallica", "name":"Master of Puppets", "year": 1986},
+	{"id":"killem", "artist_id": "metallica", "name":"Kill 'em All", "year": 1983},
+	{"id":"lightning", "artist_id": "metallica", "name":"Ride the Lightning", "year": 1984}
+]

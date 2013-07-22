@@ -17,6 +17,7 @@ define(function(require){
 
 		initialize: function(options){
 			this.elRoot = options.elRoot;
+			window.Artist = Artist;
 		},
 
 		list: function(){
@@ -36,8 +37,8 @@ define(function(require){
 			var artistView = new ArtistView({model: artist});
 			this.elRoot.html(artistView.el);
 
-			artist
-				.fetch()
+			jQuery
+				.when(artist.fetch(), artist.albums().fetch())
 				.done(artistView.render.bind(artistView));
 		}
 
