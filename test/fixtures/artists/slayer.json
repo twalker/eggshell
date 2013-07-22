@@ -1,4 +1,5 @@
 {
   "id": "slayer",
-  "name": "Slayer"
+  "name": "Slayer",
+  "albums": ["reign", "soh", "mercy"]
 }

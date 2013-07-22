@@ -24,7 +24,9 @@ require([
 				artists
 					.fetch()
 					.then(function(){
-						window.slayer = slayer = artists.last()
+						window.slayer = slayer = artists.last();
+						// JSON isn't modified
+						//assert.deepEqual(slayer.toJSON(), '{"id": "slayer","name": "Slayer","albums": ["reign", "soh", "mercy"]}');
 						return slayer.albums().fetch();
 					})
 					.then(function(){
@@ -37,11 +39,12 @@ require([
 
 						assert.strictEqual(puppets.artist(), metallica);
 						// move album from metallica to slayer
-						puppets.set('artist_id', 'slayer');
-						// I seem forced to use the model_id convention.
+						puppets.set('artist', 'slayer');
 						assert.strictEqual(puppets.artist(), slayer);
-						console.log(slayer.toJSON())// forcing artist_id !?!?
 						assert.equal(slayer.albums().size(), 4);
+
+						console.log('metallica', metallica.toJSON())
+						console.log('slayer', slayer.albums().pluck('id'))
 						done();
 					})
 

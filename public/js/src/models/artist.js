@@ -11,7 +11,7 @@ define(function(require){
 		defaults: {
 			id: null,
 			name: null,
-			albums: null,
+			albums: undefined,
 		},
 		/*
 		url: function(){
@@ -23,9 +23,9 @@ define(function(require){
 			console.log('artist constructed', attrs);
 
 			Supermodel.Model.prototype.initialize.apply(this, arguments);
-		},
+		}
 		// make it a fetchOnce for fun.
-		fetch: fetchOnce
+		//fetch: fetchOnce
 
 
 	});
@@ -52,7 +52,7 @@ define(function(require){
 				return '/api/artists/' + this.owner.id + '/albums';
 			}
 		}),
-		//source: 'albums',
+		source: 'albums',
 		inverse: 'artist'
 	});
 	// ## one
