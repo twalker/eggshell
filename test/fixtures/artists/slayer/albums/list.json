@@ -1,5 +1,5 @@
 [
-	{"id":"reign", "artist_id": "slayer", "name":"Reign in Blood", "year": 1986},
-	{"id":"soh", "artist_id": "slayer", "name":"South of Heaven", "year": 1988},
-	{"id":"mercy", "artist_id": "slayer", "name":"Show No Mercy", "year": 1983}
+	{"id":"reign", "artist": "slayer", "name":"Reign in Blood", "year": 1986},
+	{"id":"soh", "artist": "slayer", "name":"South of Heaven", "year": 1988},
+	{"id":"mercy", "artist": "slayer", "name":"Show No Mercy", "year": 1983}
 ]

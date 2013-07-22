@@ -9,7 +9,7 @@ define(function(require){
 			id: null,
 			name: null,
 			year: null,
-			artist_id: null,
+			artist: null
 		},
 
 		initialize: function(attrs, options){

@@ -52,6 +52,7 @@ define(function(require){
 				return '/api/artists/' + this.owner.id + '/albums';
 			}
 		}),
+		//source: 'albums',
 		inverse: 'artist'
 	});
 	// ## one
@@ -69,11 +70,9 @@ define(function(require){
 	//   Defaults to '_' + `name`.
 	Album.has().one('artist', {
 		model: Artist,
-		id: 'artist_id',
+		id: 'artist',
 		inverse: 'albums'
-	})
-
-
+	});
 
 	return Artist;
 });
