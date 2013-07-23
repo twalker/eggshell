@@ -18,10 +18,10 @@ define(function(require){
 		initialize: function(options){
 			this.elRoot = options.elRoot;
 			window.Artist = Artist;
+
 		},
 
 		list: function(){
-
 			var artists = new Artists();
 			var artistsView = new ArtistsView({collection: artists});
 			this.elRoot.html(artistsView.el);
@@ -32,8 +32,10 @@ define(function(require){
 
 		show: function(id){
 			console.log('show', id);
+
 			//var artist = Artist.all().get(id);
 			var artist = Artist.create({id: id});
+			window.artist = artist;
 			var artistView = new ArtistView({model: artist});
 			this.elRoot.html(artistView.el);
 

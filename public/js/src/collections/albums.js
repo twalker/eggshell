@@ -6,10 +6,12 @@ define(function(require){
 		Album = require('models/album');
 
 	var Albums = Backbone.Collection.extend({
+		/*
+		// url is defined in Artist association.
 		url: function(){
-			return '/api/TODO/albums';
-		},
-
+			return '/api/artists/' + this.owner.id + '/albums';
+		}
+		*/
 		model: function(attrs, options){
 			return Album.create(attrs, options);
 		}

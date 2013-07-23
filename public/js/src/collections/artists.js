@@ -14,9 +14,9 @@ define(function(require){
 		model: function(attrs, options){
 			//console.log('from collection', Artist.all().size())
 			return Artist.create(attrs, options);
-		},
+		}
 
-		// fetch: fetchOnce // not working since we keep constructing a new one.
+		//fetch: fetchOnce // not working since we keep constructing a new one.
 
 	});
 

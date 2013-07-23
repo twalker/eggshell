@@ -3,6 +3,7 @@
 **/
 define(function(require){
 	var Supermodel = require('supermodel'),
+		lodash = require('underscore'),
 		Albums = require('collections/albums'),
 		Album = require('models/album'),
 		fetchOnce = require('models/mixins/fetch-once');
@@ -23,7 +24,18 @@ define(function(require){
 			console.log('artist constructed', attrs);
 
 			Supermodel.Model.prototype.initialize.apply(this, arguments);
-		}
+		},
+		toJSON: function(){
+			// put the id's back in the albums attribute, see:
+			// https://github.com/pathable/supermodel/issues/37#issuecomment-21406451
+			return lodash.extend(Supermodel.Model.prototype.toJSON.apply(this, arguments), {
+				albums: this.albums().pluck('id')
+			});
+		},
+
+		hasAlbums: function(){
+			return this.albums().any();
+		},
 		// make it a fetchOnce for fun.
 		//fetch: fetchOnce
 
