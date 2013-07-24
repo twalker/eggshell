@@ -29,6 +29,10 @@ require([
 	});
 
 	var Bio = Supermodel.Model.extend({
+		urlRoot: function(){
+			// return '/api/artists/' + this.artist().id + '/bio';
+			return '/api/artists/' + this.get('artist') + '/bio';
+		},
 		defaults: {
 			id: null,
 			artist: null,
@@ -77,6 +81,12 @@ require([
 		model: Bio,
 		id: 'bio',
 		inverse: 'artist'
+	});
+	// add the reverse relation (optional, allows bio.artist())
+	Bio.has().one('artist', {
+		model: Artist,
+		id: 'artist',
+		inverse: 'bio'
 	});
 
 
@@ -132,6 +142,38 @@ require([
 			assert.equal(slayer, imposter);
 		});
 
+
+		describe('has associated model(s)', function(){
+
+			it('should indicate if it has a ONE model based on attribute', function(){
+				var slayer = Artist.create(lodash.extend({bio: 1}, fixtures.artists.slayer));
+				var metallica = Artist.create(fixtures.artists.metallica);
+				var mercy = Album.all().get('mercy');
+
+				assert.isTrue(slayer.has('bio'));
+				assert.isFalse(metallica.has('bio'));
+				assert.strictEqual(mercy.artist(), slayer);
+
+			});
+
+			it('should indicate if it has any MANY models based on collection property', function(){
+				var slayer = Artist.create(fixtures.artists.slayer);
+				var metallica = Artist.create(lodash.omit(fixtures.artists.metallica, 'albums'));
+
+				assert.isNull(slayer.get('albums'), "BEWARE: associated child id's are removed during parse")
+
+				assert.isTrue(slayer.albums().any());
+				assert.isTrue(metallica.albums().any());
+
+				var front242 = Artist.create({id: 'two4two', name: 'Front 242', albums: ["noexist"]});
+				var fla = Artist.create({id: 'fla', name: 'Front Line Assembly'})
+
+				assert.isTrue(front242.albums().any());
+				assert.isFalse(fla.albums().any());
+
+			});
+		});
+
 		describe('one to many associations', function(){
 
 			it('should reflect associations in model properties', function(){
@@ -157,26 +199,28 @@ require([
 
 		});
 
-		describe.skip('one to one associations', function(){
+		describe('one to one associations', function(){
+			it('should reflect associations in model properties', function(){
+				var slayerBio = Bio.create(fixtures.bio.slayer);
+				var slayer = Artist.create(lodash.extend({bio: 1}, fixtures.artists.slayer));
 
-			it('should be great', function(done){
-
-			});
-
-		});
-
-		describe.skip('has associated models', function(){
-
-			it('should be great', function(done){
+				assert.equal(slayer.bio(), slayerBio);
+				assert.equal(slayerBio.artist(), slayer);
 
 			});
-
 		});
+
+		describe.skip('many to many associations', function(){
+			it('should be a something similar to labels', function(){
+				assert(true);
+			});
+		});
+
 
 		describe('fetching associated models', function(done){
 
 			it('should be able to call fetch on associated/nested model methods', function(done){
-				var slayer = Artist.create(fixtures.artists.slayer);
+				var slayer = Artist.create(lodash.extend({bio: fixtures.bio.slayer}, fixtures.artists.slayer));
 				slayer
 					.albums()
 					.fetch({success: function(collection){
@@ -184,7 +228,7 @@ require([
 						assert.deepEqual(collection.toJSON(), fixtures.albums.slayer);
 					}})
 					.done(function(){
-						//slayer.bio().fetch();
+						slayer.bio().fetch();
 					});
 
 				server.respondWith('GET',
@@ -192,6 +236,13 @@ require([
 					200, {'Content-Type': 'application/json'},
 					JSON.stringify(fixtures.albums.slayer)
 				]);
+
+				server.respondWith('GET',
+					'/api/artists/slayer/bio', [
+					200, {'Content-Type': 'application/json'},
+					JSON.stringify(fixtures.bio.slayer)
+				]);
+
 
 				var mercy = slayer.albums().get('mercy');
 				mercy
@@ -210,24 +261,8 @@ require([
 
 			});
 
-		});
-
-		describe('find or create associated models', function(){
-
-			it('should indicate whether or not there is a nested model based on attribute', function(){
-				var slayer = Artist.create(fixtures.artists.slayer);
-				assert.isNull(slayer.get('albums'), "BEWARE: associated child id's are removed during parse")
-				assert.isTrue(slayer.albums().any());
-
-				var front242 = Artist.create({id: 'two4two', name: 'Front 242', albums: ["noexist"]});
-				var fla = Artist.create({id: 'fla', name: 'Front Line Assembly'})
-				assert.isTrue(front242.albums().any());
-				assert.isFalse(fla.albums().any());
-			});
-
-			it('could be used for fetch or create logic (one to one)', function(done){
+			it.skip('could be used for fetch or create logic', function(done){
 				var slayer = Artist.create(lodash.extend({}, fixtures.artists.slayer, {bio: 1}));
-				// use a one to one relationship.
 
 				slayer.fetchOrCreate = function(key){
 					var dfr = new jQuery.Deferred();
@@ -253,7 +288,9 @@ require([
 
 			});
 
+
 		});
+
 
 
 	});
