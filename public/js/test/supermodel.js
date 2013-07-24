@@ -156,7 +156,7 @@ require([
 
 			});
 
-			it('should indicate if it has any MANY models based on collection property', function(){
+			it('should indicate if it has any MANY models based on collection method', function(){
 				var slayer = Artist.create(fixtures.artists.slayer);
 				var metallica = Artist.create(lodash.omit(fixtures.artists.metallica, 'albums'));
 
@@ -176,7 +176,7 @@ require([
 
 		describe('one to many associations', function(){
 
-			it('should reflect associations in model properties', function(){
+			it('should set associated model methods', function(){
 
 				var artists = new Artists([fixtures.artists.slayer, fixtures.artists.metallica]);
 				var slayer = Artist.create({id: 'slayer'});
@@ -197,10 +197,21 @@ require([
 
 			});
 
+			it('should set associated id attribute on the MANY models, but the ONE model\'s collection.toJSON() needs to recover the ids', function(){
+				var artists = new Artists([fixtures.artists.slayer, fixtures.artists.metallica]);
+				var metallica = Artist.create({id: 'metallica'});
+				var soh = Album.all().get('soh');
+
+				soh.set('artist', metallica.id);
+
+				assert.equal(soh.toJSON().artist, 'metallica');
+				assert.deepEqual(metallica.albums().toJSON(), fixtures.albums.metallica.concat([soh.toJSON()]));
+			});
 		});
 
 		describe('one to one associations', function(){
-			it('should reflect associations in model properties', function(){
+
+			it('should set associated model methods', function(){
 				var slayerBio = Bio.create(fixtures.bio.slayer);
 				var slayer = Artist.create(lodash.extend({bio: 1}, fixtures.artists.slayer));
 
@@ -208,10 +219,20 @@ require([
 				assert.equal(slayerBio.artist(), slayer);
 
 			});
+
+			it('should set associated attributes when associating', function(){
+				var slayer = Artist.create(lodash.extend({bio: 1}, fixtures.artists.slayer));
+				var bio2 = Bio.create({id: 3, description: 'delightful'});
+
+				slayer.set('bio', bio2.id);
+				assert.strictEqual(bio2, slayer.bio());
+				assert.equal(bio2.toJSON().artist, 'slayer');
+				assert.equal(slayer.toJSON().bio, 3);
+			});
 		});
 
 		describe.skip('many to many associations', function(){
-			it('should be a something similar to labels', function(){
+			it('should be useful for labels', function(){
 				assert(true);
 			});
 		});
@@ -268,10 +289,10 @@ require([
 					var dfr = new jQuery.Deferred();
 					if(this.has(key)){
 						this[key]()
-							.fetch({url: slayer.url() + '/bio'})
+							.fetch({url: this.url() + '/bio'})
 							.done(dfr.resolve);
 					} else {
-						dfr.resolve(new Bio({artist: slayer.id}));
+						dfr.resolve(new Bio({artist: this.id}));
 					}
 					return dfr.promise();
 				};
