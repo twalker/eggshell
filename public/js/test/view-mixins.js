@@ -73,7 +73,11 @@ require([
 
 			var View2 = Backbone.View.extend({
 				initialize: initSpy,
-				render: renderSpy
+				render: function(){
+					renderSpy();
+					return this;
+				}
+
 			});
 
 			mixer.patch(View2.prototype, ready);
@@ -101,8 +105,10 @@ require([
 				);
 			});
 
-			view.render();
-			view2.render();
+			var viewReturn = view.render();
+			var view2Return = view2.render();
+			assert.equal(viewReturn, view);
+			assert.equal(view2Return, view2);
 
 		});
 

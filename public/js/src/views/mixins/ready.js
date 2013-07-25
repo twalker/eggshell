@@ -12,12 +12,13 @@ define(function(require){
 			this._dfrReady = new jQuery.Deferred();
 		},
 
-		render: function(){
-			this._dfrReady.resolve(this);
-		},
-
 		ready: function(){
 			return this._dfrReady.promise();
+		},
+
+		render: function(){
+			this._dfrReady.resolve(this);
+			return this;
 		}
 	};
 
