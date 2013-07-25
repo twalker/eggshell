@@ -1,12 +1,15 @@
 require([
 	'mocha',
 	'chai',
+	'sinon',
+	'mixer',
 	'jquery',
 	'backbone',
 	'views/mixins/classy',
 	'views/mixins/showable',
-	'views/mixins/delegator'
-], function(mocha, chai, jQuery, Backbone, classy, showable, delegator){
+	'views/mixins/delegator',
+	'views/mixins/ready'
+], function(mocha, chai, sinon, mixer, jQuery, Backbone, classy, showable, delegator, ready){
 
 	// setup
 	var assert = chai.assert;
@@ -57,6 +60,49 @@ require([
 				assert.isFalse($fixture.is(':visible'));
 				assert.isFalse(view.isVisible());
 			});
+
+		});
+
+
+		describe('ready', function(){
+			var initSpy = sinon.spy(),
+				renderSpy = sinon.spy(),
+				readySpy = sinon.spy();
+
+			var View = Backbone.View.extend(ready);
+
+			var View2 = Backbone.View.extend({
+				initialize: initSpy,
+				render: renderSpy
+			});
+
+			mixer.patch(View2.prototype, ready);
+
+			var view = new View();
+			var view2 = new View2();
+
+			it('should resolve when the view is rendered', function(done){
+
+				view2.ready().done(readySpy);
+
+				jQuery
+					.when(view.ready(), view2.ready())
+					.done(function(vw, vw2){
+						assert(initSpy.called);
+						assert(renderSpy.called);
+						assert(readySpy.called);
+
+						assert.equal(vw, view);
+						assert.equal(vw2, view2);
+						assert.isTrue(renderSpy.calledBefore(readySpy));
+
+						done();
+					}
+				);
+			});
+
+			view.render();
+			view2.render();
 
 		});
 
