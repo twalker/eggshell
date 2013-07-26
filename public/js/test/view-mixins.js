@@ -67,7 +67,8 @@ require([
 		describe('ready', function(){
 			var initSpy = sinon.spy(),
 				renderSpy = sinon.spy(),
-				readySpy = sinon.spy();
+				readySpy = sinon.spy(),
+				callbackSpy = sinon.spy();
 
 			var View = Backbone.View.extend(ready);
 
@@ -87,14 +88,15 @@ require([
 
 			it('should resolve when the view is rendered', function(done){
 
-				view2.ready().done(readySpy);
+				view2.ready(callbackSpy).done(readySpy);
 
 				jQuery
 					.when(view.ready(), view2.ready())
 					.done(function(vw, vw2){
-						assert(initSpy.called);
-						assert(renderSpy.called);
-						assert(readySpy.called);
+						assert.isTrue(initSpy.called);
+						assert.isTrue(renderSpy.called);
+						assert.isTrue(readySpy.called);
+						assert.isTrue(callbackSpy.called);
 
 						assert.equal(vw, view);
 						assert.equal(vw2, view2);
@@ -111,6 +113,7 @@ require([
 			assert.equal(view2Return, view2);
 
 		});
+
 
 		describe('delegator', function() {
 			var SweetModel = Backbone.Model.extend({

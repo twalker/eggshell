@@ -1,9 +1,19 @@
 /**
-* View.ready indicates when a view has rendered, returning a promise.
+* View.ready indicates when a view has rendered,
+* returning a promise.
 *
-* Needs to be patched into a view's prototype due to the initialize and render methods.
-* e.g. mixer.patch(View2.prototype, ready);
-**/
+* Needs patched into a View's prototype to trigger the initialize and render methods.
+*
+* @example
+* mixer.patch(MyView.prototype, ready);
+* var view = new MyView();
+*
+* view.ready(function(){console.log('view is')});
+* // and/or
+* view.ready().done(function(){console.log('rendered and ready!')});
+* view.render();
+* > view is rendered and ready!
+*/
 define(function(require){
 	var jQuery = require('jquery');
 
@@ -12,7 +22,8 @@ define(function(require){
 			this._dfrReady = new jQuery.Deferred();
 		},
 
-		ready: function(){
+		ready: function(cb){
+			if(cb) this._dfrReady.done(cb);
 			return this._dfrReady.promise();
 		},
 
