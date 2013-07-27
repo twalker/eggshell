@@ -1,12 +1,12 @@
 /**
-* SyncPromise is a proxy to Backbone.sync that filters the return deferred.
-* It normalizing the default arguments passed to xhr (json, status, jqXHR),
+* SyncPromise is a proxy to Backbone.sync that filters the returned deferred.
+* It normalizes the default arguments passed to xhr (json, status, jqXHR),
 * to match that of success/error callbacks (model, resp, options).
 *
 * // Instead of:
 * foo.save().done(function(json, status, jqXHR){ return "Where's my model?"});
 *
-* // I wanted promises to match the success callback signature:
+* // We have:
 * foo.save().done(function(model, res, options){ gotIt(model)});
 **/
 define(function(require){
