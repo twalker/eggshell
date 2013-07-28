@@ -20,7 +20,7 @@ define(function(require){
 				return jQuery.Deferred().resolve(model, json, options);
 			},
 			function(json, status, jqXhr){
-				return jQuery.Deferred().reject(model, xhr, options);
+				return jQuery.Deferred().reject(model, jqXhr, options);
 			}
 		);
 	};
