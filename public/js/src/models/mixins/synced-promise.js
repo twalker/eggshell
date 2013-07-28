@@ -14,8 +14,7 @@ define(function(require){
 		Backbone = require('backbone');
 
 	return function sync(method, model, options){
-		var xhr = Backbone.sync(method, model, options);
-		return xhr.then(
+		return Backbone.sync(method, model, options).then(
 			function(json, status, jqXhr){
 				return jQuery.Deferred().resolve(model, json, options);
 			},
