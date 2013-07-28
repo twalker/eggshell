@@ -13,7 +13,7 @@ require([
 
 	mocha.setup('bdd');
 
-	describe('syncPromise replacement for Backbone.sync', function() {
+	describe('synced promise to decorate Backbone.sync', function() {
 
 		var server, callback;
 		beforeEach(function(){
