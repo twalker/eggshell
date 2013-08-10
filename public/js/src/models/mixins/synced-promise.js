@@ -10,17 +10,17 @@
 * foo.save().done(function(model, res, options){ gotIt(model)});
 **/
 define(function(require){
-	var jQuery = require('jquery'),
-		Backbone = require('backbone');
+  var jQuery = require('jquery'),
+    Backbone = require('backbone');
 
-	return function sync(method, model, options){
-		return Backbone.sync(method, model, options).then(
-			function(json, status, jqXhr){
-				return jQuery.Deferred().resolve(model, json, options);
-			},
-			function(json, status, jqXhr){
-				return jQuery.Deferred().reject(model, jqXhr, options);
-			}
-		);
-	};
+  return function sync(method, model, options){
+    return Backbone.sync(method, model, options).then(
+      function(json, status, jqXhr){
+        return jQuery.Deferred().resolve(model, json, options);
+      },
+      function(json, status, jqXhr){
+        return jQuery.Deferred().reject(model, jqXhr, options);
+      }
+    );
+  };
 });

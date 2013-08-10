@@ -12,13 +12,13 @@
 * });
 **/
 define(function(require){
-	var lodash = require('underscore');
-	return function(member) {
-		return function() {
-			var obj = this.model || this.collection;
-			var method = obj[member];
-			// return model's function or property
-			return (lodash.isFunction(method)) ? method.apply(obj, arguments) : method;
-		};
-	};
+  var lodash = require('underscore');
+  return function(member) {
+    return function() {
+      var obj = this.model || this.collection;
+      var method = obj[member];
+      // return model's function or property
+      return (lodash.isFunction(method)) ? method.apply(obj, arguments) : method;
+    };
+  };
 });

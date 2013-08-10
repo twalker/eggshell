@@ -5,6 +5,7 @@
 	"maxlen": 120,
 	"maxdepth": 4,
 	"maxparams": 4,
+	"indent": 2,
 	"smarttabs": true,
 	"immed" : true,
 	"newcap" : true,

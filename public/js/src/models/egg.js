@@ -2,21 +2,21 @@
 * module for a egg model
 **/
 define(function(require){
-	var Backbone = require('backbone');
+  var Backbone = require('backbone');
 
-	var Egg = Backbone.Model.extend({
-		defaults: {
-			id: null,
-			name: null,
-			cracked: false
-		},
+  var Egg = Backbone.Model.extend({
+    defaults: {
+      id: null,
+      name: null,
+      cracked: false
+    },
 
-		initialize: function(){
+    initialize: function(){
 
-		}
+    }
 
 
-	});
+  });
 
-	return Egg;
+  return Egg;
 });

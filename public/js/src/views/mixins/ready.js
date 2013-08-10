@@ -15,22 +15,22 @@
 * > view is rendered and ready!
 */
 define(function(require){
-	var jQuery = require('jquery');
+  var jQuery = require('jquery');
 
-	return {
-		initialize: function(){
-			this._dfrReady = new jQuery.Deferred();
-		},
+  return {
+    initialize: function(){
+      this._dfrReady = new jQuery.Deferred();
+    },
 
-		ready: function(cb){
-			if(cb) this._dfrReady.done(cb);
-			return this._dfrReady.promise();
-		},
+    ready: function(cb){
+      if(cb) this._dfrReady.done(cb);
+      return this._dfrReady.promise();
+    },
 
-		render: function(){
-			this._dfrReady.resolve(this);
-			return this;
-		}
-	};
+    render: function(){
+      this._dfrReady.resolve(this);
+      return this;
+    }
+  };
 
 });

@@ -1,12 +1,12 @@
 <aside class="crack-count">
-	<b class="count">{{crackedCount}}</b>
-	eggs cracked.
+  <b class="count">{{crackedCount}}</b>
+  eggs cracked.
 </aside>
 <p>and/or get crackin' on the client!</p>
 <p>Crack an egg:</p>
 <ul class="egglist">
-	{{#eggs}}
-		<li{{#cracked}} class="cracked"{{/cracked}} data-id="{{id}}">{{name}}</li>
-	{{/eggs}}
+  {{#eggs}}
+    <li{{#cracked}} class="cracked"{{/cracked}} data-id="{{id}}">{{name}}</li>
+  {{/eggs}}
 </ul>
 <p>ooh, and don't forget to write some <a href="/client-tests/app">client-tests</a>.</p>

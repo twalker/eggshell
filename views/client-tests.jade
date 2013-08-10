@@ -1,34 +1,34 @@
 !!! 5
 html(lang="en")
-	head
-		meta(charset="utf-8")
-		title #{name} unit test
-		link(rel="stylesheet", href="/js/src/bower_components/mocha/mocha.css")
-		style.
-			nav.tests {
-				font-size: 12px;
-				position: fixed;
-				top: 25px;
-				max-width: 70%;
-			}
-			nav.tests a {
-				margin: 0.25em 0.5em;
-				display: inline-block
-			}
-			nav.tests a.active {
-				text-decoration: none;
-			}
-		script(data-main="/js/src/config", src="/js/src/bower_components/requirejs/require.js")
-		script.
-			requirejs({
-				paths : {
-					// overwrite 'main' to be the unit test file for the module to be tested.
-					main: "../test/#{name}"
-				}
-			});
-	body
-		nav.tests
-			each test in names
-				a(href=test, class= (test == name) && "active") #{test}
+  head
+    meta(charset="utf-8")
+    title #{name} unit test
+    link(rel="stylesheet", href="/js/src/bower_components/mocha/mocha.css")
+    style.
+      nav.tests {
+        font-size: 12px;
+        position: fixed;
+        top: 25px;
+        max-width: 70%;
+      }
+      nav.tests a {
+        margin: 0.25em 0.5em;
+        display: inline-block
+      }
+      nav.tests a.active {
+        text-decoration: none;
+      }
+    script(data-main="/js/src/config", src="/js/src/bower_components/requirejs/require.js")
+    script.
+      requirejs({
+        paths : {
+          // overwrite 'main' to be the unit test file for the module to be tested.
+          main: "../test/#{name}"
+        }
+      });
+  body
+    nav.tests
+      each test in names
+        a(href=test, class= (test == name) && "active") #{test}
 
-		#mocha
+    #mocha
