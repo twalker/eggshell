@@ -1,0 +1,9 @@
+<h1 id="model">
+  {{#showName}}name:{{name}}{{/showName}}
+  {{^showName}}noname{{/showName}}
+</h1>
+<h1 id="collection">collection: {{#models}}{{name}}{{/models}}</h1>
+<a>clicker</a>
+<div data-region="primary">primary</div>
+<div data-region="secondary">secondary</div>
+<div data-region="tertiary" data-region-options='{"replace": true}'>tertiary</div>

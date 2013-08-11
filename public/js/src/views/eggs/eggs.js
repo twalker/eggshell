@@ -4,7 +4,7 @@
 define(function(require, exports, module){
   var Backbone = require('backbone'),
     Mustache = require('mustache'),
-    mainTemplate = require('text!views/eggs.mustache'),
+    mainTemplate = require('text!views/eggs/eggs.mustache'),
     jQuery = require('jquery');
 
   var EggsView = Backbone.View.extend({
