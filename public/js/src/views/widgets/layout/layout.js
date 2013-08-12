@@ -72,7 +72,6 @@ define(function(require){
 
     // assigns a view to a region, removes pre-existing view if one exists.
     assignView: function(regionKey, view){
-      //console.log('assignView', regionKey, view);
       var previousView = this.regions[regionKey];
       if(previousView && previousView !== view) this.clearRegion(regionKey);
       // assign to region
@@ -86,12 +85,11 @@ define(function(require){
     },
 
     _inject: function(regionKey, view){
-      var layoutId = this.cid;
-      var elRegion = this.el.querySelector('[data-layoutid=' + layoutId + '][data-region=' + regionKey + ']');
-      if(!elRegion) throw new Error(regionKey +' is not a defined region within Layout ' + layoutId);
+      var layoutId = this.cid
+        , elRegion = this.el.querySelector('[data-layoutid=' + layoutId + '][data-region=' + regionKey + ']')
+        , regionOptions = jQuery(elRegion).data('regionOptions') || {};
 
-      var regionOptions = elRegion.dataset.regionOptions ? JSON.parse(elRegion.dataset.regionOptions) : {};
-      //console.log(elRegion, regionOptions);
+      if(!elRegion) throw new Error(regionKey +' is not a defined region within Layout ' + layoutId);
 
       if(regionOptions.replace){
         this.$(elRegion).replaceWith(view.el);
@@ -100,7 +98,8 @@ define(function(require){
       } else {
         this.$(elRegion).html(view.el);
       }
-      //return view;
+
+      return view;
     },
 
     // convenience method for getting a view assigned to a region
