@@ -12,10 +12,10 @@ require(['require', 'mocha', 'chai', 'sinon',
   describe('layout', function() {
 
     describe('Constructor', function() {
-      //options
-      var now = new Date();
-      var child1 = new Backbone.View({date: new Date(now.setUTCFullYear(2012))}).render();
-      var child2 = new Backbone.View({date: new Date(now.setUTCFullYear(2013))}).render();
+
+      var child1 = new Backbone.View().render();
+      var child2 = new Backbone.View().render();
+
       var layout = new Layout({
         template: layoutTemplate,
         regions: {
@@ -27,7 +27,7 @@ require(['require', 'mocha', 'chai', 'sinon',
       layout.render();
 
       it('should insert regions specified in constructor options', function(){
-        assert.ok(jQuery.contains(layout.el, child1.el));
+        assert.isTrue(jQuery.contains(layout.el, child1.el));
       });
       it('should place regions in the data-region specified', function(){
         assert.equal(layout.$('[data-region="secondary"] :first-child')[0], child2.el);
@@ -98,7 +98,7 @@ require(['require', 'mocha', 'chai', 'sinon',
 
       it('should deserialize/toJSON collection on render, like a normal view', function(){
         layout2.render();
-        assert.ok(/tuco/.test(layout2.$('h1#collection').text()));
+        assert.isTrue(/tuco/.test(layout2.$('h1#collection').text()));
       });
 
     });
@@ -143,22 +143,29 @@ require(['require', 'mocha', 'chai', 'sinon',
         assert.equal(layout.getView('primary'), view2);
       });
 
-      it('should allow view assignemts even after layout\'s been rendered', function(){
+      it('should allow view assignments even after layout\'s been rendered', function(){
         layout.render();
         layout.assignView('primary', view3);
         assert.isTrue(jQuery.contains(layout.el, view3.el));
       });
 
       it('should replace the region element when data-region-options=\'{"replace":true}\'', function(){
-        var view4 = new Backbone.View();
-        layout.assignView('secondary', view4.render());
-        assert.strictEqual(view4.el, layout.getView('secondary').el);
-        assert.strictEqual(view4.el, layout.$('[data-region="secondary"]')[0])
+        var PView = Backbone.View.extend({tagName: 'p'});
+        var tertiary = new PView();
+        var layout2 = new Layout({
+          template: layoutTemplate,
+          regions: { tertiary: tertiary.render()}
+        });
+
+        layout2.render();
+
+        assert.strictEqual(tertiary.el, layout2.getView('tertiary').el);
+        console.log(layout2.$('[data-region="tertiary"]')[0]);
+        assert.strictEqual(tertiary.el, layout2.$('[data-region="tertiary"]')[0])
 
       });
     });
 
-    // was destroy view
     describe('.clearRegion(regionKey)', function(){
       var clickCount = 0, changeCount = 0;
       var layout = new Layout({template: layoutTemplate});

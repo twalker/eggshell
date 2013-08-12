@@ -1,13 +1,12 @@
 /**
  * @module Layout is a composite view of child views
  * which are assigned to regions defined in the Layout's template
- * denoted with `data-region="name"` attributes.
- * These attributes correspond with a region property that references a subview.
+ * denoted with `data-region="keyname"` attributes.
+ * These attributes correspond with a region property with a subview reference.
  * Views can be assigned at instantiation or after.
  * Like a faithful parent, Layout cleans up after it's child views.
  *
  * TODO:
- * - finish implementing data-region-options
  * - revisit hasRendered implentation
  * - think about layoutable as mixin
  *
@@ -34,10 +33,10 @@
  * myLayout.assignView('primary', view3).render();
   */
 define(function(require){
-  var jQuery = require('jquery'),
-    Backbone = require('backbone'),
-    lodash = require('underscore'),
-    Mustache = require('mustache');
+  var jQuery = require('jquery')
+    , lodash = require('underscore')
+    , Backbone = require('backbone')
+    , Mustache = require('mustache');
 
   var Layout = Backbone.View.extend({
     constructor: function Layout(options){
@@ -78,17 +77,30 @@ define(function(require){
       if(previousView && previousView !== view) this.clearRegion(regionKey);
       // assign to region
       this.regions[regionKey] = view;
+
       // insert the view into the dom immediately if this layout has already rendered.
       if(this.hasRendered){
-        var regionOptions = !!(view.el.dataset.regionOptions) ? JSON.parse(view.el.dataset.regionOptions) : {};
-        var method = regionOptions.replace ? 'replaceWith' : 'html';
-
-        //if(regionOptions.replace) view.el.dataset.region = regionKey;
-        if(regionOptions.replace) view.el.dataset.region = regionKey;
-
-        this.$('[data-region=' + regionKey + ']')[method](view.el);
+        this._inject(regionKey, view);
       }
       return view;
+    },
+
+    _inject: function(regionKey, view){
+      var layoutId = this.cid;
+      var elRegion = this.el.querySelector('[data-layoutid=' + layoutId + '][data-region=' + regionKey + ']');
+      if(!elRegion) throw new Error(regionKey +' is not a defined region within Layout ' + layoutId);
+
+      var regionOptions = elRegion.dataset.regionOptions ? JSON.parse(elRegion.dataset.regionOptions) : {};
+      //console.log(elRegion, regionOptions);
+
+      if(regionOptions.replace){
+        this.$(elRegion).replaceWith(view.el);
+        view.el.setAttribute('data-region', regionKey);
+        view.el.setAttribute('data-layoutid', layoutId);
+      } else {
+        this.$(elRegion).html(view.el);
+      }
+      //return view;
     },
 
 
@@ -125,29 +137,41 @@ define(function(require){
     insertRegions: function(){
       var regions = this.regions;
       // loop through region object and insert each view.el into $region element
-      this.$('[data-region]').each(function(i, el){
-        var $region= jQuery(el),
-          name = $region.data('region'),
-          regionOptions = !!(el.dataset.regionOptions) ? JSON.parse(el.dataset.regionOptions) : {};
-
-        if(regions[name]){
-          $region[regionOptions.replace ? 'replaceWith' : 'html'](regions[name].el);
-          //$region.html(regions[name].el);
+      lodash.forOwn(this.regions, function(view, key){
+        if(view){
+          this._inject(key, view);
         } else {
           console.info('no views assigned to layout region: '+ name);
         }
-      });
+      }, this);
+
       this.hasRendered = true;
       return this;
     },
 
     // renders self with deserialized model and templateOptions (if implemented),
     // then inserts views into their assigned regions.
-    /*jshint -W074 */ // TODO: reduce cyclomatic complexity.
     render: function(){
       if(this.onPreRender) this.onPreRender();
 
-      // consolidate template options and model (or collection) attributes into a viewmodel.
+      var viewmodel = this.getViewModel();
+
+      this.$el.html(this.template(viewmodel));
+
+      // mark regions for this layout, to avoid naming conflicts with nested layouts.
+      [].forEach.call(this.el.querySelectorAll('[data-region]'), function(el){
+        el.setAttribute('data-layoutid', this.cid);
+      }, this);
+
+      this.insertRegions();
+
+      if(this.onPostRender) this.onPostRender();
+      return this;
+    },
+
+    // consolidate template options and model/collection attributes into a viewmodel.
+    /*jshint -W074*/ // TODO: decrease cyclomatic complexity.
+    getViewModel: function(){
       var viewmodel = {};
       if(this.templateOptions){
         // support plain object or a function
@@ -163,12 +187,7 @@ define(function(require){
           'deserialize': 'toJSON']()});
       }
 
-      this.$el.html(this.template(viewmodel));
-
-      this.insertRegions();
-
-      if(this.onPostRender) this.onPostRender();
-      return this;
+      return viewmodel;
     }
   });
 
