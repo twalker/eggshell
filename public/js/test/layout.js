@@ -13,48 +13,61 @@ require(['require', 'mocha', 'chai', 'sinon',
 
     describe('Constructor', function() {
 
-      var child1 = new Backbone.View().render();
-      var child2 = new Backbone.View().render();
+      var vwPrimary = new Backbone.View().render();
+      var vwSecondary = new Backbone.View().render();
 
       var layout = new Layout({
         template: layoutTemplate,
         regions: {
-          primary: child1,
-          secondary: child2
+          primary: vwPrimary,
+          secondary: vwSecondary
         }
       });
 
       layout.render();
 
       it('should insert regions specified in constructor options', function(){
-        assert.isTrue(jQuery.contains(layout.el, child1.el));
+        assert.isTrue(jQuery.contains(layout.el, vwPrimary.el));
       });
       it('should place regions in the data-region specified', function(){
-        assert.equal(layout.$('[data-region="secondary"] :first-child')[0], child2.el);
+        assert.equal(layout.$('[data-region="secondary"] :first-child')[0], vwSecondary.el);
       });
 
     });
 
     describe('.render()', function() {
-      // model, options, beforeRender, afterRender
-      var MyModel = Backbone.Model.extend({
-        defaults: {id: undefined, name: undefined}
-      });
-
-      var model = new MyModel({id:1, name: 'bar'});
-
-      var layout = new Layout({
-        template: layoutTemplate,
-        model: model
-      });
-
-      layout.templateOptions = function(){
-        return { showName: true };
-      };
-
       it('should deserialize/toJSON model on render, like a normal view', function(){
+        var MyModel = Backbone.Model.extend({
+          defaults: {id: undefined, name: undefined}
+        });
+
+        var model = new MyModel({id:1, name: 'bar'});
+
+        var layout = new Layout({
+          template: layoutTemplate,
+          model: model
+        });
+
+        layout.templateOptions = function(){
+          return { showName: true };
+        };
+
         layout.render();
+
         assert.isTrue(/bar/.test(layout.$('h1#model').text()));
+      });
+
+      it('should deserialize/toJSON collection on render, like a normal view', function(){
+        var MyCollection = Backbone.Collection.extend({});
+        var myCollection = new MyCollection([{name: 'tuco'},{name: 'angel eyes'}, {name: 'blondie'}]);
+
+        var layout2 = new Layout({
+          template: layoutTemplate,
+          collection: myCollection
+        });
+
+        layout2.render();
+        assert.isTrue(/tuco/.test(layout2.$('h1#collection').text()));
       });
 
       it('should use this.templateOptions to use in viewmodel', function(){
@@ -64,41 +77,46 @@ require(['require', 'mocha', 'chai', 'sinon',
           }
         });
         var layoutExt = new LayoutExt({
-          template: layoutTemplate,
-          model: model
+          template: layoutTemplate
         });
         layoutExt.render();
 
         assert.isTrue(/noname/.test(layoutExt.$('h1#model').text()));
       });
 
-      var preCalled = false, postCalled = false;
-      var extendedLayout = new(Layout.extend({
-        onPreRender: function(){preCalled = true;},
-        onPostRender: function(){postCalled = true;}
-      }))({template: layoutTemplate});
-
-      extendedLayout.render();
-
       it('should invoke onPreRender and onPostRender methods if defined on Layout', function(){
-        assert.isTrue(preCalled && postCalled);
+        var preRenderSpy = sinon.spy();
+        var postRenderSpy = sinon.spy();
+        var extendedLayout = new(Layout.extend({
+          onPreRender: preRenderSpy,
+          onPostRender: postRenderSpy
+        }))({template: layoutTemplate});
+
+        extendedLayout.render();
+
+        assert.isTrue(preRenderSpy.called);
+        assert.isTrue(postRenderSpy.called);
       });
 
-      // collections
-      var MyCollection = Backbone.Collection.extend({
-        model: MyModel
-      });
-      var myCollection = new MyCollection([{name: 'tuco'},{name: 'angel eyes'}, {name: 'blondie'}]);
+      it('should allow nested layouts without collisions', function(){
+        var parentLayout = new(Layout.extend({
+          template: Mustache.compile('<section data-region="clash"></section>')
+        }))();
 
+        var nestedLayout = new(Layout.extend({
+          template: Mustache.compile('<section data-region="clash"></section>')
+        }))();
 
-      var layout2 = new Layout({
-        template: layoutTemplate,
-        collection: myCollection
-      });
+        var innerChild = new Backbone.View({});
+        parentLayout.assignView('clash', nestedLayout);
+        nestedLayout.assignView('clash', innerChild);
 
-      it('should deserialize/toJSON collection on render, like a normal view', function(){
-        layout2.render();
-        assert.isTrue(/tuco/.test(layout2.$('h1#collection').text()));
+        parentLayout.render();
+        nestedLayout.render();
+
+        assert.strictEqual(parentLayout.getView('clash'), nestedLayout);
+        assert.strictEqual(nestedLayout.getView('clash'), innerChild);
+
       });
 
     });
@@ -160,14 +178,14 @@ require(['require', 'mocha', 'chai', 'sinon',
         layout2.render();
 
         assert.strictEqual(tertiary.el, layout2.getView('tertiary').el);
-        console.log(layout2.$('[data-region="tertiary"]')[0]);
         assert.strictEqual(tertiary.el, layout2.$('[data-region="tertiary"]')[0])
 
       });
     });
 
     describe('.clearRegion(regionKey)', function(){
-      var clickCount = 0, changeCount = 0;
+      var clickSpy = sinon.spy();
+      var changeSpy = sinon.spy();
       var layout = new Layout({template: layoutTemplate});
       var model = new Backbone.Model({});
       var View = Backbone.View.extend({
@@ -175,8 +193,8 @@ require(['require', 'mocha', 'chai', 'sinon',
           this.listenTo(this.model, 'change', this.onChange);
         },
         events: {'click a': 'onClick'},
-        onClick: function(){clickCount++;},
-        onChange: function(){changeCount++;},
+        onClick: clickSpy,
+        onChange: changeSpy,
         render: function(){
           this.$el.html('<a>clicker</a>');
           return this;
@@ -196,32 +214,35 @@ require(['require', 'mocha', 'chai', 'sinon',
       layout.$('[data-region="primary"] a').click();
 
       it('should remove dom event listeners from view', function(){
-        assert.equal(clickCount, 1);
+        assert.isTrue(clickSpy.calledOnce);
       });
       it('should remove model event listeners from view', function(){
-        assert.equal(changeCount, 1);
+        assert.isTrue(changeSpy.calledOnce);
       });
 
     });
 
-
+    describe('.showRegion(regionKey) , .hideRegion(regionKey)', function(){
+      it.skip('should show or hide the specified region', function(){
+        assert.isTrue(false)
+      })
+    });
 
     describe('.remove()', function() {
-      var incCount = 0,
-        clickCount = 0,
-        removeCalled = false;
+      var incSpy = sinon.spy(),
+        clickSpy = sinon.spy(),
+        removeSpy = sinon.spy();
 
       var model = new Backbone.Model({});
-
-      var view = new (Backbone.View.extend({remove: function(){removeCalled = true;}}))();
+      var view = new (Backbone.View.extend({remove: removeSpy}))();
 
       var ExtendedLayout = Layout.extend({
         events: {'click a':'onClick'},
         initialize: function(){
           this.listenTo(this.model, 'change', this.incrementCount);
         },
-        incrementCount: function(){incCount++;},
-        onClick: function(e){clickCount++;}
+        incrementCount: incSpy,
+        onClick: clickSpy
       });
 
       var layout = new ExtendedLayout({
@@ -242,13 +263,13 @@ require(['require', 'mocha', 'chai', 'sinon',
       layout.$('[data-region="tertiary"] a').click();
 
       it('should remove model listeners', function(){
-        assert.equal(incCount, 1);
+        assert.isTrue(incSpy.calledOnce);
       });
       it('should remove dom event listeners', function(){
-        assert.equal(clickCount, 1);
+        assert.isTrue(clickSpy.calledOnce);
       });
       it('should call remove on assigned views', function(){
-        assert.isTrue(removeCalled);
+        assert.isTrue(removeSpy.called);
       });
     });
 

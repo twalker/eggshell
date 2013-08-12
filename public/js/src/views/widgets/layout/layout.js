@@ -6,9 +6,7 @@
  * Views can be assigned at instantiation or after.
  * Like a faithful parent, Layout cleans up after it's child views.
  *
- * TODO:
- * - revisit hasRendered implentation
- * - think about layoutable as mixin
+ * TOREVISIT: layoutable as mixin
  *
  * @example
  * var myTemplate = '<p data-region="primary"><!-- view element injected here --></p>';
@@ -19,9 +17,9 @@
  *
  * var myLayout = new Layout({
  *   template: myTemplate,
- *     regions: {
- *       primary: view1,
- *       secondary: view2
+ *   regions: {
+ *     primary: view1,
+ *     secondary: view2
  *   }
  * });
  *
@@ -39,9 +37,11 @@ define(function(require){
     , Mustache = require('mustache');
 
   var Layout = Backbone.View.extend({
+
     constructor: function Layout(options){
       // compiled template expected by subclass or instances
       if(options && options.template) this.template = Mustache.compile(options.template);
+
       // create references to the view assigned to each region.
       this.regions = {};
       if(options && options.regions){
@@ -60,13 +60,13 @@ define(function(require){
 
     // show a specific region
     showRegion: function(regionKey){
-      this.$('[data-region=' + regionKey + ']').show();
+      this.$('[data-layoutid=' + this.cid + '][data-region=' + regionKey + ']').show();
       return this;
     },
 
     // hide a specific region
     hideRegion: function(regionKey){
-      this.$('[data-region=' + regionKey + ']').hide();
+      this.$('[data-layoutid=' + this.cid + '][data-region=' + regionKey + ']').hide();
       return this;
     },
 
@@ -103,7 +103,6 @@ define(function(require){
       //return view;
     },
 
-
     // convenience method for getting a view assigned to a region
     getView: function(regionKey){
       return this.regions[regionKey];
@@ -112,9 +111,8 @@ define(function(require){
     // cleanup existing views for a the region
     clearRegion: function(regionKey){
       var view = this.regions[regionKey];
-      if(view){
-        view.remove();
-      }
+      if(view) view.remove();
+
       this.regions[regionKey] = null;
       return this;
     },
