@@ -1,8 +1,8 @@
-require(['require', 'mocha', 'chai',
+require(['require', 'mocha', 'chai', 'sinon',
     'backbone',
     'underscore',
     'collections/mixins/filterable'
-  ], function(require, mocha, chai, Backbone, lodash, filterable){
+  ], function(require, mocha, chai, sinon, Backbone, lodash, filterable){
 
   // Setup
   var assert = chai.assert
@@ -23,7 +23,7 @@ require(['require', 'mocha', 'chai',
       mocks.push({id: i, name: 'mock number ' + i});
     }
 
-    describe('.addFilter(key, fnFilter)', function() {
+    describe('.addFilter(key, fnFilter, options)', function() {
       it('should allow adding of model filters to a collection', function(){
         var mockCol = new MockColl(mocks);
         var fnIdExists = function(model){
@@ -35,7 +35,7 @@ require(['require', 'mocha', 'chai',
       });
     });
 
-    describe('.removeFilter(key)', function() {
+    describe('.removeFilter(key, options)', function() {
       it('should allow removing of filters that exist on the collection', function(){
         var mockCol = new MockColl(mocks);
         var fnNoop = function(){};
@@ -83,6 +83,42 @@ require(['require', 'mocha', 'chai',
       });
 
     });
+
+    describe(':filter(models) event', function(done) {
+      it('should fire when filtered(), addFilter, or removeFilter is called', function(){
+        var eventSpy = sinon.spy();
+        var fnNoop = function(){};
+        var mockCol = new MockColl(mocks);
+        var vw = new Backbone.View({});
+        vw.listenTo(mockCol, 'filter', eventSpy);
+
+        mockCol.addFilter('noop', fnNoop);
+        mockCol.removeFilter('noop');
+
+        var filtered = mockCol.filtered();
+
+        assert.isTrue(eventSpy.called);
+        assert.isTrue(eventSpy.calledWith(filtered));
+        assert.isTrue(eventSpy.calledThrice);
+
+      });
+
+      it('should not fire when {silent: true} option is passed to addFilter or removeFilter', function(){
+        var eventSpy = sinon.spy();
+        var fnNoop = function(){};
+        var mockCol = new MockColl(mocks);
+        var vw = new Backbone.View({});
+        vw.listenTo(mockCol, 'filter', eventSpy);
+
+        mockCol.addFilter('noop', fnNoop, {silent: true});
+        mockCol.removeFilter('noop', {silent: true});
+
+        assert.isFalse(eventSpy.called);
+
+      });
+
+    });
+
   });
 
   // Start runner
