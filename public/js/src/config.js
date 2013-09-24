@@ -7,7 +7,7 @@ require.config({
   paths: {
     // Third-party libraries
     jquery: 'bower_components/jquery/jquery',
-    underscore: 'bower_components/lodash/lodash',
+    underscore: 'bower_components/lodash/dist/lodash',
     backbone: 'bower_components/backbone/backbone',
     mustache: 'bower_components/mustache/mustache',
     requireLib: 'bower_components/requirejs/require',
