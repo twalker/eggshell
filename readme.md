@@ -21,7 +21,7 @@ I want to write code instead of reading configuration documentation.
 ### install
 
 Assuming npm and grunt are available globally:  
-`npm install`  will install node modules and bower components
+`npm install` will install node modules and bower components  
 `grunt build`  
 
 ### run
