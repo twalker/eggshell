@@ -20,9 +20,8 @@ I want to write code instead of reading configuration documentation.
 ------
 ### install
 
-assuming npm, grunt, and bower are available globally:  
-`npm install`  
-`bower install`  
+Assuming npm and grunt are available globally:  
+`npm install`  will install node modules and bower components
 `grunt build`  
 
 ### run

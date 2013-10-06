@@ -6,16 +6,16 @@ require.config({
 
   paths: {
     // Third-party libraries
-    jquery: 'bower_components/jquery/jquery',
-    underscore: 'bower_components/lodash/dist/lodash',
-    backbone: 'bower_components/backbone/backbone',
-    mustache: 'bower_components/mustache/mustache',
-    requireLib: 'bower_components/requirejs/require',
-    text: 'bower_components/requirejs-text/text',
+    jquery: '../vendor/jquery/jquery',
+    underscore: '../vendor/lodash/js/lodash',
+    backbone: '../vendor/backbone/js/backbone',
+    mustache: '../vendor/mustache/js/mustache',
+    requireLib: '../vendor/requirejs/js/require',
+    text: '../vendor/requirejs-text/js/text',
     // Unit testing libraries
-    mocha: 'bower_components/mocha/mocha',
-    chai: 'bower_components/chai/chai',
-    sinon: 'bower_components/sinonjs/sinon'
+    mocha: '../vendor/mocha/js/mocha',
+    chai: '../vendor/chai/chai',
+    sinon: '../vendor/sinonjs/sinon'
   },
 
   shim: {
