@@ -2,16 +2,16 @@
   "name": "eggshell",
   "version": "0.0.5",
   "dependencies": {
-    "requirejs": "2.1.8",
+    "requirejs": "2.1.9",
     "requirejs-text": "2.0.10",
     "jquery": "2.0.3",
     "lodash": "2.2.1",
-    "backbone": "1.0.0",
+    "backbone": "1.1.0",
     "mustache": "0.7.2"
   },
   "devDependencies": {
     "mocha": "1.13.0",
-    "chai": "1.8.0",
+    "chai": "1.8.1",
     "sinonjs": "1.7.1"
   },
   "exportsOverride": {
