@@ -9,9 +9,8 @@
  * - support buffer for dataURL
  */
 self.addEventListener('message', function(e) {
-  var verb = Object.keys(e.data).filter(function(key){
-    return /get|post|put|delete|patch/i.test(key)
-  })[0];
+  var isVerb = /get|post|put|delete|patch/i;
+  var verb = Object.keys(e.data).filter(isVerb.test, isVerb)[0];
 
   request({
     verb: verb.toUpperCase(),
@@ -23,7 +22,14 @@ self.addEventListener('message', function(e) {
   self.close();
 });
 
-var request = function(options){
+var mimeMap = {
+  form: 'application/x-www-form-urlencoded; charset=utf-8',
+  //form: 'multipart/form-data; charset=utf-8'
+  json: 'application/json',
+  text: 'text/plain'
+};
+
+var request = function request(options){
   var xhr = new XMLHttpRequest();
   xhr.addEventListener('load', onLoad, false);
   xhr.addEventListener('error', onError, false);
@@ -37,13 +43,6 @@ var request = function(options){
   xhr.send(options.data);
 
 }
-
-var mimeMap = {
-  form: 'application/x-www-form-urlencoded; charset=utf-8',
-  //form: 'multipart/form-data; charset=utf-8'
-  json: 'application/json',
-  text: 'text/plain'
-};
 
 function onLoad(e){
   //currentTarget, srcElement, target,
