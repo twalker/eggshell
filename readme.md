@@ -1,4 +1,4 @@
-local change test eggshell
+eggshell
 ========
 
 a starting point for hatching ideas.
