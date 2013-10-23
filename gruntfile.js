@@ -7,29 +7,15 @@ module.exports = function(grunt) {
     // Shared JS File locations
     jsfiles: {
       client: [
-        'bower.json',
         'gruntfile.js',
-        'public/js/src/**/*.js'
+        'public/js/src/**/*.js',
+        '!public/js/src/bower_components/**'
       ],
       server: [
         'app.js',
         'package.json',
         'routes/*'
       ]
-    },
-    // The bower task installs bower components and moves the required files
-    // into the vendor folder.
-    bower: {
-      install: {
-        options: {
-          targetDir: 'public/js/vendor',
-          layout: 'byComponent',
-          install: true,
-          verbose: true,
-          cleanTargetDir: false,
-          cleanBowerDir: true
-        }
-      }
     },
 
     // The clean task removes previous built files from the dist folder.
@@ -130,7 +116,6 @@ module.exports = function(grunt) {
   });
 
   /* Load task plugins */
-  grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-stylus');
@@ -139,10 +124,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-notify');
 
   /* Register primary tasks */
-
-  // `grunt install` installs bower dependencies
-  grunt.registerTask('install', ['bower']);
-
   // `grunt build` builds fresh production js/css files
   grunt.registerTask('build', ['jshint', 'clean', 'stylus', 'requirejs']);
 

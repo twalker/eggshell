@@ -1,6 +1,5 @@
 node_modules
 bower_components
-vendor
 npm-debug.log
 dist
 *.orig
