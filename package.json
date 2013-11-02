@@ -20,7 +20,8 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-notify": "~0.2.13",
-    "bower": "~1.2.6"
+    "bower": "~1.2.6",
+    "matchdep": "*"
   },
   "scripts": {
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",

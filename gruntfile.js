@@ -116,12 +116,7 @@ module.exports = function(grunt) {
   });
 
   /* Load task plugins */
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-requirejs');
-  grunt.loadNpmTasks('grunt-notify');
+  require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
   /* Register primary tasks */
   // `grunt build` builds fresh production js/css files
