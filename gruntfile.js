@@ -82,6 +82,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     // watches for file changes and performs tasks
     watch: {
       css: {
