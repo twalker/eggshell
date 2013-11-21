@@ -3,13 +3,14 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
+    bowerDir: grunt.file.readJSON('.bowerrc').directory,
 
     // Shared JS File locations
     jsfiles: {
       client: [
         'gruntfile.js',
         'public/js/src/**/*.js',
-        '!public/js/src/bower_components/**'
+        '!<%= bowerDir %>/**'
       ],
       server: [
         'app.js',
@@ -19,7 +20,11 @@ module.exports = function(grunt) {
     },
 
     // The clean task removes previous built files from the dist folder.
-    clean: ['public/js/dist/'],
+    clean: {
+      dist: ['public/js/dist/'],
+      modules: ['node_modules'],
+      components: ['<%= bowerDir %>']
+    },
 
     jshint: {
       options: {jshintrc: '.jshintrc'},
@@ -121,10 +126,12 @@ module.exports = function(grunt) {
 
   /* Register primary tasks */
   // `grunt build` builds fresh production js/css files
-  grunt.registerTask('build', ['jshint', 'clean', 'stylus', 'requirejs']);
+  grunt.registerTask('build', ['jshint', 'clean:dist', 'stylus', 'requirejs']);
 
-  // `grunt dev` builds fresh distributable js/css files and starts watching for
-  // code changes--sending livereload messages when it does.
+  // `grunt uninstall` cleans out all external dependencies
+  grunt.registerTask('uninstall', ['clean']);
+
+  // `grunt dev` builds fresh distributable js/css files and starts watching
   grunt.registerTask('dev', ['build', 'watch']);
 
   // `grunt` an alias to the build task
