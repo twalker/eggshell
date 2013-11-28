@@ -118,6 +118,15 @@ module.exports = function(grunt) {
           livereload: true
         }
       }
+    },
+    'node-inspector': {
+      custom: {
+        options: {
+          //'web-port': 3000,
+          //'web-host': 'localhost'
+          'save-live-edit': true
+        }
+      }
     }
   });
 
@@ -132,7 +141,7 @@ module.exports = function(grunt) {
   grunt.registerTask('uninstall', ['clean']);
 
   // `grunt dev` builds fresh distributable js/css files and starts watching
-  grunt.registerTask('dev', ['build', 'watch']);
+  grunt.registerTask('dev', ['build', 'watch', 'node-inspector']);
 
   // `grunt` an alias to the build task
   grunt.registerTask('default', ['build']);

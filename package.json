@@ -21,10 +21,13 @@
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-notify": "~0.2.16",
     "bower": "~1.2.7",
-    "matchdep": "*"
+    "matchdep": "*",
+    "grunt-node-inspector": "~0.1.2"
   },
   "scripts": {
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",
-    "start": "node app"
+    "test-sh": "bin/mocha-test.sh",
+    "start": "node app",
+    "start-dev": "node --debug app"
   }
 }

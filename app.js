@@ -18,7 +18,6 @@ app
   .set('version', pkg.version)
   .use(express.favicon('public/img/favicon.ico'))
   .use(express.logger('dev'))
-  .use(express.bodyParser())
   .use(app.router)
   // use mock json files for api requests
   .use('/api', mocki())
