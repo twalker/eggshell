@@ -22,12 +22,12 @@
     "grunt-notify": "~0.2.16",
     "bower": "~1.2.7",
     "matchdep": "*",
-    "grunt-node-inspector": "~0.1.2"
+    "node-inspector": "~0.6.1"
   },
   "scripts": {
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",
     "test-sh": "bin/mocha-test.sh",
     "start": "node app",
-    "start-dev": "node --debug app"
+    "start-dev": "node-inspector --save-live-edit & node --debug app"
   }
 }

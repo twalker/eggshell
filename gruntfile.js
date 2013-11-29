@@ -118,15 +118,6 @@ module.exports = function(grunt) {
           livereload: true
         }
       }
-    },
-    'node-inspector': {
-      custom: {
-        options: {
-          //'web-port': 3000,
-          //'web-host': 'localhost'
-          'save-live-edit': true
-        }
-      }
     }
   });
 

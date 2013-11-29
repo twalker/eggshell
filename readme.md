@@ -26,10 +26,13 @@ assuming npm, grunt, and bower are available globally:
 `grunt build`  
 
 ### run
-`npm start` for the site, and `grunt dev` in a second terminal tab for live-reload goodness.
+`npm start` for the server-side app, or  
+`npm run start-dev` to start with node-inspector debugging.  
+
+`grunt dev` in a separate terminal tab for live-reload goodness.
 
 ### test
-`npm test` for server-side
+`npm test` for server-side  
 browse to `/client-tests/` for client-side
 
 ### build
