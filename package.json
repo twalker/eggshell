@@ -1,6 +1,6 @@
 {
   "name": "eggshell",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "dependencies": {
     "express": "~3.4.4",
@@ -22,12 +22,15 @@
     "grunt-notify": "~0.2.16",
     "bower": "~1.2.7",
     "matchdep": "*",
-    "node-inspector": "~0.6.1"
+    "node-inspector": "~0.6.1",
+    "pm2": "~0.6.8"
   },
   "scripts": {
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",
     "test-sh": "bin/mocha-test.sh",
     "start": "node app",
-    "start-dev": "node-inspector --save-live-edit & node --debug app"
+    "start-dev": "node-inspector --save-live-edit & node --debug app",
+    "start-prod": "NODE_ENV=production pm2 start app.js --name eggshell -i max",
+    "stop-prod": "pm2 stop eggshell"
   }
 }

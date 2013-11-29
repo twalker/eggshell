@@ -25,10 +25,17 @@ assuming npm, grunt, and bower are available globally:
 `bower install`  
 `grunt build`  
 
-### run
-`npm start` for the server-side app, or  
-`npm run start-dev` to start with node-inspector debugging.  
+for server-side debugging and emulating a production environment:  
+`npm install -g pm2 node-inspector`  
 
+### run
+
+**server-side**, start the app in one of the following ways:  
+`npm start`  
+`npm run start-dev` to start with node-inspector debugging.  
+`npm run start-prod` to emulate a production environment (uses [pm2](https://github.com/Unitech/pm2).  
+
+**client-side**: 
 `grunt dev` in a separate terminal tab for live-reload goodness.
 
 ### test
@@ -40,8 +47,9 @@ browse to `/client-tests/` for client-side
 
 ### browse
 
-`NODE_ENV=test node app` # individual js requests
+`NODE_ENV=test node app` # to serve individual js requests
 
-`NODE_ENV=development node app` # concatenated, but not minified js (default)
+`npm start` # to serve concatenated, but not minified js (default)
 
-`NODE_ENV=production node app` # concatenated and minified js
+`npm run start-prod` OR set `NODE_ENV=production` # to serve concatenated and minified js
+
