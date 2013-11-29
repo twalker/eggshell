@@ -33,9 +33,9 @@ for server-side debugging and emulating a production environment:
 **server-side**, start the app in one of the following ways:  
 `npm start`  
 `npm run start-dev` to start with node-inspector debugging.  
-`npm run start-prod` to emulate a production environment (uses [pm2](https://github.com/Unitech/pm2).  
+`npm run start-prod` to emulate a production environment (uses [pm2](https://github.com/Unitech/pm2)).  
 
-**client-side**: 
+**client-side**:  
 `grunt dev` in a separate terminal tab for live-reload goodness.
 
 ### test
