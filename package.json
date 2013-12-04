@@ -26,6 +26,7 @@
     "pm2": "~0.6.8"
   },
   "scripts": {
+    "postinstall": "bower install; grunt build",
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",
     "test-sh": "bin/mocha-test.sh",
     "start": "node app",
