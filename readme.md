@@ -21,7 +21,9 @@ I want to write code instead of reading configuration documentation.
 ### install
 
 assuming npm, grunt, and bower are available globally:  
-`npm install` 
+`npm install`  
+`bower install`  
+`grunt build`  
 
 for server-side debugging and emulating a production environment:  
 `npm install -g pm2 node-inspector`  
