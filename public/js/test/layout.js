@@ -1,7 +1,7 @@
 require(['require', 'mocha', 'chai', 'sinon',
     'backbone',
     'mustache',
-    'views/widgets/layout/layout',
+    'views/layout',
     'text!../test/layout-fixture.mustache'
   ], function(require, mocha, chai, sinon, Backbone, Mustache, Layout, layoutTemplate){
   // Setup

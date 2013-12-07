@@ -6,7 +6,6 @@
  * Views can be assigned at instantiation or after.
  * Like a faithful parent, Layout cleans up after it's child views.
  *
- * TOREVISIT: layoutable as mixin
  *
  * @example
  * var myTemplate = '<p data-region="primary"><!-- view element injected here --></p>';
@@ -29,7 +28,13 @@
  *
  * // swap view1 for view3--view1 will be removed.
  * myLayout.assignView('primary', view3).render();
-  */
+ *
+ * TODO:
+ * - currently cannot re-render when using the replace option:
+ *  data-region-options="{replace:true}"
+ * - event attachment issues when child views are rendered before in the dom
+ *
+*/
 define(function(require){
   var jQuery = require('jquery')
     , lodash = require('underscore')
