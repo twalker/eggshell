@@ -45,7 +45,7 @@ define(function(require){
 
     constructor: function Layout(options){
       // compiled template expected by subclass or instances
-      if(options && options.template) this.template = lodash.partial(Mustache.render, options.template);
+      if(options && options.template) this.template = options.template;
 
       // create references to the view assigned to each region.
       this.regions = {};
@@ -158,7 +158,7 @@ define(function(require){
 
       var viewmodel = this.getViewModel();
 
-      this.$el.html(this.template(viewmodel));
+      this.$el.html(Mustache.render(this.template, viewmodel));
 
       // mark regions for this layout, to avoid naming conflicts with nested layouts.
       [].forEach.call(this.el.querySelectorAll('[data-region]'), function(el){

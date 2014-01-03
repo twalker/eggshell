@@ -5,12 +5,11 @@ define(function(require, exports, module){
   var Backbone = require('backbone'),
     lodash = require('underscore'),
     Mustache = require('mustache'),
-    mainTemplate = require('text!views/eggs/eggs.mustache'),
     jQuery = require('jquery');
 
   var EggsView = Backbone.View.extend({
+    template: require('text!views/eggs/eggs.mustache'),
     className: 'eggs',
-    template: lodash.partial(Mustache.render, mainTemplate),
     events: {
       'click li': 'onClick'
     },
@@ -27,7 +26,7 @@ define(function(require, exports, module){
     },
 
     render: function(){
-      this.$el.html(this.template({
+      this.$el.html(Mustache.render(this.template, {
         eggs: this.collection.toJSON(),
         crackedCount: this.collection.crackedCount()
       }));

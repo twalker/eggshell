@@ -1,4 +1,4 @@
-doctype 5
+doctype html
 html
   head
     title #{title} v#{settings.version} (#{settings.env})
@@ -10,6 +10,6 @@ html
       when 'development'
         script(src='/js/dist/#{settings.name}.dev.js')
       default
-        script(src='/js/src/vendor/require.js', data-main="/js/src/config")
+        script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
   body
     block content
