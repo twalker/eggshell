@@ -9,7 +9,7 @@
     "nib": "~1.0.1"
   },
   "devDependencies": {
-    "mocha": "~1.15.1",
+    "mocha": "~1.16.2",
     "chai": "~1.8.1",
     "supertest": "~0.8.2",
     "cuid": "~1.2.1",

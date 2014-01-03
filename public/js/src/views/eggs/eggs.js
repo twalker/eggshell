@@ -3,13 +3,14 @@
  */
 define(function(require, exports, module){
   var Backbone = require('backbone'),
+    lodash = require('underscore'),
     Mustache = require('mustache'),
     mainTemplate = require('text!views/eggs/eggs.mustache'),
     jQuery = require('jquery');
 
   var EggsView = Backbone.View.extend({
     className: 'eggs',
-    template: Mustache.compile(mainTemplate),
+    template: lodash.partial(Mustache.render, mainTemplate),
     events: {
       'click li': 'onClick'
     },

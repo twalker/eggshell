@@ -1,9 +1,10 @@
 require(['require', 'mocha', 'chai', 'sinon',
+    'underscore',
     'backbone',
     'mustache',
     'views/layout',
     'text!../test/layout-fixture.mustache'
-  ], function(require, mocha, chai, sinon, Backbone, Mustache, Layout, layoutTemplate){
+  ], function(require, mocha, chai, sinon, lodash, Backbone, Mustache, Layout, layoutTemplate){
   // Setup
   var assert = chai.assert;
 
@@ -100,11 +101,11 @@ require(['require', 'mocha', 'chai', 'sinon',
 
       it('should allow nested layouts without collisions', function(){
         var parentLayout = new(Layout.extend({
-          template: Mustache.compile('<section data-region="clash"></section>')
+          template: lodash.partial(Mustache.render, '<section data-region="clash"></section>')
         }))();
 
         var nestedLayout = new(Layout.extend({
-          template: Mustache.compile('<section data-region="clash"></section>')
+          template: lodash.partial(Mustache.render, '<section data-region="clash"></section>')
         }))();
 
         var innerChild = new Backbone.View({});

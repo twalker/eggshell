@@ -45,7 +45,7 @@ define(function(require){
 
     constructor: function Layout(options){
       // compiled template expected by subclass or instances
-      if(options && options.template) this.template = Mustache.compile(options.template);
+      if(options && options.template) this.template = lodash.partial(Mustache.render, options.template);
 
       // create references to the view assigned to each region.
       this.regions = {};
