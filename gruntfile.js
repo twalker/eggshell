@@ -122,7 +122,7 @@ module.exports = function(grunt) {
   });
 
   /* Load task plugins */
-  require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   /* Register primary tasks */
   // `grunt build` builds fresh production js/css files

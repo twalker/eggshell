@@ -34,36 +34,47 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('rjs', function() {
+gulp.task('rjs-dev', function() {
   rjs({
-    baseUrl: './public/js/src',
     out: 'eggshell.dev.js',
+    baseUrl: './public/js/src',
     mainConfigFile: './public/js/src/config.js',
-    //useSourceUrl: true,
-    //optimize: 'none',
-    //generateSourceMaps: true,
     name: 'config',
+    optimize: 'none',
+    include: 'requireLib',
+    useSourceUrl: true
+  })
+  .pipe(gulp.dest('./public/js/dist/'))
+  .pipe(refresh(server));
+});
+
+gulp.task('rjs-prod', function() {
+  rjs({
+    out: 'eggshell.prod.js',
+    baseUrl: './public/js/src',
+    mainConfigFile: './public/js/src/config.js',
+    name: 'config',
+    optimize: 'none',
     include: 'requireLib'
   })
-  //.pipe(uglify())
+  .pipe(uglify({ outSourceMap: false }))
   .pipe(gulp.dest('./public/js/dist/'))
-  .pipe(refresh(server));;
 });
 
 gulp.task('dev', function(){
 
-  gulp.run('livereload', 'stylus');
+  gulp.run('livereload');
 
-  gulp.watch('./public/css/style.styl', function(ev){
-    gulp.run('stylus')
+  gulp.watch('./public/css/style.styl', function(){
+    gulp.run('stylus');
   });
 
-  gulp.watch('./public/js/src/**/*.js', function(ev){
-    gulp.run('lint', 'rjs')
+  gulp.watch('./public/js/src/**/*.js', function(){
+    gulp.run('lint', 'rjs-dev');
   });
 
 });
 
 gulp.task('default', function(){
-  gulp.run('stylus', 'rjs');
+  gulp.run('stylus', 'rjs-dev', 'rjs-prod');
 });
