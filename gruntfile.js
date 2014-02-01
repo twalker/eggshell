@@ -70,6 +70,11 @@ module.exports = function(grunt) {
       }
     },
 
+    // bumpup patch number
+    bumpup: {
+      files: ['package.json', 'bower.json']
+    },
+
     notify: {
       css: {
         options: {
@@ -126,7 +131,7 @@ module.exports = function(grunt) {
 
   /* Register primary tasks */
   // `grunt build` builds fresh production js/css files
-  grunt.registerTask('build', ['jshint', 'clean:dist', 'stylus', 'requirejs']);
+  grunt.registerTask('build', ['jshint', 'clean:dist', 'stylus', 'requirejs', 'bumpup']);
 
   // `grunt uninstall` cleans out all external dependencies
   grunt.registerTask('uninstall', ['clean']);

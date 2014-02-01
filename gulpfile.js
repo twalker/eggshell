@@ -1,5 +1,5 @@
 var gulp = require('gulp')
-  , gutil = require('gulp-util')
+  , bump = require('gulp-bump')
   , clean = require('gulp-clean')
   , stylus = require('gulp-stylus')
   , watch = require('gulp-watch')
@@ -61,6 +61,13 @@ gulp.task('rjs-prod', function() {
   .pipe(gulp.dest('./public/js/dist/'))
 });
 
+// Update bower, component, npm at once:
+gulp.task('bump', function(){
+  gulp.src(['./bower.json', './package.json'])
+    .pipe(bump())
+    .pipe(gulp.dest('./'));
+});
+
 gulp.task('dev', function(){
 
   gulp.run('livereload');
@@ -76,5 +83,5 @@ gulp.task('dev', function(){
 });
 
 gulp.task('default', function(){
-  gulp.run('stylus', 'rjs-dev', 'rjs-prod');
+  gulp.run('clean', 'stylus', 'rjs-dev', 'rjs-prod', 'bump');
 });
