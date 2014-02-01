@@ -2,38 +2,40 @@ var gulp = require('gulp')
   , bump = require('gulp-bump')
   , clean = require('gulp-clean')
   , stylus = require('gulp-stylus')
-  , watch = require('gulp-watch')
+  , notify = require('gulp-notify')
   , jshint = require('gulp-jshint')
   , rjs = require('gulp-requirejs')
   , uglify = require('gulp-uglify')
-  , refresh = require('gulp-livereload')
+  , livereload = require('gulp-livereload')
   , lr = require('tiny-lr')
   , server = lr();
 
-gulp.task('clean', function() {
-  gulp.src(['./public/js/dist/'], {read: false})
-    .pipe(clean());
+gulp.task('css', function(){
+  return gulp.src('public/css/style.styl')
+    .pipe(stylus({use: ['nib']}))
+    .pipe(gulp.dest('public/css'))
+    .pipe(livereload(server))
+    .pipe(notify({ message: 'css built' }));
 });
 
-gulp.task('livereload', function(){
-  server.listen(35729, function(err){
-    if(err) return console.log(err);
-  });
-});
-
-gulp.task('stylus', function(){
-  gulp.src('public/css/style.styl')
-  .pipe(stylus({use: ['nib']}))
-  .pipe(gulp.dest('public/css'))
-  .pipe(refresh(server));
-});
-
-gulp.task('lint', function() {
-  gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
+gulp.task('js', function() {
+  return gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
     .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(rjs({
+      out: 'eggshell.dev.js',
+      baseUrl: './public/js/src',
+      mainConfigFile: './public/js/src/config.js',
+      name: 'config',
+      optimize: 'none',
+      include: 'requireLib',
+      useSourceUrl: true
+    }))
+    .pipe(gulp.dest('./public/js/dist/'))
+    .pipe(livereload(server))
+    .pipe(notify({ onLast: true, message: 'js built' }));
 });
-
+/*
 gulp.task('rjs-dev', function() {
   rjs({
     out: 'eggshell.dev.js',
@@ -45,7 +47,7 @@ gulp.task('rjs-dev', function() {
     useSourceUrl: true
   })
   .pipe(gulp.dest('./public/js/dist/'))
-  .pipe(refresh(server));
+  .pipe(livereload(server));
 });
 
 gulp.task('rjs-prod', function() {
@@ -60,28 +62,32 @@ gulp.task('rjs-prod', function() {
   .pipe(uglify({ outSourceMap: false }))
   .pipe(gulp.dest('./public/js/dist/'))
 });
+*/
 
-// Update bower, component, npm at once:
+gulp.task('clean', function() {
+  return gulp.src(['./public/js/dist/'], {read: false})
+    .pipe(clean());
+});
+
+// Increment packages by patch point
 gulp.task('bump', function(){
   gulp.src(['./bower.json', './package.json'])
     .pipe(bump())
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('dev', function(){
+gulp.task('watch', function(){
 
-  gulp.run('livereload');
+  server.listen(35729, function (err) {
+    if (err) return console.log(err);
 
-  gulp.watch('./public/css/style.styl', function(){
-    gulp.run('stylus');
-  });
+    gulp.watch('./public/css/style.styl', ['css']);
+    gulp.watch('./public/js/src/**/*.js', ['js']);
 
-  gulp.watch('./public/js/src/**/*.js', function(){
-    gulp.run('lint', 'rjs-dev');
   });
 
 });
 
-gulp.task('default', function(){
-  gulp.run('clean', 'stylus', 'rjs-dev', 'rjs-prod', 'bump');
+gulp.task('default', ['clean'], function(){
+  gulp.start('css', 'js', 'bump');
 });
