@@ -1,0 +1,7 @@
+<strong>{{width}} x {{height}}</strong>
+{{#sizes}}
+  <a data-size="{{id}}" title="{{width}} x {{height}}">{{label}}</a>
+{{/sizes}}
+<form>
+  <input name="w" value="{{width}}" /> x <input name="h" value="{{height}}"/> <button type="submit">resize</button>
+</form>
