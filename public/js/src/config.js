@@ -6,7 +6,7 @@ require.config({
 
   paths: {
     // Third-party libraries
-    jquery: 'bower_components/jquery/jquery',
+    jquery: 'bower_components/jquery/dist/jquery',
     underscore: 'bower_components/lodash/dist/lodash',
     backbone: 'bower_components/backbone/backbone',
     mustache: 'bower_components/mustache/mustache',
@@ -19,16 +19,8 @@ require.config({
   },
 
   shim: {
-    backbone: {
-      deps: ['underscore', 'jquery'],
-      exports: 'Backbone'
-    },
-    mocha: {
-      exports: 'mocha'
-    },
-    sinon: {
-      exports: 'sinon'
-    }
+    mocha: { exports: 'mocha' },
+    sinon: { exports: 'sinon' }
   }
 
 });
