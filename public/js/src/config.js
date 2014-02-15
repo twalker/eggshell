@@ -12,6 +12,8 @@ require.config({
     mustache: 'bower_components/mustache/mustache',
     requireLib: 'bower_components/requirejs/require',
     text: 'bower_components/requirejs-text/text',
+    wysiwyg: 'bower_components/bootstrap-wysiwyg/bootstrap-wysiwyg',
+
     // Unit testing libraries
     mocha: 'bower_components/mocha/mocha',
     chai: 'bower_components/chai/chai',
@@ -19,6 +21,7 @@ require.config({
   },
 
   shim: {
+    wysiwyg: { deps: ['jquery'], exports: '$.fn.wysiwyg' },
     mocha: { exports: 'mocha' },
     sinon: { exports: 'sinon' }
   }

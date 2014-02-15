@@ -1,9 +1,22 @@
 extends layout
 
 block content
-
   h1= title
   p get crackin' on the server!
 
   article#content
     p client-side failed?
+
+  include full-toolbar.html
+
+  //div.btn-toolbar(data-role="editor-toolbar", data-target="#editor")
+    a(data-edit="bold")
+      i.fa.fa-bold
+    a(data-edit="italic")
+      i.fa.fa-italic
+    a(data-edit="insertorderedlist") ol
+    a(data-edit="formatBlock h2") format block
+    a(data-edit="heading H2") Huge
+  div#editor(style="border: 1px solid #ccc; min-height: 10em;")
+    <p>Hello world</p>
+    <h3>Headings are good things, <em>Wouldn't you say?</em></h3>

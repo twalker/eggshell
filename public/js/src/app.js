@@ -7,6 +7,8 @@ define(function(require){
     Backbone = require('backbone'),
     nav = require('nav'),
 
+    wysiwyg = require('wysiwyg'),
+
     Egg = require('models/egg'),
     Eggs = require('collections/eggs'),
     EggsRouter = require('routers/eggs');
@@ -20,6 +22,9 @@ define(function(require){
 
     // single page app boot procedure
     init: function(bootdata){
+
+      window.editor = jQuery('#editor').wysiwyg({hotKeys: {}});
+
       // Instantiate root view
       var rootView = this.rootView = new Backbone.View({el: jQuery('#content')});
 
