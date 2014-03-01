@@ -3,13 +3,31 @@ html
   head
     title #{title} v#{settings.version} (#{settings.env})
     link(rel='stylesheet', href='/css/style.css')
+    script(src='/js/src/bower_components/es6-module-loader/dist/es6-module-loader.js')
+    //https://github.com/ModuleLoader/es6-module-loader
+    script.
+      System.baseURL = '/js/src/';
+      /*
+      System.import('flyweight').then(function(fly){
+        console.log('hello', fly)
+      }, function(err){
+        console.log('error', err)
+      });
+      */
+    script(type="module").
+      import {Character} from 'es6character';
+      import {Flyweight as fly} from 'flyweight';
 
-    case settings.env
-      when 'production'
-        script(src='/js/dist/#{settings.name}.prod.js')
-      when 'development'
-        script(src='/js/dist/#{settings.name}.dev.js')
-      default
-        script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
+      var c = new Character();
+      c.attack('Foo');
+      console.log('fly', fly)
+    //
+      case settings.env
+        when 'production'
+          script(src='/js/dist/#{settings.name}.prod.js')
+        when 'development'
+          script(src='/js/dist/#{settings.name}.dev.js')
+        default
+          script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
   body
     block content

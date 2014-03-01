@@ -7,6 +7,7 @@ var gulp = require('gulp')
   , rjs = require('gulp-requirejs')
   , uglify = require('gulp-uglify')
   , livereload = require('gulp-livereload')
+  , traceur = require('gulp-traceur')
   , lr = require('tiny-lr')
   , server = lr();
 
@@ -22,6 +23,8 @@ gulp.task('js', function() {
   return gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(traceur())
+    /*
     .pipe(rjs({
       out: 'eggshell.dev.js',
       baseUrl: './public/js/src',
@@ -31,6 +34,7 @@ gulp.task('js', function() {
       include: 'requireLib',
       useSourceUrl: true
     }))
+*/
     .pipe(gulp.dest('./public/js/dist/'))
     .pipe(livereload(server))
     .pipe(notify({ onLast: true, message: 'js built' }));

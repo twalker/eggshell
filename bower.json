@@ -1,25 +1,18 @@
 {
   "name": "eggshell",
   "version": "0.0.8",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "components",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
-    "requirejs": "2.1.10",
+    "requirejs": "2.1.11",
     "requirejs-text": "2.0.10",
     "jquery": "2.1.0",
     "lodash": "2.4.1",
-    "backbone": "1.1.1",
-    "mustache": "0.8.1"
+    "backbone": "1.1.2",
+    "mustache": "0.8.1",
+    "es6-module-loader": "~0.4.3"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
     "chai": "1.9.0",
-    "sinonjs": "1.7.3"
+    "sinonjs": "1.8.2"
   }
 }
