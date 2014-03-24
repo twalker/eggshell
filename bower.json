@@ -10,16 +10,16 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "2.1.10",
+    "requirejs": "2.1.11",
     "requirejs-text": "2.0.10",
     "jquery": "2.1.0",
     "lodash": "2.4.1",
-    "backbone": "1.1.1",
+    "backbone": "1.1.2",
     "mustache": "0.8.1"
   },
   "devDependencies": {
-    "mocha": "~1.17.1",
-    "chai": "1.9.0",
-    "sinonjs": "1.7.3"
+    "mocha": "~1.18.2",
+    "chai": "1.9.1",
+    "sinonjs": "1.9.0"
   }
 }
