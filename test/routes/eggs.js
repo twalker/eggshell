@@ -1,8 +1,6 @@
 var chai = require("chai"),
   assert = chai.assert,
-  expect = chai.expect,
-  request = require('supertest'),
-  express = require('express');
+  request = require('supertest');
 
 var app = require('../../app');
 
