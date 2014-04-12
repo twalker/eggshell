@@ -19,6 +19,7 @@ var update = function update(req, res) {
   var json = req.body;
   eggs[json.id] = json;
   console.log('%s egg updated', json.name);
+  res.json(eggs[json.id]);
 };
 
 router.use(bodyParser.json());

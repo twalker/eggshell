@@ -36,7 +36,7 @@ app.get('/', function(req, res){
 app.use('/client-tests', require('./routes/client-tests'));
 
 // use mock json files for api requests
-app.use('/api',require('mocki')(path.join(__dirname, 'test', 'fixtures')))
+app.use('/api',require('mocki')());
 // OR, manual api routes to egg resources (when not using mocki)
 //app.use('/api', require('./routes/eggs'))
 
