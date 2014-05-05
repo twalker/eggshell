@@ -8,6 +8,7 @@ var gulp = require('gulp')
   , uglify = require('gulp-uglify')
   , livereload = require('gulp-livereload')
   , traceur = require('gulp-traceur')
+  , rename = require('gulp-rename')
   , lr = require('tiny-lr')
   , server = lr();
 
@@ -19,11 +20,20 @@ gulp.task('css', function(){
     .pipe(notify({ message: 'css built' }));
 });
 
+gulp.task('transpile', function(){
+  return gulp.src(['./public/js/src/**/*.es6'])
+    .pipe(traceur({modules: "amd"}))
+    .pipe(rename(function(path){
+      path.extname = '.js';
+    }))
+    .pipe(gulp.dest('./public/js/src/'));
+
+});
+
 gulp.task('js', function() {
   return gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(traceur())
     /*
     .pipe(rjs({
       out: 'eggshell.dev.js',
@@ -86,6 +96,7 @@ gulp.task('watch', function(){
     if (err) return console.log(err);
 
     gulp.watch('./public/css/style.styl', ['css']);
+    gulp.watch('./public/js/src/**/*.es6', ['transpile']);
     gulp.watch('./public/js/src/**/*.js', ['js']);
 
   });
