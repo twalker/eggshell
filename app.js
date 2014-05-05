@@ -13,7 +13,7 @@ app
   .set('view engine', 'jade')
   .set('name', pkg.name)
   .set('version', pkg.version)
-  .use(require('static-favicon')('public/img/favicon.ico'))
+  .use(require('serve-favicon')('public/img/favicon.ico'))
   .use(require('morgan')('dev'))
   .use(stylus.middleware({
     src: path.join(__dirname, 'public'),
