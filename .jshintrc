@@ -19,8 +19,10 @@
 	"camelcase": true,
 	"browser" : true,
 	"node": true,
+	"esnext": true,
 	"devel": true,
 	"globals": {
-		"define": true
+		"define": true,
+		"$traceurRuntime": true
 	}
 }

@@ -1,0 +1,16 @@
+define([], function() {
+  "use strict";
+  var __moduleName = "character.es6";
+  var Character = function Character(name) {
+    this.name = name;
+  };
+  ($traceurRuntime.createClass)(Character, {attack: function(character) {
+      console.log(this.name, ' is attacking ', character);
+    }}, {});
+  return {
+    get Character() {
+      return Character;
+    },
+    __esModule: true
+  };
+});

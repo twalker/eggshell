@@ -6,6 +6,8 @@ var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , rjs = require('gulp-requirejs')
   , uglify = require('gulp-uglify')
+  , traceur = require('gulp-traceur')
+  , rename = require('gulp-rename')
   , livereload = require('gulp-livereload')
   , lr = require('tiny-lr')
   , server = lr();
@@ -16,6 +18,16 @@ gulp.task('css', function(){
     .pipe(gulp.dest('public/css'))
     .pipe(livereload(server))
     .pipe(notify({ message: 'css built' }));
+});
+
+gulp.task('transpile', function(){
+  return gulp.src(['./public/js/src/**/*.es6'])
+    .pipe(traceur({ modules: 'amd'}))
+    .pipe(rename(function(path){
+      path.extname = '.js';
+    }))
+    .pipe(gulp.dest('./public/js/src/'));
+
 });
 
 gulp.task('js', function() {
@@ -82,6 +94,7 @@ gulp.task('watch', function(){
     if (err) return console.log(err);
 
     gulp.watch('./public/css/style.styl', ['css']);
+    gulp.watch('./public/js/src/**/*.es6', ['transpile']);
     gulp.watch('./public/js/src/**/*.js', ['js']);
 
   });
