@@ -1,12 +1,9 @@
-var express = require('express'),
-  routes = require('./routes'),
-  eggs = require('./routes/eggs'),
-  mocki = require('./routes/mocki'),
-  http = require('http'),
-  path = require('path'),
-  stylus = require('stylus'),
-  nib = require('nib'),
-  pkg = require('./package.json');
+var express = require('express')
+  , http = require('http')
+  , path = require('path')
+  , stylus = require('stylus')
+  , nib = require('nib')
+  , pkg = require('./package.json');
 
 var app = module.exports = express();
 
@@ -16,36 +13,36 @@ app
   .set('view engine', 'jade')
   .set('name', pkg.name)
   .set('version', pkg.version)
-  .use(express.favicon('public/img/favicon.ico'))
-  .use(express.logger('dev'))
-  .use(app.router)
-  // use mock json files for api requests
-  .use('/api', mocki())
+  .use(require('static-favicon')('public/img/favicon.ico'))
+  .use(require('morgan')('dev'))
   .use(stylus.middleware({
     src: path.join(__dirname, 'public'),
-    compile: compileCss
+    compile: function compileCss(str, path) {
+      return stylus(str)
+        .set('filename', path)
+        .set('compress', true)
+        .use(nib());
+    }
   }))
   .use(express.static(path.join(__dirname, 'public')));
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+// spa home view -- routing handled w/pushState on the client
+app.get('/', function(req, res){
+  res.render('index', { title: require('./package.json').name });
 });
 
-// spa
-app.get('/', routes.index);
-
 // client-tests
-app.get('/client-tests/:name?', require('./routes/client-tests').show);
+//app.get('/client-tests/:name?', require('./routes/client-tests').show);
+app.use('/client-tests', require('./routes/client-tests'));
 
-// manual routes to egg resources
-//app.get('/api/eggs', eggs.list);
-//app.put('/api/eggs/:id', eggs.update);
+// use mock json files for api requests
+app.use('/api',require('mocki')());
+// OR, manual api routes to egg resources (when not using mocki)
+//app.use('/api', require('./routes/eggs'))
 
-function compileCss(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .set('compress', true)
-    .use(nib());
+// error handling
+if('production' !== app.get('env')){
+  app.use(require('errorhandler')({ dumpExceptions: true, showStack: true }));
 }
 
 http.createServer(app).listen(app.get('port'), function(){

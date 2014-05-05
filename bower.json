@@ -1,6 +1,14 @@
 {
   "name": "eggshell",
-  "version": "0.0.8",
+  "version": "0.0.12",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "requirejs": "2.1.11",
     "requirejs-text": "2.0.10",
@@ -13,11 +21,8 @@
     "traceur": "~0.0.33"
   },
   "devDependencies": {
-    "mocha": "~1.17.1",
-    "chai": "1.9.0",
-    "sinonjs": "1.8.2"
-  },
-  "resolutions": {
-    "traceur": "~0.0.33"
+    "mocha": "~1.18.2",
+    "chai": "1.9.1",
+    "sinonjs": "1.9.0"
   }
 }
