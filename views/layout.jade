@@ -3,10 +3,19 @@ html
   head
     title #{title} v#{settings.version} (#{settings.env})
     link(rel='stylesheet', href='/css/style.css')
-    script(src='/js/src/bower_components/es6-module-loader/dist/es6-module-loader.js')
-    //https://github.com/ModuleLoader/es6-module-loader
+
+    script(src='/js/src/system.js')
+
     script.
+      require = requirejs = System.require;
       System.baseURL = '/js/src/';
+      System.map[''] = '';
+
+      System.map['jquery'] = 'bower_components/jquery/dist/jquery';
+      System.map['underscore'] = 'bower_components/lodash/dist/lodash';
+      System.map['backbone'] = 'bower_components/backbone/backbone';
+      System.map['mustache'] = 'bower_components/mustache/mustache';
+
       /*
       System.import('flyweight').then(function(fly){
         console.log('hello', fly)
@@ -14,13 +23,16 @@ html
         console.log('error', err)
       });
       */
+      System.import('app').then(function(app){
+        console.log('app loaded', app)
+      }, function(err){console.log('error', err)});
     script(type="module").
       import {Character} from 'es6character';
       import {Flyweight as fly} from 'flyweight';
 
-      var c = new Character();
+      var c = new Character('scooby doo');
       c.attack('Foo');
-      console.log('fly', fly)
+      //console.log('fly', fly)
     //
       case settings.env
         when 'production'

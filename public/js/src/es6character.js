@@ -1,9 +1,8 @@
 export class Character {
-  constructor(x, y, name) {
-    this.x = x;
-    this.y = y;
+  constructor(name) {
+    this.name = name;
   }
   attack(character) {
-    console.log('attacking', character);
+    console.log(this.name, 'attacking', character);
   }
 }

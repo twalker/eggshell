@@ -53,3 +53,24 @@ browse to `/client-tests/` for client-side
 
 `npm run start-prod` OR set `NODE_ENV=production` # to serve concatenated and minified js
 
+----------------------------
+
+## es6-please notes
+
+video
+https://www.youtube.com/watch?v=0VUjM-jJf2U
+
+include order for system.js: 
+
+  unbuilt:
+    //traceur.js
+    //es-6-module-loader
+    system.js
+    app.js
+
+
+  on production:
+    //traceur-runtime.js
+    //es-6-module-loader
+    system.js
+    app-build.js
