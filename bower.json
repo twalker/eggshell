@@ -8,11 +8,16 @@
     "lodash": "2.4.1",
     "backbone": "1.1.2",
     "mustache": "0.8.1",
-    "es6-module-loader": "~0.4.3"
+    "es6-module-loader": "~0.5.4",
+    "system.js": "~0.5.5",
+    "traceur": "~0.0.33"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
     "chai": "1.9.0",
     "sinonjs": "1.8.2"
+  },
+  "resolutions": {
+    "traceur": "~0.0.33"
   }
 }
