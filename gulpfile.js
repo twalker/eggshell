@@ -22,7 +22,7 @@ gulp.task('css', function(){
 
 gulp.task('transpile', function(){
   return gulp.src(['./public/js/src/**/*.es6'])
-    .pipe(traceur({modules: "amd"}))
+    .pipe(traceur({modules: "instantiate"})) //"amd"
     .pipe(rename(function(path){
       path.extname = '.js';
     }))

@@ -4,12 +4,15 @@ html
     title #{title} v#{settings.version} (#{settings.env})
     link(rel='stylesheet', href='/css/style.css')
 
+    script(src='/js/src/bower_components/traceur/traceur.js')
+    //-
+      script(src='/js/src/es6-module-loader.js')
     script(src='/js/src/system.js')
 
     script.
       require = requirejs = System.require;
       System.baseURL = '/js/src/';
-      System.map[''] = '';
+      //System.map[''] = '';
 
       System.map['jquery'] = 'bower_components/jquery/dist/jquery';
       System.map['underscore'] = 'bower_components/lodash/dist/lodash';
@@ -25,10 +28,11 @@ html
       */
       System.import('app').then(function(app){
         console.log('app loaded', app)
+          app.init({});
       }, function(err){console.log('error', err)});
     script(type="module").
-      import {Character} from 'es6character';
-      import {Flyweight as fly} from 'flyweight';
+      import {Character} from 'js/src/es6character';
+      import {Flyweight as fly} from 'js/src/flyweight';
 
       var c = new Character('scooby doo');
       c.attack('Foo');

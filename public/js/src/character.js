@@ -1,16 +1,24 @@
-define([], function() {
+System.register([], function($__0) {
   "use strict";
-  var __moduleName = "character.es6";
-  var Character = function Character(name) {
-    this.name = name;
-  };
-  ($traceurRuntime.createClass)(Character, {attack: function(character) {
-      console.log(this.name, ' attacking  and stuff ', character);
-    }}, {});
+  var Character;
   return {
-    get Character() {
-      return Character;
+    exports: {
+      get Character() {
+        return Character;
+      },
+      set Character(value) {
+        Character = value;
+      }
     },
-    __esModule: true
+    execute: function() {
+      Character = (function() {
+        var Character = function Character(name) {
+          this.name = name;
+        };
+        return ($traceurRuntime.createClass)(Character, {attack: function(character) {
+            console.log(this.name, ' attacking  and stuff ', character);
+          }}, {});
+      }());
+    }
   };
 });

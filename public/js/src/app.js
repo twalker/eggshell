@@ -1,3 +1,4 @@
+"format amd";
 /**
  * Initializes the backbone application.
  */
