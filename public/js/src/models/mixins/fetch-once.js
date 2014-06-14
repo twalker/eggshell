@@ -27,7 +27,7 @@
 * });
 *
 * TODO:
-* - return more useful error
+* - If using backbone-promises, we don't need to cast jQuery Deferred with Promise.resolve.
 *
 **/
 define(function(require){

@@ -11,7 +11,7 @@ require([
   mocha.setup('bdd');
 
   // re-define Backbone ajax
-  describe('backbone-promises monkey patches a few Backbone pains', function() {
+  describe('`backbone-promises` monkey patches Backbone sync operations to return ES6 promises', function() {
     var server;
     beforeEach(function(){
       server = sinon.fakeServer.create();
@@ -43,7 +43,7 @@ require([
         url: '/testmodel',
       });
 
-      it('should pass the model/collection as the argument promise resolutions', function(done){
+      it('should pass the model/collection to promise fulfillments', function(done){
         var testattr = {id:1, name: 'foo'};
         var loadSpy = sinon.spy(),
           successSpy = sinon.spy();
@@ -51,14 +51,14 @@ require([
         var m = new TestModel();
 
         m
-          .save({name: "foo"})
+          .save({name: 'foo'})
             .then(function(model){
               assert.strictEqual(model, m);
             })
             .then(function(){
-              m.save({name: "updated foo"})
+              m.save({name: 'updated foo'})
                 .then(function(model){
-                  assert.equal(model.get('name'), "updated foo");
+                  assert.equal(model.get('name'), 'updated foo');
               })
             })
             .then(function(){
@@ -81,7 +81,7 @@ require([
         ]);
       });
 
-      it('should return the xhr object to rejections', function(done){
+      it('should pass the xhr object to promise rejections', function(done){
         var m = new TestModel();
         m
           .save({name: 'foo'}, {url:'/testmodel'})
@@ -107,7 +107,7 @@ require([
         }
       });
 
-      it('should reject promise with xhr when xhr fails', function(done){
+      it('should reject promise when xhr fails', function(done){
         var m = new TestModel();
         m.save({name: 'broken'}, {wait: true, validate: false}).catch(function(xhr){
           assert.equal(xhr.status, 500);
@@ -119,7 +119,7 @@ require([
         ]);
       });
 
-      it('should still emit `invalid` events and not sync when validation fails', function(done){
+      it('should still emit `invalid` event when validation fails, but now return rejected promise with model instead of false', function(done){
         var m = new TestModel({name: 'foo'});
         m.on('invalid', function(err){
           done();
