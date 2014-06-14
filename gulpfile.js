@@ -28,7 +28,7 @@ gulp.task('js', function() {
       mainConfigFile: './public/js/src/config.js',
       name: 'config',
       optimize: 'none',
-      include: 'requireLib',
+      include: 'require-lib',
       useSourceUrl: true
     }))
     .pipe(gulp.dest('./public/js/dist/'))
@@ -43,7 +43,7 @@ gulp.task('rjs-dev', function() {
     mainConfigFile: './public/js/src/config.js',
     name: 'config',
     optimize: 'none',
-    include: 'requireLib',
+    include: 'require-lib',
     useSourceUrl: true
   })
   .pipe(gulp.dest('./public/js/dist/'))
@@ -57,7 +57,7 @@ gulp.task('rjs-prod', function() {
     mainConfigFile: './public/js/src/config.js',
     name: 'config',
     optimize: 'none',
-    include: 'requireLib'
+    include: 'require-lib'
   })
   .pipe(uglify({ outSourceMap: false }))
   .pipe(gulp.dest('./public/js/dist/'))

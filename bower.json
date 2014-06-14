@@ -1,6 +1,6 @@
 {
   "name": "eggshell",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -15,7 +15,8 @@
     "jquery": "2.1.1",
     "lodash": "2.4.1",
     "backbone": "1.1.2",
-    "mustache": "0.8.1"
+    "mustache": "0.8.1",
+    "es6-promise": "~1.0.0"
   },
   "devDependencies": {
     "mocha": "~1.18.2",

@@ -8,10 +8,11 @@ require.config({
     // Third-party libraries
     jquery: 'bower_components/jquery/dist/jquery',
     underscore: 'bower_components/lodash/dist/lodash',
-    backbone: 'bower_components/backbone/backbone',
+    'backbone': 'bower_components/backbone/backbone',
     mustache: 'bower_components/mustache/mustache',
-    requireLib: 'bower_components/requirejs/require',
+    'require-lib': 'bower_components/requirejs/require',
     text: 'bower_components/requirejs-text/text',
+    'es6-promise': 'bower_components/es6-promise/promise',
     // Unit testing libraries
     mocha: 'bower_components/mocha/mocha',
     chai: 'bower_components/chai/chai',
@@ -19,6 +20,7 @@ require.config({
   },
 
   shim: {
+    'es6-promise': {exports: 'Promise'},
     mocha: { exports: 'mocha' },
     sinon: { exports: 'sinon' }
   }

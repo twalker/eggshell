@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         baseUrl: 'public/js/src',
         mainConfigFile: 'public/js/src/config.js',
         name: 'config',
-        include: 'requireLib'
+        include: 'require-lib'
       },
       // development env: no minification, YAGNI?
       dev: {
@@ -131,7 +131,7 @@ module.exports = function(grunt) {
 
   /* Register primary tasks */
   // `grunt build` builds fresh production js/css files
-  grunt.registerTask('build', ['jshint', 'clean:dist', 'stylus', 'requirejs', 'bumpup']);
+  grunt.registerTask('build', ['jshint', 'clean:dist', 'stylus', 'requirejs']);
 
   // `grunt uninstall` cleans out all external dependencies
   grunt.registerTask('uninstall', ['clean']);

@@ -1,6 +1,6 @@
 {
   "name": "eggshell",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "dependencies": {
     "body-parser": "^1.0.2",
