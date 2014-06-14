@@ -5,10 +5,13 @@
  * TODO:
  *  - get Backbone.noConflict to work to and not modify the original Backbone.
  */
-define(['backbone', 'es6-promise', 'ajax'], function(Backbone, Promise, ajax){
+define(['backbone', 'es6-promise'], function(Backbone, Promise){
 
   // Backbone.ajax to use native ES6 promises for ajax calls
-  Backbone.ajax = ajax;
+  var origAjax = Backbone.ajax;
+  Backbone.ajax = function ajax(){
+    return Promise.resolve(origAjax.apply(Backbone.$, arguments));
+  }
 
   // Backbone.sync to resolve with model/collection as the settlement argument.
   var origSync = Backbone.sync;
