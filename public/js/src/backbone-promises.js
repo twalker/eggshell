@@ -1,6 +1,9 @@
 /**
  * backbone-promises provides ES6 Promises for sync operations.
  * @return {Object} Backbone monkey-patched backbone.
+ *
+ * TODO:
+ *  - get Backbone.noConflict to work to and not modify the original Backbone.
  */
 define(['backbone', 'es6-promise', 'ajax'], function(Backbone, Promise, ajax){
 
