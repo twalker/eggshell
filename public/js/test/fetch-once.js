@@ -1,15 +1,13 @@
-require([
-  'mocha',
-  'chai',
-  'sinon',
+require(['mocha', 'chai', 'sinon',
+  'jquery',
   'underscore',
   'backbone',
+  'es6-promise',
   'models/mixins/fetch-once'
-], function(mocha, chai, sinon, lodash, Backbone, fetchOnce){
+], function(mocha, chai, sinon, jQuery, lodash, Backbone, Promise, fetchOnce){
 
-  // setup
+
   var assert = chai.assert;
-
   mocha.setup('bdd');
 
   describe('fetchOnce Model (or Collection) mixin', function() {
@@ -31,8 +29,8 @@ require([
         load: fetchOnce
       });
 
-      // althernate style: mixin load method
-      //lodash.defaults(OnceModel.prototype, {fetchOnce: fetchOnce});
+      // alternate style: mixin load method
+      // lodash.defaults(OnceModel.prototype, {fetchOnce: fetchOnce});
 
       it('should make one request, re-using promise on subsequent load calls', function(done){
         server.respondWith('GET', '/load-only-once', [
@@ -43,10 +41,10 @@ require([
 
         var m = new OnceModel();
         m.load({success: successSpy})
-          .done(loadSpy);
+          .then(loadSpy);
 
         m.load({success: successSpy})
-          .done(loadSpy);
+          .then(loadSpy);
 
         m.load()
           .then(function(){
@@ -59,7 +57,7 @@ require([
           });
       });
 
-      it('should resolve with the model and the raw json response', function(done){
+      it('should resolve with the model', function(done){
         server.respondWith('GET', '/load-only-once', [
           200, {'Content-Type': 'application/json'}, '{"id":2}'
         ]);
@@ -67,17 +65,17 @@ require([
 
         var m = new OnceModel();
         m.load()
-          .done(loadSpy);
+          .then(loadSpy);
 
         m.load()
           .then(function(){
-            assert.isTrue(loadSpy.calledWithExactly(m, {id: 2}));
+            assert.isTrue(loadSpy.calledWithExactly(m));
             done();
           });
       });
 
 
-      it('should always call success and error callbacks if provided in fetch options', function(done){
+      it('should always call success callbacks if provided in fetch options', function(done){
         server.respondWith('GET', '/load-only-once', [
           200, {'Content-Type': 'application/json'}, '{"id":1}'
         ]);
@@ -95,7 +93,7 @@ require([
           });
       });
 
-      it('should also fail promises and error callbacks', function(done){
+      it('should also catch rejected promises and error callbacks', function(done){
         server.respondWith('GET', '/load-only-once', [
           500, {'Content-Type': 'application/json'}, 'ERROR'
         ]);
@@ -105,19 +103,17 @@ require([
           errorSpy = sinon.spy();
 
         var m = new OnceModel();
-        var p = m.load({error: errorSpy})
-          .done(loadSpy)
-          .fail(failSpy);
 
-         m.load({error: errorSpy})
-
-        p.fail(function(){
+        var p = m
+          .load({error: errorSpy}).then(loadSpy)
+          .catch(function(xhr){
             assert.isFalse(loadSpy.called);
-            assert.isTrue(errorSpy.calledTwice)
-            assert.isTrue(failSpy.called);
-            assert.isTrue(failSpy.calledWith(m));
+            assert.isTrue(errorSpy.called);
+            //assert.isTrue(errorSpy.calledWith(err))
+            //assert.equal(err.constructor, Error);
+            assert.isObject(xhr, 'should return the xhr for now')
             done();
-          });
+        });
       });
 
 
@@ -129,10 +125,10 @@ require([
 
         var m = new OnceModel();
         m.load()
-          .done(loadSpy);
+          .then(loadSpy);
 
         m.load({reload: true})
-          .done(loadSpy);
+          .then(loadSpy);
 
         m.load()
           .then(function(){
@@ -141,7 +137,6 @@ require([
             done();
           });
       });
-
 
     });
 
@@ -161,11 +156,11 @@ require([
         var pModel = new PatchedModel({id:1});
         pModel
           .fetch()
-          .done(fetchSpy);
+          .then(fetchSpy);
 
         pModel
           .fetch()
-          .done(function(){
+          .then(function(){
             assert.isTrue(fetchSpy.called);
             assert.equal(server.requests.length, 1);
             done()
@@ -188,17 +183,62 @@ require([
         var col = new OnceCollection();
         col
           .fetch()
-          .done(fetchSpy);
+          .then(fetchSpy);
 
         col
           .fetch()
-          .done(function(){
+          .then(function(){
             assert.isTrue(fetchSpy.called);
             assert.equal(server.requests.length, 1);
-            assert.isTrue(fetchSpy.calledWithExactly(col, [{id: 1}, {id: 2}]));
+            assert.isTrue(fetchSpy.calledWithExactly(col));
             done()
           });
       });
+    });
+
+    describe('using with jQuery.when and Promise.all', function(){
+      var OnceModel = Backbone.Model.extend({
+        url: '/load',
+        fetch: fetchOnce
+      });
+
+      it.skip('should NOT BE USED in a `jQuery.when`', function(done){
+        var pSpy = sinon.spy(),
+            dSpy = sinon.spy(),
+            dSpy2 = sinon.spy();
+
+        server.respondWith('GET', '/load', [
+          200, {'Content-Type': 'application/json'}, '{"id":1}'
+        ]);
+
+        var pModel = new OnceModel({id:1});
+        jQuery.when(jQuery.get('/load', dSpy), pModel.fetch({success: pSpy}), jQuery.get('/load', dSpy2)).then(function(results){
+          assert.isTrue(pSpy.calledAfter(dSpy))
+          assert.isTrue(pSpy.calledBefore(dSpy2))
+          done();
+        })
+
+      });
+
+      it('should be thenable in a `Promise.all`', function(done){
+        server.respondWith('GET', '/load', [
+          200, {'Content-Type': 'application/json'}, '{"id":1}'
+        ]);
+
+        var pModel = new OnceModel();
+        var pModel2 = new OnceModel();
+
+        Promise
+          .all([pModel.fetch(), pModel2.fetch()])
+          .then(function(results){
+            //console.log('results', results)
+            assert.equal(pModel, results[0]);
+            assert.equal(pModel2, results[1]);
+            done();
+        });
+
+      });
+
     });
 
   });
