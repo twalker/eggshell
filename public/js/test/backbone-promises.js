@@ -2,7 +2,7 @@ require([
   'mocha',
   'chai',
   'sinon',
-  'backbone-promises'
+  'backbone'
 ], function(mocha, chai, sinon, Backbone){
 
   // setup

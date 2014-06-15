@@ -26,14 +26,12 @@
 *   console.log('No xhr, re-uses promise from original fetch.')
 * });
 *
-* TODO:
-* - If using backbone-promises, we don't need to cast jQuery Deferred with Promise.resolve.
 *
 **/
 define(function(require){
   var Promise = require('es6-promise'),
-    Backbone = require('backbone-promises');
-
+    Backbone = require('backbone');
+  /* jshint maxcomplexity: 6 */
   return function fetchOnce(fetchOptions){
     var origFetch = Backbone[this instanceof Backbone.Collection ? 'Collection' : 'Model'].prototype.fetch,
         self = this,
@@ -51,8 +49,10 @@ define(function(require){
     }
 
     this._pFetch = new Promise(function fullfiller(resolve, reject){
-      // cast jQuery Deferred from fetch as a native ES6 Promise
-      Promise.resolve(origFetch.apply(self, origArgs))
+      // if not using backbone-promies, will need to
+      // cast original fetch (jQuery Deferred) as a native ES6 Promise
+     // e.g. Promise.resolve(origFetch.apply(self, origArgs)).then...;
+      origFetch.apply(self, origArgs)
         .then(
           function resolver(res){
             // resolve with the model/collection
@@ -60,7 +60,7 @@ define(function(require){
           },
 
           function rejecter(xhr){
-            // TODO: return more useful error
+            // resolve with xhr
             reject(xhr);
           }
         );

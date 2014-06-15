@@ -5,7 +5,7 @@
  * TODO:
  *  - get Backbone.noConflict to work to and not modify the original Backbone.
  */
-define(['backbone', 'es6-promise'], function(Backbone, Promise){
+define(['backbone-lib', 'es6-promise'], function(Backbone, Promise){
 
   // Backbone.ajax to use native ES6 promises for ajax calls
   var origAjax = Backbone.ajax;

@@ -8,7 +8,8 @@ require.config({
     // Third-party libraries
     jquery: 'bower_components/jquery/dist/jquery',
     underscore: 'bower_components/lodash/dist/lodash',
-    'backbone': 'bower_components/backbone/backbone',
+    'backbone-lib': 'bower_components/backbone/backbone',
+    'backbone': 'backbone-promises',
     mustache: 'bower_components/mustache/mustache',
     'require-lib': 'bower_components/requirejs/require',
     text: 'bower_components/requirejs-text/text',
