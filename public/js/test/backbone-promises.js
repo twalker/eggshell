@@ -10,8 +10,8 @@ require([
 
   mocha.setup('bdd');
 
-  // re-define Backbone ajax
   describe('`backbone-promises` monkey patches Backbone sync operations to return ES6 promises', function() {
+
     var server;
     beforeEach(function(){
       server = sinon.fakeServer.create();
@@ -36,6 +36,7 @@ require([
           200, {'Content-Type': 'application/json'}, JSON.stringify(testattr)
         ]);
       });
+
     });
 
     describe('Backbone.sync', function(){
@@ -45,18 +46,16 @@ require([
 
       it('should pass the model/collection to promise fulfillments', function(done){
         var testattr = {id:1, name: 'foo'};
-        var loadSpy = sinon.spy(),
-          successSpy = sinon.spy();
-
         var m = new TestModel();
 
         m
           .save({name: 'foo'})
             .then(function(model){
               assert.strictEqual(model, m);
+              assert.equal(model.id, 1);
             })
             .then(function(){
-              m.save({name: 'updated foo'})
+              m.save({name: 'updated foo'}, {wait: true})
                 .then(function(model){
                   assert.equal(model.get('name'), 'updated foo');
               })
@@ -72,7 +71,7 @@ require([
           200, {'Content-Type': 'application/json'}, JSON.stringify(testattr)
         ]);
 
-        server.respondWith('PUT', '/testmodel', [
+        server.respondWith('PUT', '/testmodel/1', [
           200, {'Content-Type': 'application/json'}, JSON.stringify({id:1, name: 'updated foo'})
         ]);
 
@@ -107,7 +106,7 @@ require([
         }
       });
 
-      it('should reject promise when xhr fails', function(done){
+      it('should reject with xhr when xhr fails', function(done){
         var m = new TestModel();
         m.save({name: 'broken'}, {wait: true, validate: false}).catch(function(xhr){
           assert.equal(xhr.status, 500);
@@ -119,16 +118,79 @@ require([
         ]);
       });
 
-      it('should still emit `invalid` event when validation fails, but now return rejected promise with model instead of false', function(done){
+      it('should reject with an Error when model validation fails (NOT return false)', function(done){
+        var m = new TestModel();
+        m.save({name: 'broken'}).catch(function(err){
+          assert.instanceOf(err, Error);
+          assert.match(err.message, /invalid/i)
+          done();
+        });
+      });
+
+      it('should still emit `invalid` event when validation fails', function(done){
         var m = new TestModel({name: 'foo'});
-        m.on('invalid', function(err){
+        m.on('invalid', function(model){
+          assert.strictEqual(model, m);
+          assert.equal(model.validationError.name, 'is not valid');
           done();
         })
 
-        m.save({name: 'not valid'}).catch(function(model){
+        m.save({name: 'not valid'});
+
+      });
+
+      it('should still emit `error` events when xhr fails', function(done){
+        var m = new TestModel({name: 'foo'});
+        var errorSpy = sinon.spy();
+        m.on('error', function(model){
           assert.strictEqual(model, m);
-          assert.equal(model.get('name'), 'invalid');
+          errorSpy();
+        })
+
+        m.save({}, {wait: true, validate: false}).catch(function(xhr){
+          assert.equal(xhr.status, 500);
+          assert.isTrue(errorSpy.called);
+          done();
         });
+
+        server.respondWith('/testmodel', [
+          500, {'Content-Type': 'application/json'}, 'ERROR'
+        ]);
+
+      });
+
+      it('should still invoke `error` callbacks', function(done){
+        var m = new TestModel();
+
+        m.save({name: 'foo'}, {
+          wait: true,
+          validate: false,
+          error: function(model, response, options){
+            assert.strictEqual(model, m);
+            done()
+          }
+        });
+
+        server.respondWith('/testmodel', [
+          500, {'Content-Type': 'application/json'}, 'ERROR'
+        ]);
+
+      });
+
+      it('should still invoke `success` callbacks', function(done){
+        var m = new TestModel();
+
+        m.save({name: 'foo'}, {
+          validate: false,
+          success: function(model, response, options){
+            assert.strictEqual(model, m);
+            done();
+          }
+        });
+
+        server.respondWith('POST', '/testmodel', [
+          200, {'Content-Type': 'application/json'}, JSON.stringify({name: "foo", id: 1})
+        ]);
 
       });
 
