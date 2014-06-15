@@ -1,6 +1,6 @@
 /**
  * backbone-promises provides ES6 Promises for sync operations.
- * @return {Object} Backbone monkey-patched backbone.
+ * @return {Object} monkey-patched Backbone.
  *
  */
 define(['backbone-lib', 'es6-promise'], function(Backbone, Promise){
@@ -18,14 +18,21 @@ define(['backbone-lib', 'es6-promise'], function(Backbone, Promise){
       .then(function resolveWithModel() { return model});
   };
 
-  // Model.prototype.save to reject promise on errors, NOT return false.
+  // Model.prototype.save to reject on errors, NOT return false.
   var origSave = Backbone.Model.prototype.save;
   Backbone.Model.prototype.save = function save(){
     var xhr = origSave.apply(this, arguments);
     // By this point, orgSave has usually validated the model (emitting 'invalid' event),
     // and sync would have caught xhr errors (rejecting with xhr, and emitting 'error' event).
-    // Rejecting with ModelInvalid error instead of false.
-    return (xhr !== false) ? xhr : Promise.reject(new Error('ModelInvalid'));
+    // Rejecting with Model error instead of false.
+    return (xhr !== false) ? xhr : Promise.reject(new Error('ModelError'));
+  };
+
+  // Model.prototype.destroy to reject on errors, NOT return false.
+  var origDestroy = Backbone.Model.prototype.destroy;
+  Backbone.Model.prototype.destroy = function destory(){
+    var xhr = origDestroy.apply(this, arguments);
+    return (xhr !== false) ? xhr : Promise.reject(new Error('ModelError'));
   };
 
   return Backbone;

@@ -122,7 +122,7 @@ require([
         var m = new TestModel();
         m.save({name: 'broken'}).catch(function(err){
           assert.instanceOf(err, Error);
-          assert.match(err.message, /invalid/i)
+          assert.match(err.message, /model/i)
           done();
         });
       });
@@ -194,6 +194,23 @@ require([
 
       });
 
+    });
+
+    describe('Backbone.Model.prototype.destroy', function(){
+      var TestModel = Backbone.Model.extend({
+        url: '/testmodel',
+        validate: function(attrs, options){
+          return { name: 'is not valid' };
+        }
+      });
+
+      it('should reject when attempting to destroy a model that is new (NOT return false)', function(done){
+        var m = new TestModel();
+        m.destroy({name: 'does not exist yet'}).catch(function(err){
+          assert.instanceOf(err, Error);
+          done();
+        });
+      });
     });
 
   });
