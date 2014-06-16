@@ -14,7 +14,7 @@ define(['backbone-lib', 'es6-promise'], function(Backbone, Promise){
   // Backbone.sync to resolve with models/collections as the settlement argument.
   var origSync = Backbone.sync;
   Backbone.sync = function sync(method, model, options){
-    return Promise.resolve(origSync(method, model, options))
+    return origSync(method, model, options)
       .then(function resolveWithModel() { return model});
   };
 
