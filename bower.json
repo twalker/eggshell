@@ -1,6 +1,6 @@
 {
   "name": "eggshell",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -10,17 +10,17 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "2.1.11",
+    "requirejs": "2.1.14",
     "requirejs-text": "2.0.12",
     "jquery": "2.1.1",
     "lodash": "2.4.1",
     "backbone": "1.1.2",
-    "mustache": "0.8.1",
+    "mustache": "0.8.2",
     "es6-promise": "~1.0.0"
   },
   "devDependencies": {
-    "mocha": "~1.18.2",
+    "mocha": "~1.20.1",
     "chai": "1.9.1",
-    "sinonjs": "1.9.1"
+    "sinonjs": "1.10.2"
   }
 }
