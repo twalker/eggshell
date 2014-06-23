@@ -3,7 +3,7 @@
  */
 define(function(require, exports, module){
   var Backbone = require('backbone'),
-    lodash = require('underscore'),
+    lodash = require('lodash'),
     Mustache = require('mustache'),
     jQuery = require('jquery');
 

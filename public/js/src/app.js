@@ -3,7 +3,7 @@
  */
 define(function(require){
   var jQuery = require('jquery'),
-    lodash = require('underscore'),
+    lodash = require('lodash'),
     Backbone = require('backbone'),
     nav = require('nav'),
 

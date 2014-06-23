@@ -3,11 +3,13 @@
  */
 require.config({
   deps: ['main'],
-
+  map: {
+    '*': {'underscore': 'lodash'}
+  },
   paths: {
     // Third-party libraries
     jquery: 'bower_components/jquery/dist/jquery',
-    underscore: 'bower_components/lodash/dist/lodash',
+    lodash: 'bower_components/lodash/dist/lodash',
     'backbone-lib': 'bower_components/backbone/backbone',
     'backbone': 'backbone-promises',
     mustache: 'bower_components/mustache/mustache',

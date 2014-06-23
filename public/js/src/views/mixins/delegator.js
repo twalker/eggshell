@@ -12,7 +12,7 @@
 * });
 **/
 define(function(require){
-  var lodash = require('underscore');
+  var lodash = require('lodash');
   return function(member) {
     return function() {
       var obj = this.model || this.collection;

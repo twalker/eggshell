@@ -3,7 +3,7 @@
  * A utility to copy functionality from mixins to objects.
  */
 define(function(require){
-  var lodash = require('underscore');
+  var lodash = require('lodash');
 
   // Monkey patch a destination object (i.e. Model.prototype, View.prototype, etc.)
   // by combining member values that are object literals (e.g. events, defaults),

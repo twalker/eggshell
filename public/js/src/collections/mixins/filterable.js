@@ -25,7 +25,7 @@
 *
 **/
 define(function(require){
-  var lodash = require('underscore');
+  var lodash = require('lodash');
 
   var filterable = {
     // add a filter to a filters property with the provided key.
