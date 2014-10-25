@@ -5,7 +5,7 @@
  */
 var gulp = require('gulp'),
   bump = require('gulp-bump'),
-  clean = require('gulp-clean'),
+  del = require('del'),
   stylus = require('gulp-stylus'),
   nib = require('nib'),
   jshint = require('gulp-jshint'),
@@ -62,9 +62,10 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('clean', function() {
-  return gulp.src(['./public/js/dist'], {read: false})
-    .pipe(clean());
+gulp.task('clean', function(cb) {
+  del([
+    './public/js/dist/**'
+  ], cb);
 });
 
 // Increment packages by patch point
