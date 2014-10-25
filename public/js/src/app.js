@@ -17,7 +17,6 @@ define(function(require){
       lodash: lodash.VERSION,
       backbone: Backbone.VERSION
     },
-
     // single page app boot procedure
     init: function(bootdata){
       // Instantiate root view
