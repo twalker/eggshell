@@ -10,7 +10,7 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "2.1.14",
+    "requirejs": "2.1.15",
     "requirejs-text": "2.0.12",
     "jquery": "2.1.1",
     "lodash": "2.4.1",
@@ -19,8 +19,8 @@
     "es6-promise": "~1.0.0"
   },
   "devDependencies": {
-    "mocha": "~1.20.1",
-    "chai": "1.9.1",
+    "mocha": "2.0.1",
+    "chai": "1.9.2",
     "sinonjs": "1.10.2"
   }
 }
