@@ -7,9 +7,16 @@ html
     case settings.env
       when 'production'
         script(src='/js/dist/prod/#{settings.name}.js')
-      when 'development'
+      when 'developmentXX'
         script(src='/js/dist/dev/#{settings.name}.js')
       default
-        script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
+        script(src='/js/jspm_packages/system.js')
+        script(src='/js/config.js')
+        script.
+          System.import('src/app').then(function(app){
+            console.log('app', app, typeof app)
+            window.app = app.init();
+          }).catch(console.error.bind(console));
+
   body
     block content

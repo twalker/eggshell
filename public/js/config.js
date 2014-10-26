@@ -1,6 +1,9 @@
 System.config({
+  baseURL: '/js',
+
   "paths": {
     "*": "*.js",
+    //"src/*": "/src/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "github:*": "jspm_packages/github/*.js"
   }
@@ -32,7 +35,7 @@ System.config({
       "mkdirp": "npm:mkdirp@0.3.0"
     },
     "npm:backbone@1.1.2": {
-      "underscore": "pm:lodash-node@2.4.1"
+      "underscore": "npm:lodash-node@2.4.1"
     },
     "npm:debug@2.0.0": {
       "ms": "npm:ms@0.6.2"

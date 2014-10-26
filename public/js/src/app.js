@@ -3,13 +3,13 @@
  */
 define(function(require){
   var jQuery = require('jquery'),
-    lodash = require('lodash'),
-    Backbone = require('backbone'),
-    nav = require('nav'),
+      lodash = require('lodash'),
+      Backbone = require('backbone'),
+      nav = require('src/nav'),
 
-    Egg = require('models/egg'),
-    Eggs = require('collections/eggs'),
-    EggsRouter = require('routers/eggs');
+      Egg = require('src/models/egg'),
+      Eggs = require('src/collections/eggs'),
+      EggsRouter = require('src/routers/eggs');
 
   var app = {
     versions: {
@@ -19,6 +19,7 @@ define(function(require){
     },
     // single page app boot procedure
     init: function(bootdata){
+      console.log('Backbone', Backbone.$ = jQuery)
       // Instantiate root view
       var rootView = this.rootView = new Backbone.View({el: jQuery('#content')});
 

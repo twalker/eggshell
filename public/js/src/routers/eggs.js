@@ -4,8 +4,8 @@
 define(function(require){
   var Backbone = require('backbone'),
     jQuery = require('jquery'),
-    Eggs = require('collections/eggs'),
-    EggsView = require('views/eggs/eggs');
+    Eggs = require('src/collections/eggs'),
+    EggsView = require('src/views/eggs/eggs');
 
   return Backbone.Router.extend({
     routes: {
