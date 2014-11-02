@@ -4,14 +4,16 @@
  * - get sourcemaps when supported
  */
 var gulp = require('gulp'),
-  bump = require('gulp-bump'),
-  del = require('del'),
-  stylus = require('gulp-stylus'),
-  nib = require('nib'),
-  jshint = require('gulp-jshint'),
-  rjs = require('gulp-requirejs'),
-  uglify = require('gulp-uglify'),
-  livereload = require('gulp-livereload');
+    bump = require('gulp-bump'),
+    del = require('del'),
+    rename = require('gulp-rename'),
+    stylus = require('gulp-stylus'),
+    nib = require('nib'),
+    jshint = require('gulp-jshint'),
+    to5 = require('gulp-6to5'),
+    rjs = require('gulp-requirejs'),
+    uglify = require('gulp-uglify'),
+    livereload = require('gulp-livereload');
 
 
 gulp.task('css', function(){
@@ -40,7 +42,7 @@ gulp.task('js', function() {
     //.pipe(gulp.dest('./public/js/dist/prod/'));
 });
 
-gulp.task('rjs', ['lint'], function(){
+gulp.task('rjs', ['6to5', 'lint'], function(){
   return rjs({
     out: 'eggshell.js',
     baseUrl: './public/js/src',
@@ -60,6 +62,13 @@ gulp.task('lint', function() {
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('6to5', function () {
+  return gulp.src('./public/js/src/**/*.es6')
+    .pipe(to5())
+    .pipe(rename({extname: '.js'}))
+    .pipe(gulp.dest('./public/js/src'));
 });
 
 gulp.task('clean', function(cb) {
