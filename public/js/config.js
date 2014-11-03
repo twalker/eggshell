@@ -1,6 +1,5 @@
 System.config({
-  baseURL: '/js',
-
+  baseURL: './js',
   "paths": {
     "*": "*.js",
     //"src/*": "/src/*.js",

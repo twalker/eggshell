@@ -39,5 +39,24 @@
     "start-dev": "node-inspector --save-live-edit & node --debug app",
     "start-prod": "NODE_ENV=production pm2 start app.js --name eggshell -i max",
     "stop-prod": "pm2 stop eggshell"
+  },
+  "jspm": {
+    "directories": {
+      "baseUrl": "./public/js/",
+      "lib": "src",
+      "packages": "jspm_packages"
+    },
+    "configFile": "public/js/config.js",
+    "dependencies": {
+      "jquery": "^2.1.1",
+      "mustache": "^0.8.2",
+      "text": "^0.0.2",
+      "github:jakearchibald/es6-promise": "^1.0.0",
+      "backbone": "^1.1.2",
+      "lodash": "^2.4.1",
+      "mocha": "^2.0.1",
+      "github:chaijs/chai": "^1.9.2",
+      "github:cjohansen/Sinon.JS": "^1.10.3"
+    }
   }
 }
