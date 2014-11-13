@@ -3,20 +3,20 @@ html
   head
     title #{title} v#{settings.version} (#{settings.env})
     link(rel='stylesheet', href='/css/style.css')
+    script(src='/js/jspm_packages/system.js')
+    script(src='/js/config.js')
+    script.
+      System.baseURL = '/js/';
 
-    case settings.env
-      when 'production'
-        script(src='/js/dist/prod/#{settings.name}.js')
-      when 'developmentXX'
-        script(src='/js/dist/dev/#{settings.name}.js')
-      default
-        script(src='/js/jspm_packages/system.js')
-        script(src='/js/config.js')
-        script.
-          System.import('src/app').then(function(app){
-            console.log('app', app, typeof app)
-            window.app = app.init();
-          }).catch(console.error.bind(console));
+    if settings.env !== 'test'
+      script(src='/js/app-built.js')
 
+    script.
+      document.addEventListener("DOMContentLoaded", function initApp(){
+        System.import('src/app').then(function(app){
+          console.log('app', app, typeof app)
+          window.app = app.init();
+        }).catch(console.error.bind(console));
+      });
   body
     block content

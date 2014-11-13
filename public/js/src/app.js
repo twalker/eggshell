@@ -5,11 +5,11 @@ define(function(require){
   var jQuery = require('jquery'),
       lodash = require('lodash'),
       Backbone = require('backbone'),
-      nav = require('src/nav'),
+      nav = require('app/nav'),
 
-      Egg = require('src/models/egg'),
-      Eggs = require('src/collections/eggs'),
-      EggsRouter = require('src/routers/eggs');
+      Egg = require('app/models/egg'),
+      Eggs = require('app/collections/eggs'),
+      EggsRouter = require('app/routers/eggs');
 
   var app = {
     versions: {

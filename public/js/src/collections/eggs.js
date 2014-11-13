@@ -3,7 +3,7 @@
  */
 define(function(require){
   var Backbone = require('backbone'),
-    Egg = require('src/models/egg');
+      Egg = require('app/models/egg');
 
   var Eggs = Backbone.Collection.extend({
     url: function(){

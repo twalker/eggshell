@@ -4,7 +4,7 @@
  */
 define(function(require){
   var Backbone = require('backbone'),
-    mixer = require('src/mixer');
+    mixer = require('./mixer');
 
   var nav = {
     // Start watching for navigation events
