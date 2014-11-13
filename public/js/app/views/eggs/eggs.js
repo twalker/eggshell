@@ -8,7 +8,7 @@ define(function(require, exports, module){
     jQuery = require('jquery');
 
   var EggsView = Backbone.View.extend({
-    template: require('src/views/eggs/eggs.mustache!text'),
+    template: require('app/views/eggs/eggs.mustache!text'),
     className: 'eggs',
     events: {
       'click li': 'onClick'

@@ -3613,23 +3613,6 @@ function define(){};  define.amd = {};
   })();
 (function() {
 function define(){};  define.amd = {};
-  System.register("src/collections/eggs", ["backbone", "app/models/egg"], false, function(require) {
-    var Backbone = require("backbone"),
-        Egg = require("app/models/egg");
-    var Eggs = Backbone.Collection.extend({
-      url: function() {
-        return 'api/eggs';
-      },
-      model: Egg,
-      crackedCount: function() {
-        return this.where({cracked: true}).length;
-      }
-    });
-    return Eggs;
-  });
-  })();
-(function() {
-function define(){};  define.amd = {};
   (function(root, factory) {
     if (typeof exports === "object" && exports) {
       factory(exports);
@@ -4088,14 +4071,14 @@ System.register("npm:lodash@2.4.1", ["npm:lodash@2.4.1/dist/lodash"], function($
 
 (function() {
 function define(){};  define.amd = {};
-  System.register("src/views/eggs/eggs", ["backbone", "lodash", "mustache", "jquery", "src/views/eggs/eggs.mustache!text"], false, function(__require, __exports, __module) {
+  System.register("app/views/eggs/eggs", ["backbone", "lodash", "mustache", "jquery", "app/views/eggs/eggs.mustache!text"], false, function(__require, __exports, __module) {
     return (function(require, exports, module) {
       var Backbone = require("backbone"),
           lodash = require("lodash"),
           Mustache = require("mustache"),
           jQuery = require("jquery");
       var EggsView = Backbone.View.extend({
-        template: require("src/views/eggs/eggs.mustache!text"),
+        template: require("app/views/eggs/eggs.mustache!text"),
         className: 'eggs',
         events: {'click li': 'onClick'},
         initialize: function(options) {
@@ -4121,11 +4104,11 @@ function define(){};  define.amd = {};
   })();
 (function() {
 function define(){};  define.amd = {};
-  System.register("app/routers/eggs", ["backbone", "jquery", "src/collections/eggs", "src/views/eggs/eggs"], false, function(require) {
+  System.register("app/routers/eggs", ["backbone", "jquery", "app/collections/eggs", "app/views/eggs/eggs"], false, function(require) {
     var Backbone = require("backbone"),
         jQuery = require("jquery"),
-        Eggs = require("src/collections/eggs"),
-        EggsView = require("src/views/eggs/eggs");
+        Eggs = require("app/collections/eggs"),
+        EggsView = require("app/views/eggs/eggs");
     return Backbone.Router.extend({
       routes: {'': 'list'},
       initialize: function(options) {
@@ -4168,7 +4151,7 @@ System.register("npm:backbone@1.1.2", ["npm:backbone@1.1.2/backbone"], function(
 
 (function() {
 function define(){};  define.amd = {};
-  System.register("src/app", ["jquery", "lodash", "backbone", "app/nav", "app/models/egg", "app/collections/eggs", "app/routers/eggs"], false, function(require) {
+  System.register("app/app", ["jquery", "lodash", "backbone", "app/nav", "app/models/egg", "app/collections/eggs", "app/routers/eggs"], false, function(require) {
     var jQuery = require("jquery"),
         lodash = require("lodash"),
         Backbone = require("backbone"),
@@ -4191,7 +4174,6 @@ function define(){};  define.amd = {};
         return this;
       }
     };
-    console.log('hello');
     lodash.bindAll(app);
     return app;
   });
@@ -5860,12 +5842,12 @@ System.register("npm:lodash-node@2.4.1/modern/utilities/uniqueId", [], true, fun
   return module.exports;
 });
 
-System.register("src/views/eggs/eggs.mustache!github:systemjs/plugin-text@0.0.2", [], true, function(require, exports, module) {
+System.register("app/views/eggs/eggs.mustache!github:systemjs/plugin-text@0.0.2", [], true, function(require, exports, module) {
   var global = System.global;
   var __define = global.define;
   global.define = undefined;
-  var __filename = "src/views/eggs/eggs.mustache";
-  var __dirname = "src/views/eggs";
+  var __filename = "app/views/eggs/eggs.mustache";
+  var __dirname = "app/views/eggs";
   module.exports = "<aside class=\"crack-count\">\n  <b class=\"count\">{{crackedCount}}</b>\n  eggs cracked.\n</aside>\n<p>and/or get crackin' on the client!</p>\n<p>Crack an egg:</p>\n<ul class=\"egglist\">\n  {{#eggs}}\n    <li{{#cracked}} class=\"cracked\"{{/cracked}} data-id=\"{{id}}\">{{name}}</li>\n  {{/eggs}}\n</ul>\n<p>ooh, and don't forget to write some <a href=\"/client-tests/app\">client-tests</a>.</p>\n";
   global.define = __define;
   return module.exports;

@@ -1,7 +1,7 @@
 {
   "jspm": {
     "directories": {
-      "lib": "src"
+      "lib": "app"
     },
     "dependencies": {
       "backbone": "^1.1.2",

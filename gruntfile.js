@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     jsfiles: {
       client: [
         'gruntfile.js',
-        'public/js/src/**/*.js',
+        'public/js/app/**/*.js',
         '!<%= bowerDir %>/**'
       ],
       server: [
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       // shared options
       options: {
         baseUrl: 'public/js/src',
-        mainConfigFile: 'public/js/src/config.js',
+        mainConfigFile: 'public/js/app/config.js',
         name: 'config',
         include: 'require-lib'
       },
@@ -102,7 +102,7 @@ module.exports = function(grunt) {
       js: {
         files: [
           '<%= jsfiles.client %>',
-          'public/js/src/views/**/*.mustache'
+          'public/js/app/views/**/*.mustache'
         ],
         tasks: ['jshint', 'requirejs:dev', 'notify:js']
       },

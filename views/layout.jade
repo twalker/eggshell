@@ -8,12 +8,12 @@ html
     script.
       System.baseURL = '/js/';
 
-    if settings.env !== 'test'
+    if settings.env === 'production'
       script(src='/js/app-built.js')
 
     script.
       document.addEventListener("DOMContentLoaded", function initApp(){
-        System.import('src/app').then(function(app){
+        System.import('app/app').then(function(app){
           console.log('app', app, typeof app)
           window.app = app.init();
         }).catch(console.error.bind(console));

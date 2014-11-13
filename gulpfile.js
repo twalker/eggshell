@@ -23,13 +23,13 @@ gulp.task('css', function(){
 });
 
 gulp.task('js', function() {
-  return gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
+  return gulp.src(['./public/js/app/**/*.js', '!./public/js/app/bower_components/**'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(gulp.src(rjs({
       out: 'eggshell.js',
       baseUrl: './public/js/src',
-      mainConfigFile: './public/js/src/config.js',
+      mainConfigFile: './public/js/app/config.js',
       name: 'config',
       optimize: 'none',
       include: 'require-lib',
@@ -46,7 +46,7 @@ gulp.task('rjs', ['6to5', 'lint'], function(){
   return rjs({
     out: 'eggshell.js',
     baseUrl: './public/js/src',
-    mainConfigFile: './public/js/src/config.js',
+    mainConfigFile: './public/js/app/config.js',
     name: 'config',
     optimize: 'none',
     include: 'require-lib',
@@ -58,14 +58,14 @@ gulp.task('rjs', ['6to5', 'lint'], function(){
 });
 
 gulp.task('lint', function() {
-  return gulp.src(['./public/js/src/**/*.js', '!./public/js/src/bower_components/**'])
+  return gulp.src(['./public/js/app/**/*.js', '!./public/js/app/bower_components/**'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('6to5', function () {
-  return gulp.src('./public/js/src/**/*.es6')
+  return gulp.src('./public/js/app/**/*.es6')
     .pipe(to5())
     .pipe(rename({extname: '.js'}))
     .pipe(gulp.dest('./public/js/src'));
@@ -87,7 +87,7 @@ gulp.task('bump', function(){
 gulp.task('watch', function(){
 
   gulp.watch('./public/css/style.styl', ['css']);
-  gulp.watch(['./public/js/src/**/*.js','public/js/src/views/**/*.mustache'], ['js']);
+  gulp.watch(['./public/js/app/**/*.js','public/js/app/views/**/*.mustache'], ['js']);
 
   var server = livereload();
   gulp.watch([
