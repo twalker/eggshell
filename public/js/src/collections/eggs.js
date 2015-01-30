@@ -1,22 +1,20 @@
 /**
  * Eggs collection.
  */
-define(function(require){
-  var Backbone = require('backbone'),
-    Egg = require('models/egg');
+import Backbone from './../backbone-extended'
+import Egg from '../models/egg';
 
-  var Eggs = Backbone.Collection.extend({
-    url: function(){
-      return 'api/eggs';
-    },
+var Eggs = Backbone.Collection.extend({
+  url: function(){
+    return 'api/eggs';
+  },
 
-    model: Egg,
+  model: Egg,
 
-    crackedCount: function(){
-      return this.where({cracked: true}).length;
-    }
+  crackedCount: function(){
+    return this.where({cracked: true}).length;
+  }
 
-  });
-
-  return Eggs;
 });
+
+export default Eggs;

@@ -1,14 +1,13 @@
-require([
-  'mocha',
-  'chai',
-  'backbone',
-  'models/mixins/accessor'
-], function(mocha, chai, Backbone, accessor){
+import accessor from '../src/models/mixins/accessor'
+import {assert} from 'chai'
+
+import Backbone from '../src/backbone-extended'
+//console.log('ext', Backbone)
 
   // setup
-  var assert = chai.assert;
+  //var assert = chai.assert;
 
-  mocha.setup('bdd');
+  //mocha.setup('bdd');
 
   describe('accessor(modelAttr)', function() {
     var Mod = Backbone.Model.extend({
@@ -41,5 +40,4 @@ require([
   });
 
   // Start runner
-  mocha.run();
-});
+  //mocha.run();

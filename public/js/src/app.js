@@ -1,41 +1,42 @@
 /**
  * Initializes the backbone application.
  */
-define(function(require){
-  var jQuery = require('jquery'),
-    lodash = require('lodash'),
-    Backbone = require('backbone'),
-    nav = require('nav'),
 
-    Egg = require('models/egg'),
-    Eggs = require('collections/eggs'),
-    EggsRouter = require('routers/eggs');
+import jquery from 'jquery'
+import lodash from 'lodash'
+import Backbone from './backbone-extended'
+import nav from './nav'
+import EggsRouter from './routers/eggs'
 
-  var app = {
-    versions: {
-      jquery: jQuery.fn.jquery,
-      lodash: lodash.VERSION,
-      backbone: Backbone.VERSION
-    },
-    // single page app boot procedure
-    init: function(bootdata){
-      // Instantiate root view
-      var rootView = this.rootView = new Backbone.View({el: jQuery('#content')});
 
-      // initialize router(s)
-      new EggsRouter({ elRoot: rootView.$el });
+var app = {
+  versions: {
+    jquery: jquery.fn.jquery,
+    lodash: lodash.VERSION,
+    backbone: Backbone.VERSION
+  },
+  // single page app boot procedure
+  init: function(bootdata){
+    // Instantiate root view
+    var rootView = this.rootView = new Backbone.View({el: jquery('#content')});
 
-      // Start watching for navigation events
-      nav.start();
+    // initialize router(s)
+    new EggsRouter({ elRoot: rootView.$el });
 
-      // global pushState link handler
-      rootView.$el.on('click', 'a[data-pushlink]',  nav.onPushLinkClick.bind(nav));
+    // Start watching for navigation events
+    nav.start();
 
-      return this;
-    }
-  };
+    // global pushState link handler
+    rootView.$el.on('click', 'a[data-pushlink]',  nav.onPushLinkClick.bind(nav));
 
-  lodash.bindAll(app);
+    return this;
+  }
+};
 
-  return app;
-});
+lodash.bindAll(app);
+
+// add single global for app
+global.app = app;
+
+export default app;
+

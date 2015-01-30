@@ -12,14 +12,12 @@
 * m.name('johnny')
 * m.name() // 'johnny'
 **/
-define(function(){
-  return function(attribute) {
-    return function(value) {
-      if (value) {
-        return this.set(attribute, value);
-      } else {
-        return this.get(attribute);
-      }
-    };
+export default function(attribute) {
+  return function(value) {
+    if (value) {
+      return this.set(attribute, value);
+    } else {
+      return this.get(attribute);
+    }
   };
-});
+}

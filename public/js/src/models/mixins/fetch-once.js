@@ -30,7 +30,7 @@
 **/
 define(function(require){
   var Promise = require('es6-promise'),
-    Backbone = require('backbone');
+      Backbone = require('backbone');
   /* jshint maxcomplexity: 6 */
   return function fetchOnce(fetchOptions){
     var origFetch = Backbone[this instanceof Backbone.Collection ? 'Collection' : 'Model'].prototype.fetch,

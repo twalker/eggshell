@@ -4,12 +4,17 @@ html
     title #{title} v#{settings.version} (#{settings.env})
     link(rel='stylesheet', href='/css/style.css')
 
-    case settings.env
-      when 'production'
-        script(src='/js/dist/prod/#{settings.name}.js')
-      when 'development'
-        script(src='/js/dist/dev/#{settings.name}.js')
-      default
-        script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
+    //- case settings.env
+    //-   when 'production'
+    //-     script(src='/js/dist/prod/#{settings.name}.js')
+    //-   when 'development'
+    //-     script(src='/js/dist/dev/#{settings.name}.js')
+    //-   default
+    //-     script(src='/js/src/bower_components/requirejs/require.js', data-main="/js/src/config")
+    script(src='/js/dist/app.js')
+    script.
+      document.addEventListener("DOMContentLoaded", function(event) {
+        app.init({boot: 'data'})
+      });
   body
     block content

@@ -1,39 +1,38 @@
 /**
  * Eggs view
  */
-define(function(require, exports, module){
-  var Backbone = require('backbone'),
-    lodash = require('lodash'),
-    Mustache = require('mustache'),
-    jQuery = require('jquery');
+import Backbone from '../../backbone-extended'
+import Mustache from 'mustache'
+import jQuery from 'jquery'
+import template from './eggs.mustache'
 
-  var EggsView = Backbone.View.extend({
-    template: require('text!views/eggs/eggs.mustache'),
-    className: 'eggs',
-    events: {
-      'click li': 'onClick'
-    },
+var EggsView = Backbone.View.extend({
+  template,
+  className: 'eggs',
+  events: {
+    'click li': 'onClick'
+  },
 
-    initialize: function(options){
-      this.listenTo(this.collection, 'sync', this.render);
-    },
+  initialize: function(options){
+    this.listenTo(this.collection, 'sync', this.render);
+  },
 
-    onClick: function(e){
-      e.preventDefault();
-      var id = jQuery(e.currentTarget).data('id');
-      var model = this.collection.get(id);
-      model.save({cracked: !model.get('cracked')});
-    },
+  onClick: function(e){
+    e.preventDefault();
+    var id = jQuery(e.currentTarget).data('id');
+    var model = this.collection.get(id);
+    model.save({cracked: !model.get('cracked')});
+  },
 
-    render: function(){
-      this.$el.html(Mustache.render(this.template, {
-        eggs: this.collection.toJSON(),
-        crackedCount: this.collection.crackedCount()
-      }));
+  render: function(){
+    this.$el.html(Mustache.render(this.template, {
+      eggs: this.collection.toJSON(),
+      crackedCount: this.collection.crackedCount()
+    }));
 
-      return this;
-    }
-  });
-
-  return EggsView;
+    return this;
+  }
 });
+
+export default EggsView;
+

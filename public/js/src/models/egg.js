@@ -1,22 +1,20 @@
 /**
 * module for a egg model
 **/
-define(function(require){
-  var Backbone = require('backbone');
+import Backbone from './../backbone-extended'
 
-  var Egg = Backbone.Model.extend({
-    defaults: {
-      id: null,
-      name: null,
-      cracked: false
-    },
+var Egg = Backbone.Model.extend({
+  defaults: {
+    id: null,
+    name: null,
+    cracked: false
+  },
 
-    initialize: function(){
+  initialize: function(){
 
-    }
+  }
 
 
-  });
-
-  return Egg;
 });
+
+export default Egg;

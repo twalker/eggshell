@@ -1,32 +1,31 @@
 /**
  * Eggs router is the controller for eggs.
 */
-define(function(require){
-  var Backbone = require('backbone'),
-    jQuery = require('jquery'),
-    Eggs = require('collections/eggs'),
-    EggsView = require('views/eggs/eggs');
+import Backbone from '../backbone-extended'
 
-  return Backbone.Router.extend({
-    routes: {
-      '': 'list'
-    },
+import Eggs from '../collections/eggs'
+import EggsView from '../views/eggs/eggs'
 
-    initialize: function(options){
-      this.elRoot = options.elRoot;
-    },
+export default Backbone.Router.extend({
+  routes: {
+    '': 'list'
+  },
 
-    list: function(){
+  initialize: function(options){
+    this.elRoot = options.elRoot;
+  },
 
-      var eggs = new Eggs();
-      var eggsView = new EggsView({collection: eggs});
-      this.elRoot.html(eggsView.el);
+  list: function(){
 
-      eggs.fetch();
+    var eggs = new Eggs();
+    var eggsView = new EggsView({collection: eggs});
+    this.elRoot.html(eggsView.el);
 
-    }
+    eggs.fetch();
+
+  }
 
 
-  });
 });
+
 
