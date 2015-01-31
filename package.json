@@ -55,6 +55,7 @@
     "test": "mocha --ui bdd --recursive --reporter nyan --timeout 10000 --slow 300",
     "test-sh": "bin/mocha-test.sh",
     "build:watch": "watch 'npm run build:app' ./public/js/src",
+    "build:watch-unit-tests": "watch 'npm run build:unit-tests' ./public/js/test",
     "build:app": "browserify public/js/src/app.js -d -t 6to5ify | exorcist public/js/dist/app.js.map > public/js/dist/app.js",
     "build:unit-tests": "browserify public/js/test/index.js -d -t stringify -t 6to5ify | exorcist public/js/dist/unit-tests.js.map > public/js/dist/unit-tests.js",
     "start": "node app",

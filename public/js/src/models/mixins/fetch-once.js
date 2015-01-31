@@ -28,44 +28,43 @@
 *
 *
 **/
-define(function(require){
-  var Promise = require('es6-promise'),
-      Backbone = require('backbone');
-  /* jshint maxcomplexity: 6 */
-  return function fetchOnce(fetchOptions){
-    var origFetch = Backbone[this instanceof Backbone.Collection ? 'Collection' : 'Model'].prototype.fetch,
-        self = this,
-        origArgs = arguments,
-        oldP = this._pFetch,
-        options = fetchOptions || {},
-        reload = !!options.reload;
+import {Promise} from 'es6-promise'
+import Backbone from '../../backbone-extended'
 
-    // return existing promise, unless reload option is used
-    if(oldP && !reload){
-      // ensure optional success/error callbacks get called when re-using promise
-      if(options.success) this._pFetch.then(options.success);
-      if(options.error) this._pFetch.catch(options.error);
-      return this._pFetch;
-    }
+/* jshint maxcomplexity: 6 */
+export default function fetchOnce(fetchOptions){
+  var origFetch = Backbone[this instanceof Backbone.Collection ? 'Collection' : 'Model'].prototype.fetch,
+      self = this,
+      origArgs = arguments,
+      oldP = this._pFetch,
+      options = fetchOptions || {},
+      reload = !!options.reload;
 
-    this._pFetch = new Promise(function fullfiller(resolve, reject){
-      // if not using backbone-promies, will need to
-      // cast original fetch (jQuery Deferred) as a native ES6 Promise
-     // e.g. Promise.resolve(origFetch.apply(self, origArgs)).then...;
-      origFetch.apply(self, origArgs)
-        .then(
-          function resolver(res){
-            // resolve with the model/collection
-            resolve(self);
-          },
-
-          function rejecter(xhr){
-            // resolve with xhr
-            reject(xhr);
-          }
-        );
-    });
-
+  // return existing promise, unless reload option is used
+  if(oldP && !reload){
+    // ensure optional success/error callbacks get called when re-using promise
+    if(options.success) this._pFetch.then(options.success);
+    if(options.error) this._pFetch.catch(options.error);
     return this._pFetch;
-  };
-});
+  }
+
+  this._pFetch = new Promise(function fullfiller(resolve, reject){
+    // if not using backbone-promies, will need to
+    // cast original fetch (jQuery Deferred) as a native ES6 Promise
+   // e.g. Promise.resolve(origFetch.apply(self, origArgs)).then...;
+    origFetch.apply(self, origArgs)
+      .then(
+        function resolver(res){
+          // resolve with the model/collection
+          resolve(self);
+        },
+
+        function rejecter(xhr){
+          // resolve with xhr
+          reject(xhr);
+        }
+      );
+  });
+
+  return this._pFetch;
+};

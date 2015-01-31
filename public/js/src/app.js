@@ -39,4 +39,3 @@ lodash.bindAll(app);
 global.app = app;
 
 export default app;
-

@@ -31,7 +31,8 @@ html(lang="en")
     script.
       mocha.setup('bdd')
       document.addEventListener("DOMContentLoaded", function(event) {
-        mocha.run()
+        runTest("#{name}")
+        //mocha.run()
       });
     script(src="/js/dist/unit-tests.js")
   body

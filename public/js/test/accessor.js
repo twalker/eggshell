@@ -1,43 +1,36 @@
-import accessor from '../src/models/mixins/accessor'
 import {assert} from 'chai'
-
 import Backbone from '../src/backbone-extended'
-//console.log('ext', Backbone)
+import accessor from '../src/models/mixins/accessor'
 
-  // setup
-  //var assert = chai.assert;
+describe('accessor(modelAttr)', function() {
+  var Mod = Backbone.Model.extend({
+    defaults: {
+      name: null
+    },
+    name: accessor('name'),
+    aliasedName: accessor('name')
+  });
+  var model;
 
-  //mocha.setup('bdd');
+  beforeEach(function(){
+    model = new Mod({id: 1, name: 'scooby'});
+  });
 
-  describe('accessor(modelAttr)', function() {
-    var Mod = Backbone.Model.extend({
-      defaults: {
-        name: null
-      },
-      name: accessor('name'),
-      aliasedName: accessor('name')
-    });
-    var model;
+  it('should provide access to .get() for model attribute (getter)', function(){
+    assert.equal(model.name(), model.get('name'));
+    assert.equal(model.aliasedName(), 'scooby');
+  });
 
-    beforeEach(function(){
-      model = new Mod({id: 1, name: 'scooby'});
-    });
+  it('should use model .set(value)  when provided a value (setter)', function(){
+    model.name('shaggy')
+    assert.equal(model.get('name'), 'shaggy');
 
-    it('should provide access to .get() for model attribute (getter)', function(){
-      assert.equal(model.name(), model.get('name'));
-      assert.equal(model.aliasedName(), 'scooby');
-    });
-
-    it('should use model .set(value)  when provided a value (setter)', function(){
-      model.name('shaggy')
-      assert.equal(model.get('name'), 'shaggy');
-
-      model.aliasedName('fred');
-      assert.equal(model.get('name'), 'fred');
-
-    });
+    model.aliasedName('fred');
+    assert.equal(model.get('name'), 'fred');
 
   });
 
-  // Start runner
-  //mocha.run();
+});
+
+// Start runner
+//export default function run(){ global.mocha.run(); }
