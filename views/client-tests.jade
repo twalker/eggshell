@@ -3,7 +3,7 @@ html(lang="en")
   head
     meta(charset="utf-8")
     title #{name} unit test
-    link(rel="stylesheet", href="/js/app/bower_components/mocha/mocha.css")
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css")
     style.
       nav.tests {
         font-size: 12px;
@@ -18,14 +18,25 @@ html(lang="en")
       nav.tests a.active {
         text-decoration: none;
       }
-    script(data-main="/js/app/config", src="/js/app/bower_components/requirejs/require.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js")
     script.
-      requirejs({
-        paths : {
-          // overwrite 'main' to be the unit test file for the module to be tested.
-          main: "../test/#{name}"
-        }
-      });
+      mocha.setup('bdd')
+
+    script(src="/js/jspm_packages/system.js")
+    script(src="/js/config.js")
+    script.
+      System.config({"baseURL": "/js"})
+      System.transpiler = '6to5';
+      System.import("test/#{name}")
+        .then(function(){
+          mocha.run();
+        })
+        .catch(function(e) {
+          setTimeout(function() {
+            throw e;
+          }, 1);
+      })
+
   body
     nav.tests
       each test in names

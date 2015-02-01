@@ -1,22 +1,16 @@
-require(['require', 'mocha', 'chai', 'sinon',
-    'app'
-  ], function(require, mocha, chai, sinon, app){
 
-  // Setup
-  var assert = chai.assert;
-  mocha.setup('bdd');
+import chai from 'chai'
+import app from '../../app/app'
 
-  describe('app', function(){
+var assert = chai.assert;
 
-    describe('.init', function(){
+describe('app', function(){
 
-      it('should exist', function(){
-        assert(app.init);
-      });
+  describe('.init', function(){
 
+    it('should exist', function(){
+      assert(app.init);
     });
-  });
 
-  // Start runner
-  mocha.run();
+  });
 });
