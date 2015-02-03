@@ -38,7 +38,7 @@
     "start-dev": "node-inspector --save-live-edit & node --debug app",
     "start-prod": "NODE_ENV=production pm2 start app.js --name eggshell -i max",
     "stop-prod": "pm2 stop eggshell",
-    "bundle": "cd ./public/js/; jspm bundle app/app ./app-built.js"
+    "bundle": "jspm bundle app/app public/js/dist/app-built.js"
   },
   "jspm": {
     "directories": {
