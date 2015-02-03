@@ -1,9 +1,9 @@
 /**
  * Eggs collection.
  */
-define(function(require){
-  var Backbone = require('backbone'),
-      Egg = require('app/models/egg');
+
+      import Backbone from 'backbone'
+      import Egg from 'app/models/egg'
 
   var Eggs = Backbone.Collection.extend({
     url: function(){
@@ -18,5 +18,5 @@ define(function(require){
 
   });
 
-  return Eggs;
-});
+  export default Eggs
+

@@ -1,15 +1,15 @@
 /**
  * Initializes the backbone application.
  */
-define(function(require){
-  var jQuery = require('jquery'),
-      lodash = require('lodash'),
-      Backbone = require('backbone'),
-      nav = require('app/nav'),
 
-      Egg = require('app/models/egg'),
-      Eggs = require('app/collections/eggs'),
-      EggsRouter = require('app/routers/eggs');
+      import jQuery from 'jquery'
+      import lodash from 'lodash'
+      import Backbone from 'backbone'
+      import nav from 'app/nav'
+
+      import Egg from 'app/models/egg'
+      import Eggs from 'app/collections/eggs'
+      import EggsRouter from 'app/routers/eggs'
 
   var app = {
     versions: {
@@ -38,5 +38,5 @@ define(function(require){
 
   lodash.bindAll(app);
 
-  return app;
-});
+  export default app
+

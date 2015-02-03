@@ -14,10 +14,10 @@
 * view.render();
 * > view is rendered and ready!
 */
-define(function(require){
-  var jQuery = require('jquery');
 
-  return {
+  import jQuery from 'jquery'
+
+  export default {
     initialize: function(){
       this._dfrReady = new jQuery.Deferred();
     },
@@ -32,5 +32,3 @@ define(function(require){
       return this;
     }
   };
-
-});

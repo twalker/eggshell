@@ -11,14 +11,13 @@
 *   }
 * });
 **/
-define(function(require){
-  var lodash = require('lodash');
-  return function(member) {
+
+      import lodash from 'lodash'
+  export default function(member) {
     return function() {
       var obj = this.model || this.collection;
       var method = obj[member];
       // return model's function or property
       return (lodash.isFunction(method)) ? method.apply(obj, arguments) : method;
     };
-  };
-});
+  }

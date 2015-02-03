@@ -1,11 +1,11 @@
 /**
  * Eggs view
  */
-define(function(require, exports, module){
-  var Backbone = require('backbone'),
-    lodash = require('lodash'),
-    Mustache = require('mustache'),
-    jQuery = require('jquery');
+
+      import Backbone from 'backbone'
+    import lodash from 'lodash'
+    import Mustache from 'mustache'
+    import jQuery from 'jquery'
 
   var EggsView = Backbone.View.extend({
     template: require('app/views/eggs/eggs.mustache!text'),
@@ -35,5 +35,5 @@ define(function(require, exports, module){
     }
   });
 
-  return EggsView;
-});
+  export default EggsView
+

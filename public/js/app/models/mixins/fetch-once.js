@@ -28,11 +28,11 @@
 *
 *
 **/
-define(function(require){
-  var Promise = require('es6-promise'),
-    Backbone = require('backbone');
+
+      import Promise from 'es6-promise'
+    import Backbone from 'backbone'
   /* jshint maxcomplexity: 6 */
-  return function fetchOnce(fetchOptions){
+  export default function fetchOnce(fetchOptions){
     var origFetch = Backbone[this instanceof Backbone.Collection ? 'Collection' : 'Model'].prototype.fetch,
         self = this,
         origArgs = arguments,
@@ -67,5 +67,4 @@ define(function(require){
     });
 
     return this._pFetch;
-  };
-});
+  }

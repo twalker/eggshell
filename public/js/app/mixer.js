@@ -2,8 +2,8 @@
  * Mixer of mixins.
  * A utility to copy functionality from mixins to objects.
  */
-define(function(require){
-  var lodash = require('lodash');
+
+      import lodash from 'lodash'
 
   // Monkey patch a destination object (i.e. Model.prototype, View.prototype, etc.)
   // by combining member values that are object literals (e.g. events, defaults),
@@ -59,7 +59,7 @@ define(function(require){
     };
   }
 
-  return {
+  export default {
     /**
      * Non-destructively copies members to a destination object from source objects.
      * A simple proxy to lodash.defaults.
@@ -90,4 +90,4 @@ define(function(require){
      */
     patch: patch
   };
-});
+

@@ -24,8 +24,8 @@
 * myColl.filtered();// return array of all big, and tasty models.
 *
 **/
-define(function(require){
-  var lodash = require('lodash');
+
+      import lodash from 'lodash'
 
   var filterable = {
     // add a filter to a filters property with the provided key.
@@ -69,6 +69,4 @@ define(function(require){
     }
   };
 
-  return filterable;
-
-});
+  export default filterable;

@@ -1,8 +1,8 @@
 /**
 * module for a egg model
 **/
-define(function(require){
-  var Backbone = require('backbone');
+
+      import Backbone from 'backbone'
 
   var Egg = Backbone.Model.extend({
     defaults: {
@@ -18,5 +18,4 @@ define(function(require){
 
   });
 
-  return Egg;
-});
+  export default Egg

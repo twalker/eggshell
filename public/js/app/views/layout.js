@@ -35,11 +35,11 @@
  * - event attachment issues when child views are rendered before in the dom
  *
 */
-define(function(require){
-  var jQuery = require('jquery')
-    , lodash = require('lodash')
-    , Backbone = require('backbone')
-    , Mustache = require('mustache');
+
+  import jQuery from 'jquery'
+  import lodash from 'lodash'
+  import Backbone from 'backbone'
+  import Mustache from 'mustache'
 
   var Layout = Backbone.View.extend({
 
@@ -193,5 +193,5 @@ define(function(require){
     }
   });
 
-  return Layout;
-});
+  export default Layout
+

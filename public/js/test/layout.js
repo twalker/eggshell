@@ -2,7 +2,7 @@ require(['require', 'mocha', 'chai', 'sinon',
     'backbone',
     'mustache',
     'views/layout',
-    'text!../test/layout-fixture.mustache'
+    '../test/layout-fixture.mustache!text'
   ], function(require, mocha, chai, sinon, Backbone, Mustache, Layout, layoutTemplate){
   // Setup
   var assert = chai.assert;

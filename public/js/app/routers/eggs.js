@@ -1,13 +1,13 @@
 /**
  * Eggs router is the controller for eggs.
 */
-define(function(require){
-  var Backbone = require('backbone'),
-    jQuery = require('jquery'),
-    Eggs = require('app/collections/eggs'),
-    EggsView = require('app/views/eggs/eggs');
 
-  return Backbone.Router.extend({
+    import Backbone from 'backbone'
+    import jQuery from 'jquery'
+    import Eggs from 'app/collections/eggs'
+    import EggsView from 'app/views/eggs/eggs'
+
+  export default Backbone.Router.extend({
     routes: {
       '': 'list'
     },
@@ -28,5 +28,4 @@ define(function(require){
 
 
   });
-});
 

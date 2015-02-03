@@ -5,7 +5,7 @@
  * Mobile Web Patterns with Backbone.js (http://mobilebbbook.com/)
  *
  */
-define(function(require){
+
   var Flyweight = function Flyweight(constructor, keyfn){
     return function(){
       var key = keyfn.apply(null, arguments);
@@ -31,5 +31,5 @@ define(function(require){
   // memory cache of all instances, for all flyweighted klasses
   Flyweight.cache = {};
 
-  return Flyweight;
-});
+  export default Flyweight
+
