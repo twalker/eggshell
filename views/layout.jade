@@ -8,15 +8,15 @@ html
     script.
       System.baseURL = '/js/';
 
-    if settings.env === 'production'
+    if settings.env !== 'production'
       script(src='/js/dist/app-built.js')
 
     script.
       document.addEventListener("DOMContentLoaded", function initApp(){
         System.import('app/app').then(function(app){
           console.log('app', app, typeof app)
-          window.app = app.init();
-        }).catch(console.error.bind(console));
+          window.app = app.default.init();
+        });
       });
   body
     block content

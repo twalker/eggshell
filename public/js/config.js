@@ -1,11 +1,11 @@
 System.config({
+  "transpiler": "6to5",
   "paths": {
     "*": "*.js",
     "eggshell/*": "app/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
-  },
-  "transpiler": "6to5"
+  }
 });
 
 System.config({

@@ -6,9 +6,10 @@
     import lodash from 'lodash'
     import Mustache from 'mustache'
     import jQuery from 'jquery'
+    import template from 'app/views/eggs/eggs.mustache!text'
 
   var EggsView = Backbone.View.extend({
-    template: require('app/views/eggs/eggs.mustache!text'),
+    template,
     className: 'eggs',
     events: {
       'click li': 'onClick'
@@ -36,4 +37,3 @@
   });
 
   export default EggsView
-
